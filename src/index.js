@@ -6,19 +6,14 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Web3ReactProvider } from '@web3-react/core'
 import Web3ReactManager from './utils/Web3ReactManager';
-// import {getLibrary} from './utils/getLibrary'
+import { getLibrary } from './utils'
 
 
-function getLibrary(provider=null) {
-    return provider
-}
-
-// https://chainid.network/  SET chainId
 ReactDOM.render(
   <React.StrictMode>
-   <Web3ReactProvider getLibrary={getLibrary}>
+    <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ReactManager>
-          <App />
+        <App />
       </Web3ReactManager>
     </Web3ReactProvider>
   </React.StrictMode>,

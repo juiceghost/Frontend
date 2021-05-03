@@ -12,6 +12,7 @@ const LiquidNavbar = () => {
             <img
                 src={`${process.env.PUBLIC_URL}/img/logo.png`}
                 style={{ width: '2em', marginRight: '0.5rem' }}
+                alt="logo"
             />
             <span className="title">Liquid Driver</span>
         </Navbar.Brand>

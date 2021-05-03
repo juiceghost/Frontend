@@ -6,9 +6,10 @@ import { getMasterChefAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
 import { QuoteToken } from './config/constants/types'
 
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID
+const CHAIN_ID = 3
 
-export const fetchFarms = async () => {
+export const fetchFarms = async (web3, account) => {
+
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
       const lpAdress = farmConfig.lpAddresses[CHAIN_ID]
@@ -19,12 +20,18 @@ export const fetchFarms = async () => {
           name: 'balanceOf',
           params: [lpAdress],
         },
-        // Balance of quote token on LP contract
         {
-          address: farmConfig.quoteTokenAdresses[CHAIN_ID],
+          address: lpAdress,
           name: 'balanceOf',
-          params: [lpAdress],
+          params: [account],
         },
+        // // Balance of quote token on LP contract
+        // {
+        //   address: farmConfig.quoteTokenAdresses[CHAIN_ID],
+        //   name: 'balanceOf',
+        //   params: [lpAdress],
+        // },
+
         // Balance of LP tokens in the master chef contract
         {
           address: farmConfig.isTokenOnly
@@ -49,7 +56,7 @@ export const fetchFarms = async () => {
           name: 'decimals',
         },
       ]
-
+      console.log(calls);
       const [
         tokenBalanceLP,
         quoteTokenBlanceLP,
@@ -57,7 +64,7 @@ export const fetchFarms = async () => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-      ] = await multicall(erc20, calls)
+      ] = await multicall(web3, erc20, calls)
 
       let tokenAmount
       let lpTotalInQuoteToken
@@ -78,6 +85,15 @@ export const fetchFarms = async () => {
         }
         lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
       } else {
+        const aaa = new BigNumber(quoteTokenBlanceLP).div(
+          new BigNumber(10).pow(18)
+        ).toFixed(2)
+        // console.log(tokenBalanceLP,
+        //   quoteTokenBlanceLP,
+        //   lpTokenBalanceMC,
+        //   lpTotalSupply,
+        //   tokenDecimals,
+        //   quoteTokenDecimals);
         // Ratio in % a LP tokens that are in staking, vs the total number in circulation
         const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(
           new BigNumber(lpTotalSupply)
@@ -106,27 +122,28 @@ export const fetchFarms = async () => {
         }
       }
 
-      const [info, totalAllocPoint, eggPerBlock] = await multicall(
-        masterchefABI,
-        [
-          {
-            address: getMasterChefAddress(),
-            name: 'poolInfo',
-            params: [farmConfig.pid],
-          },
-          {
-            address: getMasterChefAddress(),
-            name: 'totalAllocPoint',
-          },
-          {
-            address: getMasterChefAddress(),
-            name: 'eggPerBlock',
-          },
-        ]
-      )
+      // const [info, totalAllocPoint, eggPerBlock] = await multicall(
+      //   web3,
+      //   masterchefABI,
+      //   [
+      //     {
+      //       address: getMasterChefAddress(),
+      //       name: 'poolInfo',
+      //       params: [farmConfig.pid],
+      //     },
+      //     {
+      //       address: getMasterChefAddress(),
+      //       name: 'totalAllocPoint',
+      //     },
+      //     {
+      //       address: getMasterChefAddress(),
+      //       name: 'eggPerBlock',
+      //     },
+      //   ]
+      // )
 
-      const allocPoint = new BigNumber(info.allocPoint._hex)
-      const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+      // const allocPoint = new BigNumber(info.allocPoint._hex)
+      // const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
       return {
         ...farmConfig,
@@ -134,10 +151,10 @@ export const fetchFarms = async () => {
         // quoteTokenAmount: quoteTokenAmount,
         lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
         tokenPriceVsQuote: tokenPriceVsQuote.toJSON(),
-        poolWeight: poolWeight.toNumber(),
-        multiplier: `${allocPoint.div(100).toString()}X`,
-        depositFeeBP: info.depositFeeBP,
-        eggPerBlock: new BigNumber(eggPerBlock).toNumber(),
+        // poolWeight: poolWeight.toNumber(),
+        // multiplier: `${allocPoint.div(100).toString()}X`,
+        // depositFeeBP: info.depositFeeBP,
+        // eggPerBlock: new BigNumber(eggPerBlock).toNumber(),
       }
     })
   )

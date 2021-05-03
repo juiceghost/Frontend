@@ -1,10 +1,5 @@
-import BigNumber from 'bignumber.js'
+export const getLibrary = (provider = null) => (provider)
 
-export { default as formatAddress } from './formatAddress'
-
-export const bnToDec = (bn: BigNumber, decimals = 18): number => {
-  return bn.dividedBy(new BigNumber(10).pow(decimals)).toNumber()
-}
-
-export const getLibrary => (provider=null) (provider)
+export const formatAddress = (address) => {
+    return `${address.slice(0, 6)}...${address.slice(-6)}`
 }

@@ -54,6 +54,7 @@ const Wallets = () => {
                     <img
                         src={`${process.env.PUBLIC_URL}/img/metamask.png`}
                         className="logo"
+                        alt="logo"
                     />
                 </div>
 
@@ -62,6 +63,7 @@ const Wallets = () => {
                     <img
                         src={`${process.env.PUBLIC_URL}/img/trust_wallet.png`}
                         className="logo"
+                        alt="logo"
                     />
                 </div>
 
@@ -70,6 +72,7 @@ const Wallets = () => {
                     <img
                         src={`${process.env.PUBLIC_URL}/img/token_pocket_wallet.png`}
                         className="logo"
+                        alt="logo"
                     />
                 </div>
 
@@ -78,6 +81,7 @@ const Wallets = () => {
                     <img
                         src={`${process.env.PUBLIC_URL}/img/wallet_connect.png`}
                         className="logo"
+                        alt="logo"
                     />
                 </div>
 

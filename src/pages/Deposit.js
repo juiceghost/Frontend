@@ -5,21 +5,31 @@ import { observer } from 'mobx-react'
 import store from '../store'
 import { fetchFarms } from '../api'
 import './Deposit.scss'
+import useWeb3 from '../hooks/useWeb3'
+import { useWeb3React } from '@web3-react/core'
 
-const deposits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+const deposits = [0]
+
 function DepositPage() {
-  const getPools = async () => {
-    try {
-      const farms = await fetchFarms()
-      console.info('Farms fetched:', farms)
-    } catch (e) {
-      console.error(e)
-    }
-  }
+
+  const { account } = useWeb3React()
+  const web3 = useWeb3()
 
   useEffect(() => {
-    getPools()
-  }, [])
+    const getPools = async () => {
+      try {
+        const farms = await fetchFarms(web3, account)
+        console.info('Farms fetched:', farms)
+      } catch (e) {
+        console.error("Farms fetched had error", e)
+      }
+    }
+    if (web3 && account) {
+      console.log(account);
+      getPools()
+
+    }
+  }, [web3, account])
 
   return (
     <div className="deposit">
@@ -62,8 +72,8 @@ function DepositPage() {
         </div>
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
-            {deposits.map((deposit) => (
-              <div className="col-4">
+            {deposits.map((deposit, index) => (
+              <div key={index} className="col-4">
                 <div className="deposit-cell">
                   <div className="deposit-cell-header">
                     <div className="white-circle" />

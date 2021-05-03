@@ -1,11 +1,11 @@
 import random from 'lodash/random'
 
 // Array of available nodes to connect to
-const nodes = [process.env.REACT_APP_NODE_1, process.env.REACT_APP_NODE_2, process.env.REACT_APP_NODE_3]
+export const nodes = ["https://ropsten.infura.io/v3/df9a2cbc416c4aa5ba4b9c85f57f756d"]
 
-const getNodeUrl = () => {
+const getRpcUrl = () => {
   const randomIndex = random(0, nodes.length - 1)
   return nodes[randomIndex]
 }
 
-export default getNodeUrl
+export default getRpcUrl
