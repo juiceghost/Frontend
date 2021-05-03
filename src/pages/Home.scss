@@ -1,0 +1,16 @@
+.back-img {
+  z-index: -1;
+  object-fit: cover;
+}
+.tile {
+  display: flex;
+  border: 3px solid #eeeeee25;
+  border-radius: 60px;
+  background-color: #202539;
+  white-space: nowrap;
+  width: 240px;
+  height: 180px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

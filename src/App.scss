@@ -1,0 +1,46 @@
+.connect-wallet {
+  .modal-title {
+    flex: 1;
+  }
+  .modal-header {
+    border-bottom-color: #00000016 !important;
+    text-align: center;
+  }
+  .modal-content {
+    border-radius: 2rem;
+    background-color: #add8e6;
+  }
+  .connect-wallet-row {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    align-items: center;
+    background: #fff;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .connect-wallet-row:active {
+    border: 1px solid blue;
+  }
+
+  .connect-wallet-row.disabled {
+    background-color: lightgray;
+  }
+
+  .connect-wallet-row.disabled:active {
+    border: none;
+  }
+  .logo {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.notification {
+  z-index: 10000;
+}

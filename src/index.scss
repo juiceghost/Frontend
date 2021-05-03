@@ -1,0 +1,47 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+@import url('https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Amaranth:100,200,300,400,500,600,700,800,900');
+
+body {
+  font-family: 'Inter' !important;
+}
+
+$theme-colors: (
+  "dark": #080C25,
+  "primary": #2376D6
+);
+
+.title {
+  font-family: 'Amaranth' !important;
+  font-weight: bold;
+  font-size: 24px;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.nav-link {
+  color: white !important
+}
+
+
+.rounded-1 {
+  border-radius: 1rem;
+}
+
+.rounded-2 {
+  border-radius: 2rem !important;
+}
+
+.font-weight-extra-bold {
+  font-weight: 800;
+}
+
+.connect-wallet {
+
+}
+
+
+@import "~bootstrap/scss/bootstrap";
