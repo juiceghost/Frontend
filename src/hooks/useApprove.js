@@ -1,28 +1,26 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { approve } from './callHelper'
+// import { approve } from './callHelper'
 import { useERC20 } from './useContract'
+import { approve } from '../utils/callHelpers'
 
-export const useApprove = (currency, contractAddress, validChainId) => {
+export const useApprove = (farm, contractAddress) => {
     const { account, chainId } = useWeb3React()
-
-    const { address: tokenAddress } = currency
-    const contract = useERC20(tokenAddress)
+    const lpAddress = farm?.lpAddresses[chainId]
+    const contract = useERC20(lpAddress)
 
     const handleApprove = useCallback(async () => {
         try {
-            if (validChainId && chainId !== validChainId) return null
             const tx = await approve(
                 contract,
                 contractAddress,
-                account,
-                { chainId, currency }
+                account
             )
             return tx
         } catch (e) {
             return false
         }
-    }, [account, chainId, validChainId, currency, contract, contractAddress])
+    }, [account, chainId, lpAddress, contract, contractAddress])
 
     return { onApprove: handleApprove }
 }

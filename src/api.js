@@ -8,7 +8,7 @@ import { QuoteToken } from './config/constants/types'
 
 const CHAIN_ID = 3
 
-export const fetchFarms = async (web3, account) => {
+export const fetchFarms = async (web3) => {
 
   const data = await Promise.all(
     farmsConfig.map(async (farmConfig) => {
@@ -19,11 +19,6 @@ export const fetchFarms = async (web3, account) => {
           address: farmConfig.tokenAddresses[CHAIN_ID],
           name: 'balanceOf',
           params: [lpAdress],
-        },
-        {
-          address: lpAdress,
-          name: 'balanceOf',
-          params: [account],
         },
         // // Balance of quote token on LP contract
         // {
@@ -85,9 +80,6 @@ export const fetchFarms = async (web3, account) => {
         }
         lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
       } else {
-        const aaa = new BigNumber(quoteTokenBlanceLP).div(
-          new BigNumber(10).pow(18)
-        ).toFixed(2)
         // console.log(tokenBalanceLP,
         //   quoteTokenBlanceLP,
         //   lpTokenBalanceMC,

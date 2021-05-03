@@ -1,9 +1,9 @@
 import { ethers } from 'ethers'
 import { toWei } from './formatNumber'
 
-export const approve = async (lpContract, masterChefContract, account) => {
+export const approve = async (lpContract, contractAddress, account) => {
   return lpContract.methods
-    .approve(masterChefContract.options.address, ethers.constants.MaxUint256)
+    .approve(contractAddress, ethers.constants.MaxUint256.toString())
     .send({ from: account })
 }
 

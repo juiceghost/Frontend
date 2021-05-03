@@ -4,31 +4,29 @@ import BigNumber from "bignumber.js";
 // import useRefresh from "../hooks/useRefresh";
 import { useERC20 } from './useContract'
 import { ethers } from "ethers";
-import { ZERO } from "../config/constants/numbers";
+// import { ZERO } from "../config/constants/numbers";
 
 
-export const useAllowance = (currency, contractAddress, validChainId) => {
+export const useAllowance = (farm, contractAddress, forceUpdate) => {
     const [allowance, setAllowance] = useState(new BigNumber(-1))
     const { account, chainId } = useWeb3React()
     // const { fastRefresh } = useRefresh()
     const fastRefresh = 1
-    const { address: tokenAddress } = currency
-    const contract = useERC20(tokenAddress)
+    const lpAddress = farm?.lpAddresses[chainId]
+    const contract = useERC20(lpAddress)
 
     useEffect(() => {
         const fetchAllowance = async () => {
-            if (validChainId && chainId !== validChainId) setAllowance(ZERO)
             if (contract === null) setAllowance(ethers.constants.MaxUint256)
-            else if (currency.allowance) { setAllowance(currency.allowance) }
             else {
                 const res = await contract.methods.allowance(account, contractAddress).call()
                 setAllowance(new BigNumber(res))
             }
         }
-        if (account && tokenAddress) {
+        if (account && lpAddress) {
             fetchAllowance()
         }
-    }, [account, contract, chainId, contractAddress, tokenAddress, validChainId, currency.allowance, fastRefresh])
+    }, [account, contract, chainId, contractAddress, lpAddress, fastRefresh, forceUpdate])
 
     return allowance
 }
