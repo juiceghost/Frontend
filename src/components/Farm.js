@@ -16,7 +16,7 @@ const Farm = ({ pid }) => {
     const [forceUpdate, setForceUpdate] = useState(0)
     const allowance = useAllowance(farms[pid], MasterChefAddress, chainId, forceUpdate)
     console.log("allowance ", allowance.toString());
-    const { onApprove } = useApprove(farms[pid], MasterChefAddress, chainId, forceUpdate)
+    const { onApprove } = useApprove(farms[pid], MasterChefAddress, chainId)
 
     const handleApprove = useCallback(async () => {
         try {
