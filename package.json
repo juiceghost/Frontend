@@ -1,6 +1,6 @@
 {
   "name": "liquid-driver",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "@ethersproject/abi": "^5.1.2",
