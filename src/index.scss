@@ -43,5 +43,9 @@ $theme-colors: (
 
 }
 
+.btn-primary:active {
+  color: #2376D6 !important;
+  background-color: white !important;
+}
 
 @import "~bootstrap/scss/bootstrap";
