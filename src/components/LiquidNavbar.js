@@ -1,13 +1,20 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
+import { useMediaQuery } from 'react-responsive'
+
 import store from '../store'
 import './Navbar.scss'
 
 const LiquidNavbar = () => {
+    const [menu, setMenu] = useState(false)
     const { account, deactivate } = useWeb3React()
+    const isDesktop = useMediaQuery({
+        query: '(min-device-width: 768px)'
+    })
+
     return (<Navbar bg="dark" variant="dark" className="sidebar" style={{ zIndex: 100 }} expand="lg">
         <Navbar.Brand href="/" className="d-flex align-items-center">
             <img
@@ -17,14 +24,17 @@ const LiquidNavbar = () => {
             />
             <span className="title">Liquid Driver</span>
         </Navbar.Brand>
-        
-        <div className="collapsible-content">
-            <button className="navbar-toggler toggler-example">
-                <span className="dark-blue-text"><i className="fas fa-bars fa-1x"/></span>
+
+        {!isDesktop && <div className="collapsible-content">
+            <button className="navbar-toggler toggler-example" onClick={() => {
+                setMenu(!menu)
+            }}>
+                <span className="dark-blue-text"><i className="fas fa-bars fa-1x" /></span>
             </button>
         </div>
+        }
 
-        <Nav className="ml-auto">
+        { isDesktop && <Nav className="ml-auto">
             <Nav.Item>
                 <Nav.Link href="https://github.com" className="font-weight-bold mx-2">
                     GitHub
@@ -90,7 +100,7 @@ const LiquidNavbar = () => {
                             </Nav.Link>
                 </Nav.Item>
             )}
-        </Nav>
+        </Nav>}
     </Navbar >);
 }
 
