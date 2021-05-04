@@ -3,7 +3,6 @@ import MultiCallAbi from '../config/abi/Multicall.json'
 import { getMulticallAddress } from '../utils/addressHelpers'
 
 const multicall = async (web3, abi, calls) => {
-    console.log(getMulticallAddress());
     const multi = new web3.eth.Contract(
         MultiCallAbi,
         getMulticallAddress()

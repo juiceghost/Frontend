@@ -15,9 +15,9 @@ export const useERC20 = (address) => {
     }, [address, web3])
 }
 
-export const useMasterChef = (address) => {
+export const useMasterChef = () => {
     const web3 = useWeb3()
     const { chainId } = useWeb3React()
-    return useMemo(() => getMasterChefContract(address, web3, chainId), [address, web3, chainId])
+    return useMemo(() => getMasterChefContract(web3, chainId), [web3, chainId])
 }
 

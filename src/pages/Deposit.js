@@ -1,8 +1,5 @@
 import { useEffect } from 'react'
-import { Modal } from 'react-bootstrap'
 import { observer } from 'mobx-react'
-
-import store from '../store'
 import { fetchFarms } from '../api'
 import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'

@@ -14,18 +14,18 @@ export const fetchFarms = async (web3) => {
     farmsConfig.map(async (farmConfig) => {
       const lpAdress = farmConfig.lpAddresses[CHAIN_ID]
       const calls = [
-        // Balance of token in the LP contract
+        // Balance of Reward token in the LP contract
         {
           address: farmConfig.tokenAddresses[CHAIN_ID],
           name: 'balanceOf',
           params: [lpAdress],
         },
-        // // Balance of quote token on LP contract
-        // {
-        //   address: farmConfig.quoteTokenAdresses[CHAIN_ID],
-        //   name: 'balanceOf',
-        //   params: [lpAdress],
-        // },
+        // Balance of quote token on LP contract
+        {
+          address: farmConfig.quoteTokenAdresses[CHAIN_ID],
+          name: 'balanceOf',
+          params: [lpAdress],
+        },
 
         // Balance of LP tokens in the master chef contract
         {
@@ -40,7 +40,7 @@ export const fetchFarms = async (web3) => {
           address: lpAdress,
           name: 'totalSupply',
         },
-        // Token decimals
+        // Reward Token decimals
         {
           address: farmConfig.tokenAddresses[CHAIN_ID],
           name: 'decimals',
@@ -80,12 +80,6 @@ export const fetchFarms = async (web3) => {
         }
         lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
       } else {
-        // console.log(tokenBalanceLP,
-        //   quoteTokenBlanceLP,
-        //   lpTokenBalanceMC,
-        //   lpTotalSupply,
-        //   tokenDecimals,
-        //   quoteTokenDecimals);
         // Ratio in % a LP tokens that are in staking, vs the total number in circulation
         const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(
           new BigNumber(lpTotalSupply)
@@ -101,6 +95,7 @@ export const fetchFarms = async (web3) => {
         tokenAmount = new BigNumber(tokenBalanceLP)
           .div(new BigNumber(10).pow(tokenDecimals))
           .times(lpTokenRatio)
+
         const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
           .div(new BigNumber(10).pow(quoteTokenDecimals))
           .times(lpTokenRatio)
@@ -113,6 +108,8 @@ export const fetchFarms = async (web3) => {
           )
         }
       }
+
+
 
       // const [info, totalAllocPoint, eggPerBlock] = await multicall(
       //   web3,
@@ -140,7 +137,7 @@ export const fetchFarms = async (web3) => {
       return {
         ...farmConfig,
         tokenAmount: tokenAmount.toJSON(),
-        // quoteTokenAmount: quoteTokenAmount,
+        // quoteTokenAmount: quoteTokenAmount.toNumber(),
         lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
         tokenPriceVsQuote: tokenPriceVsQuote.toJSON(),
         // poolWeight: poolWeight.toNumber(),
@@ -152,3 +149,4 @@ export const fetchFarms = async (web3) => {
   )
   return data
 }
+

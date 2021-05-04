@@ -3,7 +3,6 @@ import { makeAutoObservable } from 'mobx'
 class Store {
   show_connect = false
   show_amount_popup = false
-
   constructor() {
     makeAutoObservable(this)
   }

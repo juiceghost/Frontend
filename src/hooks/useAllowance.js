@@ -17,7 +17,7 @@ export const useAllowance = (farm, contractAddress, forceUpdate) => {
 
     useEffect(() => {
         const fetchAllowance = async () => {
-            if (contract === null) setAllowance(ethers.constants.MaxUint256)
+            if (contract === null) setAllowance(new BigNumber(-1))
             else {
                 const res = await contract.methods.allowance(account, contractAddress).call()
                 setAllowance(new BigNumber(res))
