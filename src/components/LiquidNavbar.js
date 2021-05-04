@@ -15,7 +15,7 @@ const LiquidNavbar = () => {
         query: '(min-device-width: 768px)'
     })
 
-    return (<Navbar bg="dark" variant="dark" className="sidebar" style={{ zIndex: 100 }} expand="lg">
+    return (<Navbar bg="dark" variant="dark" className="sidebar" style={{ zIndex: 100 }} expand="md">
         <Navbar.Brand href="/" className="d-flex align-items-center">
             <img
                 src={`${process.env.PUBLIC_URL}/img/logo.png`}
@@ -34,7 +34,7 @@ const LiquidNavbar = () => {
         </div>
         }
 
-        { isDesktop && <Nav className="ml-auto">
+        { (isDesktop || menu) && <Nav className="ml-auto">
             <Nav.Item>
                 <Nav.Link href="https://github.com" className="font-weight-bold mx-2">
                     GitHub
@@ -70,7 +70,7 @@ const LiquidNavbar = () => {
             {account && (<>
                 <Nav.Item>
                     <Nav.Link
-                        className="font-weight-bold bg-primary px-3 mx-2 rounded-2"
+                        className="font-weight-bold bg-primary px-3 mx-2 rounded-2 account-bt"
                         onClick={() => { }}
                     >
                         Account:{' '}
@@ -81,7 +81,7 @@ const LiquidNavbar = () => {
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link
-                        className="font-weight-bold bg-danger px-3 mx-2 rounded-2"
+                        className="font-weight-bold bg-danger px-3 mx-2 rounded-2 account-bt"
                         onClick={deactivate}
                     >
                         Disconnect
@@ -91,7 +91,7 @@ const LiquidNavbar = () => {
             {!account && (
                 <Nav.Item>
                     <Nav.Link
-                        className="font-weight-bold bg-primary px-3 mx-2 rounded-2 text-nowrap"
+                        className="font-weight-bold bg-primary px-3 mx-2 rounded-2 text-nowrap account-bt"
                         onClick={() => {
                             store.showConnectPopup()
                         }}

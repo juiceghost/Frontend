@@ -7,9 +7,20 @@
 }
 
 .deposit {
-  .top-view {
-    padding-top: 5rem;
+  @media (max-width: 767px) {
+    .top-view {
+      padding-top: 1rem;
+    }
   }
+  
+  @media (min-width: 768px) {
+    /* Target devices wider than 768px. */
+    .top-view {
+      padding-top: 5rem;
+    }
+  }
+
+  
   .top-img {
     z-index: -1;
     top: 0;

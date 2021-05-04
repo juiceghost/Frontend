@@ -93,7 +93,7 @@ const Farm = ({ pid }) => {
 
 
     return (<>
-        <div className="col-4">
+        <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header">
                     <div className="white-circle" />
