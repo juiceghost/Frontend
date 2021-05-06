@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import BigNumber from "bignumber.js";
 // import useRefresh from "../hooks/useRefresh";
 import { useERC20 } from './useContract'
-import { ethers } from "ethers";
 // import { ZERO } from "../config/constants/numbers";
 
 

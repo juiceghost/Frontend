@@ -21,9 +21,9 @@ const farms = [
   {
     pid: 1,
     risk: 5,
-    lpSymbol: 'SLP',
+    lpSymbol: 'LINK/FTM',
     lpAddresses: {
-      250: '0xd32f2eb49e91aa160946f3538564118388d6246a',
+      250: '0x1Ca86e57103564F47fFCea7259a6ce8Cc1301549',
       3: '0xe10c2de405d12a8344cc5945df6f398660857760', // SushiSwap LP Token https://ropsten.etherscan.io/token/0xe10c2de405d12a8344cc5945df6f398660857760
     },
     tokenSymbol: 'LQDR',
