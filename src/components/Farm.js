@@ -37,8 +37,8 @@ const Farm = ({ pid }) => {
     const handleApprove = useCallback(async () => {
         try {
             const tx = await onApprove()
+            setForceUpdate(forceUpdate => forceUpdate + 1)
             if (tx.status) {
-                setForceUpdate(forceUpdate => forceUpdate + 1)
             } else {
                 console.log("Approve Failed");
             }
@@ -179,7 +179,7 @@ const Farm = ({ pid }) => {
             onClose={() => setStakePopup(false)}
             onConfirm={handleStake}
             amount={lpBalance}
-            symbol={"LDT-ETH"}
+            symbol={farms[pid].lpSymbol}
             inputAmount={stakeInput}
             setInputAmount={setStakeInput}
             onMax={() => setStakeInput(lpBalance)}
@@ -189,7 +189,7 @@ const Farm = ({ pid }) => {
             onClose={() => setUnStakePopup(false)}
             onConfirm={handleUnStake}
             amount={stakedBalance}
-            symbol={"LDT-ETH"}
+            symbol={farms[pid].lpSymbol}
             inputAmount={unStakeInput}
             setInputAmount={setUnStakeInput}
             onMax={() => setUnStakeInput(stakedBalance)}
