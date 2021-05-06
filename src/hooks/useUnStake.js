@@ -7,7 +7,6 @@ import { unstake } from '../utils/callHelpers'
 export const useUnStake = (farm, amount) => {
     const { account, chainId } = useWeb3React()
     const masterChefContract = useMasterChef()
-
     const handleUnStake = useCallback(async () => {
         try {
             const tx = await unstake(

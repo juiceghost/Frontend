@@ -4,36 +4,35 @@ import masterchefABI from './config/abi/masterchef.json'
 import multicall from './utils/multicall'
 import { getMasterChefAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
+import { fromWei, getFullDisplayBalance } from './utils/formatNumber'
 import { QuoteToken } from './config/constants/types'
 
-const CHAIN_ID = 3
 
-export const fetchFarms = async (web3) => {
+export const fetchFarms = async (web3, chainId = 250) => {
+  const MasterChefAddress = getMasterChefAddress(chainId)
 
   const data = await Promise.all(
-    farmsConfig.map(async (farmConfig) => {
-      const lpAdress = farmConfig.lpAddresses[CHAIN_ID]
+    farmsConfig.filter(farm => farm?.lpAddresses[chainId] !== "").map(async (farmConfig) => {
+      const lpAdress = farmConfig.lpAddresses[chainId]
       const calls = [
         // Balance of Reward token in the LP contract
         {
-          address: farmConfig.tokenAddresses[CHAIN_ID],
+          address: farmConfig.tokenAddresses[chainId],
           name: 'balanceOf',
           params: [lpAdress],
         },
         // Balance of quote token on LP contract
         {
-          address: farmConfig.quoteTokenAdresses[CHAIN_ID],
+          address: farmConfig.quoteTokenAdresses[chainId],
           name: 'balanceOf',
           params: [lpAdress],
         },
 
         // Balance of LP tokens in the master chef contract
         {
-          address: farmConfig.isTokenOnly
-            ? farmConfig.tokenAddresses[CHAIN_ID]
-            : lpAdress,
+          address: farmConfig.isTokenOnly ? farmConfig.tokenAddresses[chainId] : lpAdress,
           name: 'balanceOf',
-          params: [getMasterChefAddress()],
+          params: [MasterChefAddress],
         },
         // Total supply of LP tokens
         {
@@ -42,12 +41,12 @@ export const fetchFarms = async (web3) => {
         },
         // Reward Token decimals
         {
-          address: farmConfig.tokenAddresses[CHAIN_ID],
+          address: farmConfig.tokenAddresses[chainId],
           name: 'decimals',
         },
         // Quote token decimals
         {
-          address: farmConfig.quoteTokenAdresses[CHAIN_ID],
+          address: farmConfig.quoteTokenAdresses[chainId],
           name: 'decimals',
         },
       ]
@@ -59,31 +58,27 @@ export const fetchFarms = async (web3) => {
         lpTotalSupply,
         tokenDecimals,
         quoteTokenDecimals,
-      ] = await multicall(web3, erc20, calls)
+      ] = await multicall(web3, erc20, calls, chainId)
+
+      console.log(getFullDisplayBalance(quoteTokenBlanceLP),
+        getFullDisplayBalance(lpTokenBalanceMC),
+        getFullDisplayBalance(lpTotalSupply));
 
       let tokenAmount
       let lpTotalInQuoteToken
       let tokenPriceVsQuote
+
       if (farmConfig.isTokenOnly) {
-        tokenAmount = new BigNumber(lpTokenBalanceMC).div(
-          new BigNumber(10).pow(tokenDecimals)
-        )
-        if (
-          farmConfig.tokenSymbol === QuoteToken.BUSD &&
-          farmConfig.quoteTokenSymbol === QuoteToken.BUSD
-        ) {
+        tokenAmount = fromWei(lpTokenBalanceMC, tokenDecimals)
+        if ((farmConfig.tokenSymbol === QuoteToken.USDC && farmConfig.quoteTokenSymbol === QuoteToken.USDC)) {
           tokenPriceVsQuote = new BigNumber(1)
         } else {
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(
-            new BigNumber(tokenBalanceLP)
-          )
+          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
         }
         lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
       } else {
         // Ratio in % a LP tokens that are in staking, vs the total number in circulation
-        const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(
-          new BigNumber(lpTotalSupply)
-        )
+        const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
 
         // Total value in staking in quote token value
         lpTotalInQuoteToken = new BigNumber(quoteTokenBlanceLP)
@@ -92,58 +87,55 @@ export const fetchFarms = async (web3) => {
           .times(lpTokenRatio)
 
         // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
-        tokenAmount = new BigNumber(tokenBalanceLP)
-          .div(new BigNumber(10).pow(tokenDecimals))
-          .times(lpTokenRatio)
-
+        tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
         const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
           .div(new BigNumber(10).pow(quoteTokenDecimals))
           .times(lpTokenRatio)
 
         if (tokenAmount.comparedTo(0) > 0) {
-          tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount)
+          tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
         } else {
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(
-            new BigNumber(tokenBalanceLP)
-          )
+          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
         }
       }
 
 
+      const [info, totalAllocPoint, lqdrPerBlock] = await multicall(
+        web3,
+        masterchefABI,
+        [
+          {
+            address: MasterChefAddress,
+            name: 'poolInfo',
+            params: [farmConfig.pid],
+          },
+          {
+            address: MasterChefAddress,
+            name: 'totalAllocPoint',
+          },
+          {
+            address: MasterChefAddress,
+            name: 'lqdrPerBlock',
+          },
+        ]
+        , chainId
+      )
 
-      // const [info, totalAllocPoint, eggPerBlock] = await multicall(
-      //   web3,
-      //   masterchefABI,
-      //   [
-      //     {
-      //       address: getMasterChefAddress(),
-      //       name: 'poolInfo',
-      //       params: [farmConfig.pid],
-      //     },
-      //     {
-      //       address: getMasterChefAddress(),
-      //       name: 'totalAllocPoint',
-      //     },
-      //     {
-      //       address: getMasterChefAddress(),
-      //       name: 'eggPerBlock',
-      //     },
-      //   ]
-      // )
-
-      // const allocPoint = new BigNumber(info.allocPoint._hex)
-      // const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
+      const allocPoint = new BigNumber(info.allocPoint._hex)
+      const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint))
 
       return {
         ...farmConfig,
+        totalStaked: getFullDisplayBalance(lpTokenBalanceMC),
+        totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
-        lpTotalInQuoteToken: lpTotalInQuoteToken.toJSON(),
-        tokenPriceVsQuote: tokenPriceVsQuote.toJSON(),
-        // poolWeight: poolWeight.toNumber(),
-        // multiplier: `${allocPoint.div(100).toString()}X`,
-        // depositFeeBP: info.depositFeeBP,
-        // eggPerBlock: new BigNumber(eggPerBlock).toNumber(),
+        lpTotalInQuoteToken: lpTotalInQuoteToken.toFixed(8),
+        tokenPriceVsQuote: tokenPriceVsQuote.toFixed(8),
+        poolWeight: poolWeight.toNumber(),
+        multiplier: `${allocPoint.div(100).toString()}X`,
+        depositFeeBP: info.depositFeeBP,
+        lqdrPerBlock: new BigNumber(lqdrPerBlock).toNumber(),
       }
     })
   )

@@ -9,7 +9,6 @@ import { useERC20 } from './useContract'
 export const useAllowance = (farm, contractAddress, forceUpdate) => {
     const [allowance, setAllowance] = useState(new BigNumber(-1))
     const { account, chainId } = useWeb3React()
-    // const { fastRefresh } = useRefresh()
     const fastRefresh = 1
     const lpAddress = farm?.lpAddresses[chainId]
     const contract = useERC20(lpAddress)
@@ -19,7 +18,7 @@ export const useAllowance = (farm, contractAddress, forceUpdate) => {
             if (contract === null) setAllowance(new BigNumber(-1))
             else {
                 const res = await contract.methods.allowance(account, contractAddress).call()
-                console.log("pid ", farm.pid, lpAddress, res);
+                // console.log("pid ", farm.pid, lpAddress, res);
                 setAllowance(new BigNumber(res))
             }
         }

@@ -1,10 +1,30 @@
 export default {
   LQDR: {
     3: '0x6491fc29e175cde591f705a9694f48f4effd5d07',
-    250: '',
+    250: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+  },
+  FTM: {
+    3: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+    250: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
   },
   ETH: {
     3: '0xb603cea165119701b58d56d10d2060fbfb3efad8',
+    250: '',
+  },
+  FRAX: {
+    3: '',
+    250: '',
+  },
+  FXS: {
+    3: '',
+    250: '',
+  },
+  USDT: {
+    3: '',
+    250: '',
+  },
+  USDC: {
+    3: '',
     250: '',
   },
   MasterChef: {

@@ -5,13 +5,12 @@ import multicall from './utils/multicall'
 import { getMasterChefAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
 
-const CHAIN_ID = 3
 
-export const fetchFarmUserAllowances = async (web3, account) => {
-    const masterChefAdress = getMasterChefAddress(CHAIN_ID)
+export const fetchFarmUserAllowances = async (web3, account, chainId) => {
+    const masterChefAdress = getMasterChefAddress(chainId)
 
     const calls = farmsConfig.map((farm) => {
-        const lpContractAddress = farm.isTokenOnly ? farm.tokenAddresses[CHAIN_ID] : farm.lpAddresses[CHAIN_ID]
+        const lpContractAddress = farm.isTokenOnly ? farm.tokenAddresses[chainId] : farm.lpAddresses[chainId]
         return { address: lpContractAddress, name: 'allowance', params: [account, masterChefAdress] }
     })
 
@@ -22,9 +21,9 @@ export const fetchFarmUserAllowances = async (web3, account) => {
     return parsedLpAllowances
 }
 
-export const fetchFarmUserTokenBalances = async (web3, account) => {
+export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
     const calls = farmsConfig.map((farm) => {
-        const lpContractAddress = farm.isTokenOnly ? farm.tokenAddresses[CHAIN_ID] : farm.lpAddresses[CHAIN_ID]
+        const lpContractAddress = farm.isTokenOnly ? farm.tokenAddresses[chainId] : farm.lpAddresses[chainId]
         return {
             address: lpContractAddress,
             name: 'balanceOf',
@@ -39,8 +38,8 @@ export const fetchFarmUserTokenBalances = async (web3, account) => {
     return parsedTokenBalances
 }
 
-export const fetchFarmUserStakedBalances = async (web3, account) => {
-    const masterChefAdress = getMasterChefAddress(CHAIN_ID)
+export const fetchFarmUserStakedBalances = async (web3, account, chainId) => {
+    const masterChefAdress = getMasterChefAddress(chainId)
 
     const calls = farmsConfig.map((farm) => {
         return {
@@ -57,8 +56,8 @@ export const fetchFarmUserStakedBalances = async (web3, account) => {
     return parsedStakedBalances
 }
 
-export const fetchFarmUserEarnings = async (web3, account) => {
-    const masterChefAdress = getMasterChefAddress(CHAIN_ID)
+export const fetchFarmUserEarnings = async (web3, account, chainId) => {
+    const masterChefAdress = getMasterChefAddress(chainId)
 
     const calls = farmsConfig.map((farm) => {
         return {

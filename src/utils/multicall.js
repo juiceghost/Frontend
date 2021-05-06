@@ -2,10 +2,10 @@ import { Interface } from '@ethersproject/abi'
 import MultiCallAbi from '../config/abi/Multicall.json'
 import { getMulticallAddress } from '../utils/addressHelpers'
 
-const multicall = async (web3, abi, calls) => {
+const multicall = async (web3, abi, calls, chainId = 3) => {
     const multi = new web3.eth.Contract(
         MultiCallAbi,
-        getMulticallAddress()
+        getMulticallAddress(chainId)
     )
     const itf = new Interface(abi)
 

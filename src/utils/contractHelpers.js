@@ -8,7 +8,7 @@ const getContract = (abi, address, web3) => {
     return new _web3.eth.Contract(abi, address)
 }
 
-export const getMasterChefContract = (web3, chainId = 3) => {
+export const getMasterChefContract = (web3, chainId) => {
     return getContract(MasterChefAbi, getMasterChefAddress(chainId), web3)
 }
 

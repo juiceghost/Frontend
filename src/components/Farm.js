@@ -8,13 +8,11 @@ import useFarmUser from '../hooks/useFarmUser';
 import { useStake } from '../hooks/useStake';
 import { useUnStake } from '../hooks/useUnStake';
 import { getMasterChefAddress } from '../utils/addressHelpers';
-import { unstake } from '../utils/callHelpers';
-import { getBalanceNumber } from '../utils/formatNumber';
 import StakeModal from './StakeModal';
 
-const Farm = ({ pid }) => {
+const Farm = ({ farm }) => {
 
-    console.log(farms[pid]);
+    // console.log(farm);
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
     const [forceUpdate, setForceUpdate] = useState(0)
@@ -23,16 +21,16 @@ const Farm = ({ pid }) => {
 
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
-    const allowance = useAllowance(farms[pid], MasterChefAddress, chainId, forceUpdate)
-    console.log("allowance ", allowance.toString());
-    const { onApprove } = useApprove(farms[pid], MasterChefAddress, chainId)
-    const { onStake } = useStake(farms[pid], stakeInput)
-    const { onUnStake } = useUnStake(farms[pid], unStakeInput)
-    const { onUnStake: onHarvest } = useUnStake(farms[pid], 0)
-    const { lpBalance, stakedBalance, earnings } = useFarmUser(farms[pid], forceUpdate)
-    console.log("tokenBalance ", lpBalance);
-    console.log("stakedBalance ", stakedBalance);
-    console.log("earnings ", earnings);
+    const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
+    // console.log("allowance ", allowance.toString());
+    const { onApprove } = useApprove(farm, MasterChefAddress, chainId)
+    const { onStake } = useStake(farm, stakeInput)
+    const { onUnStake } = useUnStake(farm, unStakeInput)
+    const { onUnStake: onHarvest } = useUnStake(farm, 0)
+    const { lpBalance, stakedBalance, earnings } = useFarmUser(farm, forceUpdate)
+    // console.log("tokenBalance ", lpBalance);
+    // console.log("stakedBalance ", stakedBalance);
+    // console.log("earnings ", earnings);
 
     const handleApprove = useCallback(async () => {
         try {
@@ -97,7 +95,7 @@ const Farm = ({ pid }) => {
             <div className="deposit-cell">
                 <div className="deposit-cell-header">
                     <div className="white-circle" />
-                    <div className="deposit-cell-header-text">{farms[pid].lpSymbol} Pool</div>
+                    <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
                 </div>
                 <div className="deposit-cell-content px-4 py-2">
                     <div className="earn-container">
@@ -148,17 +146,41 @@ const Farm = ({ pid }) => {
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{stakedBalance} {farms[pid].lpSymbol}</div>
+                        <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
                     </div>
 
                     <div className="btn btn-primary w-100 my-4">
                         See Details
                     </div>
 
-                    {/* <div className="d-flex justify-content-between">
-                        <div className="text-white">Total staked:</div>
-                        <div className="text-white">100000 SUSHI</div>
-                    </div> */}
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">Total Staked:</div>
+                        <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">Deposit fee:</div>
+                        <div className="text-white"> {farm?.depositFeeBP} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">poolWeight:</div>
+                        <div className="text-white"> {farm?.poolWeight} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">multiplier:</div>
+                        <div className="text-white"> {farm?.multiplier} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">tokenPriceVsQuote:</div>
+                        <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">lpTotalInQuoteToken:</div>
+                        <div className="text-white"> {farm?.lpTotalInQuoteToken} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">tokenAmount:</div>
+                        <div className="text-white"> {farm?.tokenAmount} </div>
+                    </div>
 
                     {/* <div className="d-flex justify-content-between">
                     <div className="text-white">End:</div>
@@ -179,7 +201,7 @@ const Farm = ({ pid }) => {
             onClose={() => setStakePopup(false)}
             onConfirm={handleStake}
             amount={lpBalance}
-            symbol={farms[pid].lpSymbol}
+            symbol={farm.lpSymbol}
             inputAmount={stakeInput}
             setInputAmount={setStakeInput}
             onMax={() => setStakeInput(lpBalance)}
@@ -189,7 +211,7 @@ const Farm = ({ pid }) => {
             onClose={() => setUnStakePopup(false)}
             onConfirm={handleUnStake}
             amount={stakedBalance}
-            symbol={farms[pid].lpSymbol}
+            symbol={farm.lpSymbol}
             inputAmount={unStakeInput}
             setInputAmount={setUnStakeInput}
             onMax={() => setUnStakeInput(stakedBalance)}

@@ -47,7 +47,7 @@ const useFarmUser = (farm, forceUpdate) => {
             setLpBalance("")
             setStakedBalance("")
         }
-    }, [account, lpContract, masterChefContract, farm.pid, web3, forceUpdate])
+    }, [account, lpContract, masterChefContract, farm.pid, web3, chainId, forceUpdate])
 
     return { lpBalance, stakedBalance, earnings }
 }
