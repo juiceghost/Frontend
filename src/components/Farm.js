@@ -9,6 +9,7 @@ import { useStake } from '../hooks/useStake';
 import { useUnStake } from '../hooks/useUnStake';
 import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
+import './farm.scss'
 
 const Farm = ({ farm }) => {
 
@@ -93,9 +94,12 @@ const Farm = ({ farm }) => {
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
-                <div className="deposit-cell-header">
-                    <div className="white-circle" />
-                    <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
+                <div className="deposit-cell-header px-4">
+                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" />
+                    <div className="text-right">
+                        <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
+                        <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>4X</div>
+                    </div>
                 </div>
                 <div className="deposit-cell-content px-4 py-2">
                     <div className="earn-container">
@@ -139,18 +143,19 @@ const Farm = ({ farm }) => {
                 </div>
                     }
 
-                    {/* < div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white">350%</div>
-                    </div> */}
+                    </div>
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
                         <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
                     </div>
 
-                    <div className="btn btn-primary w-100 my-4">
-                        See Details
+                    <div className="w-100 my-4 see-details">
+                        <span>See Details</span>
+                        <img src="/img/up.png" className="details-up" />
                     </div>
 
                     <div className="d-flex justify-content-between">
