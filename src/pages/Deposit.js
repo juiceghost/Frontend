@@ -5,7 +5,7 @@ import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'
 import './Deposit.scss'
 
-const deposits = [0]
+const deposits = [0, 1]
 
 function DepositPage() {
 

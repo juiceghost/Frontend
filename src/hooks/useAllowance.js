@@ -20,6 +20,7 @@ export const useAllowance = (farm, contractAddress, forceUpdate) => {
             if (contract === null) setAllowance(new BigNumber(-1))
             else {
                 const res = await contract.methods.allowance(account, contractAddress).call()
+                console.log("pid ", farm.pid, lpAddress, res);
                 setAllowance(new BigNumber(res))
             }
         }
