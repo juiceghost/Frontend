@@ -5,25 +5,25 @@ import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'
 import './Deposit.scss'
 
-const deposits = [0]
+const deposits = [0, 1]
 
 function DepositPage() {
 
   const web3 = useWeb3()
 
-  useEffect(() => {
-    const getPools = async () => {
-      try {
-        const farms = await fetchFarms(web3)
-        console.info('Farms fetched:', farms)
-      } catch (e) {
-        console.error("Farms fetched had error", e)
-      }
-    }
-    if (web3) {
-      getPools()
-    }
-  }, [web3])
+  // useEffect(() => {
+  //   const getPools = async () => {
+  //     try {
+  //       const farms = await fetchFarms(web3)
+  //       console.info('Farms fetched:', farms)
+  //     } catch (e) {
+  //       console.error("Farms fetched had error", e)
+  //     }
+  //   }
+  //   if (web3) {
+  //     getPools()
+  //   }
+  // }, [web3])
 
   return (
     <div className="deposit">

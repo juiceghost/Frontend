@@ -148,7 +148,7 @@ const Farm = ({ pid }) => {
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{stakedBalance} SUSHI</div>
+                        <div className="text-white">{stakedBalance} {farms[pid].lpSymbol}</div>
                     </div>
 
                     <div className="btn btn-primary w-100 my-4">
