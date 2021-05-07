@@ -167,20 +167,7 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
   for (let index = 0; index < data[0].length; index++) {
     const out = data[0][index]
     const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
-    // console.log(tokens[index]);
-    const lastTokenName = getLastRouteName(tokens[index])
     priceMap[tokens[index]] = fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber()
   }
   return priceMap
 }
-
-
-  // return data[0].map((out, index) => {
-  //   const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
-  //   console.log(tokens[index]);
-  //   const lastTokenName = getLastRouteName(tokens[index])
-  //   console.log(DefultTokens[lastTokenName]);
-  //   return { [tokens[index]]: fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber() }
-  // })
-// }
-

@@ -2,7 +2,7 @@ import { InjectedConnector } from '@web3-react/injected-connector';
 
 
 const supportedChainIds = [
-    3, // Ropsten
+    // 3, // Ropsten
     250, // FTM
 ]
 

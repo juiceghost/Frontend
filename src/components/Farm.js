@@ -94,7 +94,7 @@ const Farm = ({ farm, prices }) => {
 
 
 
-    const { lqdrPerBlock, lpTotalInQuoteToken, multiplier } = farm
+    const { lqdrPerBlock, lpTotalInQuoteToken, multiplier, poolWeight } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
     // console.log(prices[farm.quoteTokenSymbol], prices);
     return (<>
@@ -157,7 +157,7 @@ const Farm = ({ farm, prices }) => {
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white">
-                            {prices[farm.quoteTokenSymbol] !== 0 && new BigNumber(lqdrPerBlock.times(multiplier).times(prices["LQDR"]).times(31536000))
+                            {prices[farm.quoteTokenSymbol] !== 0 && new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
                                 .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)}
                         </div>
                     </div>
