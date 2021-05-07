@@ -20,7 +20,7 @@ const Farm = ({ farm }) => {
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
     const [details, setDetails] = useState(false)
-    
+
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
     const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
@@ -159,34 +159,37 @@ const Farm = ({ farm }) => {
                         <img src="/img/up.png" className="details-up" />
                     </div>
 
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">Total Staked:</div>
-                        <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">Deposit fee:</div>
-                        <div className="text-white"> {farm?.depositFeeBP} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">poolWeight:</div>
-                        <div className="text-white"> {farm?.poolWeight} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">multiplier:</div>
-                        <div className="text-white"> {farm?.multiplier} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">tokenPriceVsQuote:</div>
-                        <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">lpTotalInQuoteToken:</div>
-                        <div className="text-white"> {farm?.lpTotalInQuoteToken} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">tokenAmount:</div>
-                        <div className="text-white"> {farm?.tokenAmount} </div>
-                    </div>
+                    {details && <>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">Total Staked:</div>
+                            <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">Deposit fee:</div>
+                            <div className="text-white"> {farm?.depositFeeBP} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">poolWeight:</div>
+                            <div className="text-white"> {farm?.poolWeight} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">multiplier:</div>
+                            <div className="text-white"> {farm?.multiplier} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">tokenPriceVsQuote:</div>
+                            <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">lpTotalInQuoteToken:</div>
+                            <div className="text-white"> {farm?.lpTotalInQuoteToken} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">tokenAmount:</div>
+                            <div className="text-white"> {farm?.tokenAmount} </div>
+                        </div>
+                    </>
+                    }
 
                     {/* <div className="d-flex justify-content-between">
                     <div className="text-white">End:</div>
