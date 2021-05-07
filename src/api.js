@@ -136,7 +136,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
         lpTotalInQuoteToken: lpTotalInQuoteToken,
         tokenPriceVsQuote: tokenPriceVsQuote.toFixed(8),
         poolWeight: poolWeight.toNumber(),
-        multiplierShow: `${allocPoint.div(100).toString()}X`,
+        multiplierShow: `${allocPoint.toString()}X`,
         multiplier: allocPoint.div(100),
         depositFeeBP: info.depositFeeBP,
         lqdrPerBlock: fromWei(lqdrPerBlock),

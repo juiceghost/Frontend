@@ -95,8 +95,8 @@ const Farm = ({ farm, prices }) => {
 
 
     const { lqdrPerBlock, lpTotalInQuoteToken, multiplier } = farm
-
-    console.log(prices[farm.quoteTokenSymbol], prices);
+    const lqdrPrice = new BigNumber(prices["LQDR"])
+    // console.log(prices[farm.quoteTokenSymbol], prices);
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
@@ -112,9 +112,9 @@ const Farm = ({ farm, prices }) => {
                         <div>
                             <div className="text-primary small">LQDR Earned</div>
                             <div className="text-white large font-weight-bold">
-                                {earnings}
+                                {Number(earnings).toFixed(4)}
                             </div>
-                            <div className="text-primary smaller">-0.00USD</div>
+                            <div className="text-primary smaller">-{lqdrPrice.times(earnings).toFixed(2)}USD</div>
                         </div>
                         <div className="d-flex align-items-center" onClick={handleHarvest}>
                             <div className="btn btn-secondary">Harvest</div>
@@ -185,7 +185,7 @@ const Farm = ({ farm, prices }) => {
                             <div className="text-white">Deposit fee:</div>
                             <div className="text-white"> {farm?.depositFeeBP} </div>
                         </div>
-                        <div className="d-flex justify-content-between">
+                        {/* <div className="d-flex justify-content-between">
                             <div className="text-white">poolWeight:</div>
                             <div className="text-white"> {farm?.poolWeight} </div>
                         </div>
@@ -196,7 +196,7 @@ const Farm = ({ farm, prices }) => {
                         <div className="d-flex justify-content-between">
                             <div className="text-white">lpTotalInQuoteToken:</div>
                             <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(5)} </div>
-                        </div>
+                        </div> */}
                         {/* <div className="d-flex justify-content-between">
                             <div className="text-white">tokenAmount:</div>
                             <div className="text-white"> {farm?.tokenAmount} </div>
