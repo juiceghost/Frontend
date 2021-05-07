@@ -129,7 +129,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
       return {
         ...farmConfig,
-        totalStaked: getFullDisplayBalance(lpTokenBalanceMC),
+        totalStaked: fromWei(lpTokenBalanceMC).toFixed(3),
         totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
@@ -148,14 +148,14 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
 export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
   const SushiAddress = getSushiAddress(chainId)
-  const FUSDT = DefultTokens.FUSDT
   const tokens = ["FTM", "WBTC", "FXS"]
+  const smallAmount = 0.001
   const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
 
     return {
       address: SushiAddress,
       name: 'getAmountsOut',
-      params: [toWei(1, DefultTokens[token].decimals).toFixed(), getSushiRoute(token, chainId)],
+      params: [toWei(smallAmount, DefultTokens[token].decimals).toFixed(), getSushiRoute(token, chainId)],
     }
   })
   console.log(calls);
@@ -163,12 +163,24 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
     await multicall(web3, SushiAbi, calls, chainId)
   ])
 
-  return data[0].map((out, index) => {
+  const priceMap = {}
+  for (let index = 0; index < data[0].length; index++) {
+    const out = data[0][index]
     const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
-    console.log(tokens[index]);
+    // console.log(tokens[index]);
     const lastTokenName = getLastRouteName(tokens[index])
-    console.log(DefultTokens[lastTokenName]);
-    return { [tokens[index]]: fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).toNumber() }
-  })
+    priceMap[tokens[index]] = fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber()
+  }
+  return priceMap
 }
+
+
+  // return data[0].map((out, index) => {
+  //   const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
+  //   console.log(tokens[index]);
+  //   const lastTokenName = getLastRouteName(tokens[index])
+  //   console.log(DefultTokens[lastTokenName]);
+  //   return { [tokens[index]]: fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber() }
+  // })
+// }
 

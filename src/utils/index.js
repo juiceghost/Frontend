@@ -4,7 +4,7 @@ export const formatAddress = (address) => {
     return `${address.slice(0, 6)}...${address.slice(-6)}`
 }
 
-export const getExplorerAddress = (tokenAddresses, chainId) => {
+export const getExplorerAddress = (tokenAddresses, chainId = 250) => {
     if (chainId === 3) {
         return `https://ropsten.etherscan.io/address/${tokenAddresses[chainId]}`
 

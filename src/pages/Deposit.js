@@ -28,6 +28,7 @@ function DepositPage() {
     const getPrice = async () => {
       try {
         const prices = await fetchQuoteTokenPrices(web3, 250)
+        prices["LQDR"] = 60 
         setPrices(prices)
         console.info('fetchQuoteTokenPrices fetched:', prices)
       } catch (e) {
@@ -83,7 +84,7 @@ function DepositPage() {
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, key) => (
-              <Farm key={key} farm={farm} />
+              <Farm key={key} farm={farm} prices={prices} />
             ))}
           </div>
         </div>

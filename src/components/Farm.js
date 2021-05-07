@@ -9,6 +9,8 @@ import { useUnStake } from '../hooks/useUnStake';
 import { getExplorerAddress } from '../utils';
 import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
+import './farm.scss'
+import BigNumber from 'bignumber.js';
 
 const Farm = ({ farm, prices }) => {
 
@@ -18,6 +20,7 @@ const Farm = ({ farm, prices }) => {
     const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
+    const [details, setDetails] = useState(false)
 
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
@@ -91,24 +94,18 @@ const Farm = ({ farm, prices }) => {
 
 
 
-    // let quoteTokenPrice = 0
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         quoteTokenPrice = await getAmountsOut()
-    //         console.log(getFullDisplayBalance(quoteTokenPrice, 18));
-    //     }
-    //     fetch()
-    // }, [getAmountsOut])
-
-
-
     const { lqdrPerBlock, lpTotalInQuoteToken, multiplier } = farm
+
+    console.log(prices[farm.quoteTokenSymbol], prices);
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
-                <div className="deposit-cell-header">
-                    <div className="white-circle" />
-                    <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
+                <div className="deposit-cell-header px-4">
+                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" />
+                    <div className="text-right">
+                        <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
+                        <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
+                    </div>
                 </div>
                 <div className="deposit-cell-content px-4 py-2">
                     <div className="earn-container">
@@ -152,60 +149,60 @@ const Farm = ({ farm, prices }) => {
                 </div>
                     }
 
-                    {/* < div className="d-flex justify-content-between">
+                    {/* <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white">350%</div>
                     </div> */}
 
-                    {/* <div className="d-flex justify-content-between">
-                        <div className="text-white">APY</div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">APR:</div>
                         <div className="text-white">
-                            {quoteTokenPrice !== 0 && new BigNumber(lqdrPerBlock.times(multiplier).times(31536000))
-                                .div(lpTotalInQuoteToken.times(quoteTokenPrice)).toFixed(2)}
+                            {prices[farm.quoteTokenSymbol] !== 0 && new BigNumber(lqdrPerBlock.times(multiplier).times(prices["LQDR"]).times(31536000))
+                                .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)}
                         </div>
-                    </div> */}
+                    </div>
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
                         <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
                     </div>
 
-                    <div className="btn btn-primary w-100 my-4">
-                        See Details
+                    <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
+                        <span>See Details</span>
+                        <i class={details ? "fas fa-sort-up" : "fas fa-sort-down"} style={details ? {
+                            marginTop: '0.5rem'
+                        } : {
+                            marginBottom: '0.5rem'
+                        }}></i>
                     </div>
 
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">Total Staked:</div>
-                        <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">Deposit fee:</div>
-                        <div className="text-white"> {farm?.depositFeeBP} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">poolWeight:</div>
-                        <div className="text-white"> {farm?.poolWeight} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">multiplier:</div>
-                        <div className="text-white"> {farm?.multiplierShow} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">tokenPriceVsQuote:</div>
-                        <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">lpTotalInQuoteToken:</div>
-                        <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(8)} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">tokenAmount:</div>
-                        <div className="text-white"> {farm?.tokenAmount} </div>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <div className="text-white">lqdrPerBlock:</div>
-                        <div className="text-white"> {farm?.lqdrPerBlock.toFixed(2)} </div>
-                    </div>
+                    {details && <>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">Total Staked:</div>
+                            <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">Deposit fee:</div>
+                            <div className="text-white"> {farm?.depositFeeBP} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">poolWeight:</div>
+                            <div className="text-white"> {farm?.poolWeight} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">tokenPriceVsQuote:</div>
+                            <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">lpTotalInQuoteToken:</div>
+                            <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(5)} </div>
+                        </div>
+                        {/* <div className="d-flex justify-content-between">
+                            <div className="text-white">tokenAmount:</div>
+                            <div className="text-white"> {farm?.tokenAmount} </div>
+                        </div> */}
+                    </>
+                    }
 
                     {/* <div className="d-flex justify-content-between">
                     <div className="text-white">End:</div>
