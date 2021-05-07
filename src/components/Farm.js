@@ -19,7 +19,8 @@ const Farm = ({ farm }) => {
     const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
-
+    const [details, setDetails] = useState(false)
+    
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
     const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
