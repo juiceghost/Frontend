@@ -154,9 +154,13 @@ const Farm = ({ farm }) => {
                         <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
                     </div>
 
-                    <div className="w-100 my-4 see-details">
+                    <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
                         <span>See Details</span>
-                        <img src="/img/up.png" className="details-up" />
+                        <i class={details ? "fas fa-sort-up" : "fas fa-sort-down"} style={details ? {
+                            marginTop: '0.5rem'
+                        } : {
+                            marginBottom: '0.5rem'
+                        }}></i>
                     </div>
 
                     {details && <>
