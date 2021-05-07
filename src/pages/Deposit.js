@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
-import { fetchFarms } from '../api'
+import { fetchFarms, fetchQuoteTokenPrices } from '../api'
 import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'
 import './Deposit.scss'
 import { useWeb3React } from '@web3-react/core'
+import { useLqdrPrice } from '../hooks/useLqdrPrice'
 
-const deposits = [1]
+// const deposits = [1]
 
 function DepositPage() {
   const [farms, setFarms] = useState(null)
+  const [prices, setPrices] = useState(null)
   const web3 = useWeb3()
   const { chainId } = useWeb3React()
+  const price = useLqdrPrice()
   useEffect(() => {
     const getPools = async () => {
       try {
@@ -22,8 +25,19 @@ function DepositPage() {
         console.error("Farms fetched had error", e)
       }
     }
+    const getPrice = async () => {
+      try {
+        const prices = await fetchQuoteTokenPrices(web3, 250)
+        setPrices(prices)
+        console.info('fetchQuoteTokenPrices fetched:', prices)
+      } catch (e) {
+        console.error("fetchQuoteTokenPrices fetched had error", e)
+      }
+    }
+
     if (web3) {
       getPools()
+      getPrice()
     }
   }, [web3])
 

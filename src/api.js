@@ -1,11 +1,14 @@
 import BigNumber from 'bignumber.js'
 import erc20 from './config/abi/erc20.json'
 import masterchefABI from './config/abi/masterchef.json'
+import SushiAbi from './config/abi/sushi.json'
 import multicall from './utils/multicall'
-import { getMasterChefAddress } from './utils/addressHelpers'
+import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
-import { fromWei, getFullDisplayBalance } from './utils/formatNumber'
+import { fromWei, getBalanceNumber, getFullDisplayBalance, toWei } from './utils/formatNumber'
 import { QuoteToken } from './config/constants/types'
+import addresses from './config/constants/contracts'
+import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
 
 
 export const fetchFarms = async (web3, chainId = 250) => {
@@ -130,15 +133,42 @@ export const fetchFarms = async (web3, chainId = 250) => {
         totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
-        lpTotalInQuoteToken: lpTotalInQuoteToken.toFixed(8),
+        lpTotalInQuoteToken: lpTotalInQuoteToken,
         tokenPriceVsQuote: tokenPriceVsQuote.toFixed(8),
         poolWeight: poolWeight.toNumber(),
-        multiplier: `${allocPoint.div(100).toString()}X`,
+        multiplierShow: `${allocPoint.div(100).toString()}X`,
+        multiplier: allocPoint.div(100),
         depositFeeBP: info.depositFeeBP,
-        lqdrPerBlock: new BigNumber(lqdrPerBlock).toNumber(),
+        lqdrPerBlock: fromWei(lqdrPerBlock),
       }
     })
   )
   return data
+}
+
+export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
+  const SushiAddress = getSushiAddress(chainId)
+  const FUSDT = DefultTokens.FUSDT
+  const tokens = ["FTM", "WBTC", "FXS"]
+  const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
+
+    return {
+      address: SushiAddress,
+      name: 'getAmountsOut',
+      params: [toWei(1, DefultTokens[token].decimals).toFixed(), getSushiRoute(token, chainId)],
+    }
+  })
+  console.log(calls);
+  const data = await Promise.all([
+    await multicall(web3, SushiAbi, calls, chainId)
+  ])
+
+  return data[0].map((out, index) => {
+    const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
+    console.log(tokens[index]);
+    const lastTokenName = getLastRouteName(tokens[index])
+    console.log(DefultTokens[lastTokenName]);
+    return { [tokens[index]]: fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).toNumber() }
+  })
 }
 

@@ -1,4 +1,5 @@
 import { ethers } from 'ethers'
+import { getSushiRouter } from './contractHelpers'
 import { toWei } from './formatNumber'
 
 export const approve = async (lpContract, contractAddress, account) => {
@@ -33,4 +34,27 @@ export const harvest = async (masterChefContract, pid, account) => {
     .on('transactionHash', (tx) => {
       return tx.transactionHash
     })
+}
+
+export const getSushiAmountsOut = async (
+  fromCurrency,
+  toCurrency,
+  amountIn,
+  web3,
+  chainId
+) => {
+
+  const sushiGetAmountsOut = async (amountIn, path = []) => {
+    console.log(amountIn.toString(), path);
+    try {
+      const amountsOut = await getSushiRouter(web3, chainId)
+        .methods.getAmountsOut(amountIn, path)
+        .call()
+      return amountsOut[amountsOut.length - 1]
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return await sushiGetAmountsOut(toWei(amountIn, fromCurrency.decimals), [fromCurrency.address, toCurrency.address])
 }

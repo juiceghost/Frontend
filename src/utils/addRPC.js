@@ -1,9 +1,7 @@
-import { injected } from '../connectors';
-
-export const addRPC = (account, activate, chainId = 100) => {
+export const addRPC = (account, chainId = 250) => {
     console.log(account, chainId)
 
-    if (account && (window.ethereum)) {
+    if ((window.ethereum)) {
         window.ethereum
             .request({
                 method: 'wallet_addEthereumChain',
@@ -11,13 +9,6 @@ export const addRPC = (account, activate, chainId = 100) => {
             })
             .then((result) => {
                 console.log("success");
-                setTimeout(() => {
-                    try {
-                        activate(injected)
-                    } catch (error) {
-                        console.log("error ", error);
-                    }
-                }, 500)
             })
             .catch((error) => {
                 console.log('We can encrypt anything without the key.');
@@ -38,5 +29,5 @@ const NetworksData = {
         blockExplorerUrls: ["https://ftmscan.com/"],
         iconUrls: []
     },
-    
+
 }

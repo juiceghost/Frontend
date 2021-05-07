@@ -1,16 +1,16 @@
 import { useWeb3React } from '@web3-react/core';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import farms from '../config/constants/farms';
 import { useAllowance } from '../hooks/useAllowance';
 import { useApprove } from '../hooks/useApprove';
 import useFarmUser from '../hooks/useFarmUser';
 import { useStake } from '../hooks/useStake';
 import { useUnStake } from '../hooks/useUnStake';
+import { getExplorerAddress } from '../utils';
 import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
 
-const Farm = ({ farm }) => {
+const Farm = ({ farm, prices }) => {
 
     // console.log(farm);
     const { account, chainId } = useWeb3React()
@@ -74,7 +74,7 @@ const Farm = ({ farm }) => {
         }
     }, [onUnStake])
 
-    const handleHarvest = useCallback(async (amount) => {
+    const handleHarvest = useCallback(async () => {
         try {
             const tx = await onHarvest()
             if (tx.status) {
@@ -87,9 +87,22 @@ const Farm = ({ farm }) => {
         }
     }, [onHarvest])
 
+    // const { getAmountsOut } = useGetAmountsOut({ address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83", decimals: 18 }, { address: "0x049d68029688eabf473097a2fc38ef61633a3c7a", decimals: 6 }, 1)
 
 
 
+    // let quoteTokenPrice = 0
+    // useEffect(() => {
+    //     const fetch = async () => {
+    //         quoteTokenPrice = await getAmountsOut()
+    //         console.log(getFullDisplayBalance(quoteTokenPrice, 18));
+    //     }
+    //     fetch()
+    // }, [getAmountsOut])
+
+
+
+    const { lqdrPerBlock, lpTotalInQuoteToken, multiplier } = farm
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
@@ -144,6 +157,14 @@ const Farm = ({ farm }) => {
                         <div className="text-white">350%</div>
                     </div> */}
 
+                    {/* <div className="d-flex justify-content-between">
+                        <div className="text-white">APY</div>
+                        <div className="text-white">
+                            {quoteTokenPrice !== 0 && new BigNumber(lqdrPerBlock.times(multiplier).times(31536000))
+                                .div(lpTotalInQuoteToken.times(quoteTokenPrice)).toFixed(2)}
+                        </div>
+                    </div> */}
+
                     <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
                         <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
@@ -167,7 +188,7 @@ const Farm = ({ farm }) => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="text-white">multiplier:</div>
-                        <div className="text-white"> {farm?.multiplier} </div>
+                        <div className="text-white"> {farm?.multiplierShow} </div>
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="text-white">tokenPriceVsQuote:</div>
@@ -175,11 +196,15 @@ const Farm = ({ farm }) => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="text-white">lpTotalInQuoteToken:</div>
-                        <div className="text-white"> {farm?.lpTotalInQuoteToken} </div>
+                        <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(8)} </div>
                     </div>
                     <div className="d-flex justify-content-between">
                         <div className="text-white">tokenAmount:</div>
                         <div className="text-white"> {farm?.tokenAmount} </div>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <div className="text-white">lqdrPerBlock:</div>
+                        <div className="text-white"> {farm?.lqdrPerBlock.toFixed(2)} </div>
                     </div>
 
                     {/* <div className="d-flex justify-content-between">
@@ -188,9 +213,9 @@ const Farm = ({ farm }) => {
                 </div> */}
 
                     <div className="my-2">
-                        <a className="text-white">
+                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer">
                             <i className="fas fa-clipboard" />
-                            <u className="small ml-1 pointer">View on fantomscan</u>
+                            <u className="small ml-1 pointer">View on ftmscan</u>
                         </a>
                     </div>
                 </div>
