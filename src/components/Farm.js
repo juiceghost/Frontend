@@ -123,7 +123,7 @@ const Farm = ({ farm, prices, index }) => {
                         </div>
                     </div>}
                     {!account ?
-                        <div className="btn btn-secondary w-100 my-4" 
+                        <div className="btn btn-secondary w-100 my-4"
                             onClick={handleApprove}>
                             Connect Wallet
                         </div>
@@ -155,7 +155,8 @@ const Farm = ({ farm, prices, index }) => {
                         <div className="text-white">APR:</div>
                         <div className="text-white">
                             {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) ?
-                                new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000)).div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)
+                                new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
+                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)
                                 : "0"
                             }
                         </div>
@@ -163,7 +164,7 @@ const Farm = ({ farm, prices, index }) => {
 
                     {account && <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
+                        <div className="text-white">{stakedBalance === 0 ? 0 : stakedBalance.toFixed(3)} {farm.lpSymbol}</div>
                     </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
