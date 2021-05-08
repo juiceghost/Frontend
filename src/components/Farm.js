@@ -16,11 +16,11 @@ import { useFarmFromPid } from '../hooks/useFarmFromPid';
 import { toWei } from 'web3-utils';
 import { fromWei, getBalanceNumber, getFullDisplayBalance } from '../utils/formatNumber';
 
-const Farm = ({ farm, prices, index }) => {
+const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
-    const [forceUpdate, setForceUpdate] = useState(0)
+    // const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
     const [details, setDetails] = useState(false)
@@ -34,7 +34,9 @@ const Farm = ({ farm, prices, index }) => {
     const { onUnStake } = useUnStake(farm, unStakeInput)
     const { onUnStake: onHarvest } = useUnStake(farm, 0)
 
-    const userInfo = useFarmFromPid(index, forceUpdate)
+    // const userInfo = useFarmFromPid(index, forceUpdate)
+
+    // const userInfo = users ? users[index] : null
     const lpBalance = userInfo ? getFullDisplayBalance(userInfo.tokenBalance, 18) : 0
     const stakedBalance = userInfo ? getFullDisplayBalance(userInfo.stakedBalance) : 0
     const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0
@@ -45,7 +47,7 @@ const Farm = ({ farm, prices, index }) => {
             const tx = await onApprove()
             if (tx.status) {
                 setRequestedApproval(false)
-                setForceUpdate(forceUpdate => forceUpdate + 1)
+                forceUpdate()
             } else {
                 console.log("Approve Failed");
             }
@@ -58,7 +60,8 @@ const Farm = ({ farm, prices, index }) => {
         try {
             const tx = await onStake()
             if (tx.status) {
-                setForceUpdate(forceUpdate => forceUpdate + 1)
+                forceUpdate()
+
             } else {
                 console.log("Stake Failed");
             }
@@ -73,7 +76,8 @@ const Farm = ({ farm, prices, index }) => {
         try {
             const tx = await onUnStake()
             if (tx.status) {
-                setForceUpdate(forceUpdate => forceUpdate + 1)
+                forceUpdate()
+
             } else {
                 console.log("UnStake Failed");
             }
@@ -87,7 +91,8 @@ const Farm = ({ farm, prices, index }) => {
         try {
             const tx = await onHarvest()
             if (tx.status) {
-                setForceUpdate(forceUpdate => forceUpdate + 1)
+                forceUpdate()
+
             } else {
                 console.log("Harvest Failed");
             }
@@ -103,7 +108,7 @@ const Farm = ({ farm, prices, index }) => {
         <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
-                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" onClick={() => setForceUpdate(forceUpdate => forceUpdate + 1)} />
+                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" onClick={() => forceUpdate()} />
                     <div className="text-right">
                         <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
                         <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
@@ -154,7 +159,7 @@ const Farm = ({ farm, prices, index }) => {
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white">
-                            {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) ?
+                            {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
                                     .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFixed(0)
                                 : "0"

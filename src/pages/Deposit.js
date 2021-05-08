@@ -1,14 +1,23 @@
+import { useState } from 'react'
 import { observer } from 'mobx-react'
 import Farm from '../components/Farm'
 import './Deposit.scss'
 import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
+import { useFarmsUser } from '../hooks/useFarmsUser'
 // const deposits = [1]
 
 function DepositPage() {
+  const [update, setUpdate] = useState(0)
+  const farms = useFarms(update)
+  const prices = usePrices(update)
+  const users = useFarmsUser(update)
 
-  const farms = useFarms()
-  const prices = usePrices()
+  const forceUpdate = () => {
+    setUpdate(update => update + 1)
+    console.log(update);
+  }
+
 
   return (
     <div className="deposit">
@@ -52,7 +61,7 @@ function DepositPage() {
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, index) => (
-              <Farm key={index} index={index} farm={farm} prices={prices} />
+              <Farm key={index} index={index} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
             ))}
           </div>
         </div>
