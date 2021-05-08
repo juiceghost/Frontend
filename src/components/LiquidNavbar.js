@@ -36,7 +36,7 @@ const LiquidNavbar = () => {
 
         { (isDesktop || menu) && <Nav className="ml-auto">
             <Nav.Item>
-                <Nav.Link href="https://github.com" className="font-weight-bold mx-2">
+                <Nav.Link href="https://github.com/liquiddriver" className="font-weight-bold mx-2">
                     GitHub
                 </Nav.Link>
             </Nav.Item>
