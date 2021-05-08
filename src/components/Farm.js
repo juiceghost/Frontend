@@ -11,35 +11,41 @@ import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
 import './farm.scss'
 import BigNumber from 'bignumber.js';
+import { isZero, ZERO } from '../config/constants/numbers';
+import { useFarmFromPid } from '../hooks/useFarmFromPid';
+import { toWei } from 'web3-utils';
+import { fromWei, getBalanceNumber } from '../utils/formatNumber';
 
-const Farm = ({ farm, prices }) => {
+const Farm = ({ farm, prices, index }) => {
 
-    // console.log(farm);
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
     const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
     const [details, setDetails] = useState(false)
-
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
-    const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
-    // console.log("allowance ", allowance.toString());
+    const [requestedApproval, setRequestedApproval] = useState(true)
+    // const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
+
     const { onApprove } = useApprove(farm, MasterChefAddress, chainId)
     const { onStake } = useStake(farm, stakeInput)
     const { onUnStake } = useUnStake(farm, unStakeInput)
     const { onUnStake: onHarvest } = useUnStake(farm, 0)
-    const { lpBalance, stakedBalance, earnings } = useFarmUser(farm, forceUpdate)
-    // console.log("tokenBalance ", lpBalance);
-    // console.log("stakedBalance ", stakedBalance);
-    // console.log("earnings ", earnings);
+
+    const userInfo = useFarmFromPid(index, forceUpdate)
+    const lpBalance = userInfo ? getBalanceNumber(userInfo.tokenBalance, 18) : 0
+    const stakedBalance = userInfo ? getBalanceNumber(userInfo.stakedBalance) : 0
+    const earnings = userInfo ? getBalanceNumber(userInfo.earnings) : 0
+    const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO
 
     const handleApprove = useCallback(async () => {
         try {
             const tx = await onApprove()
-            setForceUpdate(forceUpdate => forceUpdate + 1)
             if (tx.status) {
+                setRequestedApproval(false)
+                setForceUpdate(forceUpdate => forceUpdate + 1)
             } else {
                 console.log("Approve Failed");
             }
@@ -90,25 +96,21 @@ const Farm = ({ farm, prices }) => {
         }
     }, [onHarvest])
 
-    // const { getAmountsOut } = useGetAmountsOut({ address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83", decimals: 18 }, { address: "0x049d68029688eabf473097a2fc38ef61633a3c7a", decimals: 6 }, 1)
-
-
-
     const { lqdrPerBlock, lpTotalInQuoteToken, multiplier, poolWeight } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
-    // console.log(prices[farm.quoteTokenSymbol], prices);
+
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
-                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" />
+                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" onClick={() => setForceUpdate(forceUpdate => forceUpdate + 1)} />
                     <div className="text-right">
                         <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
                         <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
                     </div>
                 </div>
                 <div className="deposit-cell-content px-4 py-2">
-                    <div className="earn-container">
+                    {account && <div className="earn-container">
                         <div>
                             <div className="text-primary small">LQDR Earned</div>
                             <div className="text-white large font-weight-bold">
@@ -119,21 +121,21 @@ const Farm = ({ farm, prices }) => {
                         <div className="d-flex align-items-center" onClick={handleHarvest}>
                             <div className="btn btn-secondary">Harvest</div>
                         </div>
-                    </div>
+                    </div>}
                     {!account ?
-                        <div className="btn btn-secondary w-100 my-4"
+                        <div className="btn btn-secondary w-100 my-4" 
                             onClick={handleApprove}>
                             Connect Wallet
-                </div>
+                        </div>
                         :
-                        allowance.gt(0) ?
+                        !requestedApproval || allowance.gt(0) ?
                             <div className="text-center"><div className="col-5  center btn btn-primary w-100 my-4 mx-2"
                                 onClick={
                                     () => {
                                         setStakePopup(true)
                                     }}>
                                 Stake
-                    </div>
+                            </div>
                                 <div className="col-5 center btn btn-primary w-100 my-4 mx-2"
                                     onClick={
                                         () => {
@@ -146,26 +148,23 @@ const Farm = ({ farm, prices }) => {
                             <div className="btn btn-primary w-100 my-4"
                                 onClick={handleApprove}>
                                 Approve Pool
-                </div>
+                            </div>
                     }
-
-                    {/* <div className="d-flex justify-content-between">
-                        <div className="text-white">APR:</div>
-                        <div className="text-white">350%</div>
-                    </div> */}
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white">
-                            {prices[farm.quoteTokenSymbol] !== 0 && new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
-                                .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)}
+                            {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) ?
+                                new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000)).div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)
+                                : "0"
+                            }
                         </div>
                     </div>
 
-                    <div className="d-flex justify-content-between">
+                    {account && <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
                         <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
-                    </div>
+                    </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
                         <span>See Details</span>
@@ -183,7 +182,7 @@ const Farm = ({ farm, prices }) => {
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Deposit fee:</div>
-                            <div className="text-white"> {farm?.depositFeeBP} </div>
+                            <div className="text-white"> {farm?.depositFeeBP / 100}%</div>
                         </div>
                         {/* <div className="d-flex justify-content-between">
                             <div className="text-white">poolWeight:</div>

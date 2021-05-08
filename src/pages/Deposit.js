@@ -5,16 +5,17 @@ import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'
 import './Deposit.scss'
 import { useWeb3React } from '@web3-react/core'
-import { useLqdrPrice } from '../hooks/useLqdrPrice'
+import { fetchFarmUserDataAsync } from '../fetchFarmUser'
 
 // const deposits = [1]
 
 function DepositPage() {
   const [farms, setFarms] = useState(null)
   const [prices, setPrices] = useState(null)
+
   const web3 = useWeb3()
-  const { chainId } = useWeb3React()
-  const price = useLqdrPrice()
+  const { chainId, account } = useWeb3React()
+
   useEffect(() => {
     const getPools = async () => {
       try {
@@ -28,7 +29,7 @@ function DepositPage() {
     const getPrice = async () => {
       try {
         const prices = await fetchQuoteTokenPrices(web3, 250)
-        prices["LQDR"] = 60 
+        prices["LQDR"] = 60
         setPrices(prices)
         console.info('fetchQuoteTokenPrices fetched:', prices)
       } catch (e) {
@@ -83,8 +84,8 @@ function DepositPage() {
         </div>
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
-            {farms && farms.map((farm, key) => (
-              <Farm key={key} farm={farm} prices={prices} />
+            {farms && farms.map((farm, index) => (
+              <Farm key={index} index={index} farm={farm} prices={prices}  />
             ))}
           </div>
         </div>

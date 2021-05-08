@@ -5,24 +5,28 @@ import Home from './pages/Home'
 import Deposit from './pages/Deposit'
 import Navbar from './components/LiquidNavbar'
 import Wallets from './components/Wallets'
+import { RefreshContextProvider } from './context/RefreshContext'
 import 'react-notifications/lib/notifications.css'
 import './App.scss'
 
 function App() {
   return (
+
     <div>
       <Navbar />
       <Wallets />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/deposit">
-            <Deposit />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <RefreshContextProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/deposit">
+              <Deposit />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </RefreshContextProvider>
       <NotificationContainer />
     </div >
   )
