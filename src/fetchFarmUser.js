@@ -4,6 +4,10 @@ import masterchefABI from './config/abi/masterchef.json'
 import multicall from './utils/multicall'
 import { getMasterChefAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
+import { ZERO } from './config/constants/numbers'
+import { useFarms } from './hooks/useFarms'
+import { usePrices } from './hooks/usePrices'
+import { useEffect, useState } from 'react'
 
 export const fetchFarmUserAllowances = async (web3, account, chainId) => {
     const masterChefAdress = getMasterChefAddress(chainId)
@@ -93,24 +97,29 @@ export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
 }
 
 
-// export const useTotalValue = () => {
-//     const farms = useFarms();
-//     const bnbPrice = usePriceBnbBusd();
-//     const cakePrice = usePriceCakeBusd();
-//     let value = new BigNumber(0);
-//     for (let i = 0; i < farms.length; i++) {
-//         const farm = farms[i]
-//         if (farm.lpTotalInQuoteToken) {
-//             let val;
-//             if (farm.quoteTokenSymbol === QuoteToken.BNB) {
-//                 val = (bnbPrice.times(farm.lpTotalInQuoteToken));
-//             } else if (farm.quoteTokenSymbol === QuoteToken.CAKE) {
-//                 val = (cakePrice.times(farm.lpTotalInQuoteToken));
-//             } else {
-//                 val = (farm.lpTotalInQuoteToken);
-//             }
-//             value = value.plus(val);
-//         }
-//     }
-//     return value;
-// }
+export const useTotalValue = () => {
+    const [TVL, setTVL] = useState(ZERO)
+    const farms = useFarms();
+    const prices = usePrices()
+
+    useEffect(() => {
+        const getTVL = () => {
+            let value = ZERO;
+            for (let i = 0; i < farms.length; i++) {
+                const farm = farms[i]
+                if (farm.lpTotalInQuoteToken) {
+                    let val = farm.lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])
+                    value = value.plus(val);
+                }
+            }
+            return value
+        }
+
+
+        if (farms && prices) {
+            setTVL(getTVL())
+        }
+
+    }, [farms, prices])
+    return TVL;
+}

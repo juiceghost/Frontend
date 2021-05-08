@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react'
 import { useHistory } from 'react-router-dom'
 import { NotificationManager } from 'react-notifications'
-
-import store from '../store'
+import { useTotalValue } from '../fetchFarmUser'
+import { isZero } from '../config/constants/numbers'
 import './Home.scss'
 
 function HomePage() {
   const history = useHistory()
+  const tvl = useTotalValue()
   return (
     <div className="text-center d-flex flex-column position-fixed w-100 h-100 justify-content-center align-items-center text-white">
       <img
@@ -17,7 +18,7 @@ function HomePage() {
         First Shippers of Deep Liquidity for sushiswap on{' '}
       </h2>
       <h2 className="font-weight-extra-bold">Fantom Opera</h2>
-      <p className="py-4">Total Value Locked: N/A</p>
+      <p className="py-4">Total Value Locked: {isZero(tvl) ? "" : `$${tvl.toFixed(2)}`}</p>
       <a
         className="font-weight-bold btn btn-primary rounded-2 px-4"
         onClick={() => {

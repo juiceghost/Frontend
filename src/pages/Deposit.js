@@ -1,47 +1,14 @@
-import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
-import { fetchFarms, fetchQuoteTokenPrices } from '../api'
-import useWeb3 from '../hooks/useWeb3'
 import Farm from '../components/Farm'
 import './Deposit.scss'
-import { useWeb3React } from '@web3-react/core'
-import { fetchFarmUserDataAsync } from '../fetchFarmUser'
-
+import { useFarms } from '../hooks/useFarms'
+import { usePrices } from '../hooks/usePrices'
 // const deposits = [1]
 
 function DepositPage() {
-  const [farms, setFarms] = useState(null)
-  const [prices, setPrices] = useState(null)
 
-  const web3 = useWeb3()
-  const { chainId, account } = useWeb3React()
-
-  useEffect(() => {
-    const getPools = async () => {
-      try {
-        const farms = await fetchFarms(web3, chainId)
-        setFarms(farms)
-        console.info('Farms fetched:', farms)
-      } catch (e) {
-        console.error("Farms fetched had error", e)
-      }
-    }
-    const getPrice = async () => {
-      try {
-        const prices = await fetchQuoteTokenPrices(web3, 250)
-        prices["LQDR"] = 60
-        setPrices(prices)
-        console.info('fetchQuoteTokenPrices fetched:', prices)
-      } catch (e) {
-        console.error("fetchQuoteTokenPrices fetched had error", e)
-      }
-    }
-
-    if (web3) {
-      getPools()
-      getPrice()
-    }
-  }, [web3])
+  const farms = useFarms()
+  const prices = usePrices()
 
   return (
     <div className="deposit">
@@ -85,7 +52,7 @@ function DepositPage() {
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, index) => (
-              <Farm key={index} index={index} farm={farm} prices={prices}  />
+              <Farm key={index} index={index} farm={farm} prices={prices} />
             ))}
           </div>
         </div>
