@@ -23,6 +23,10 @@ export default {
     3: '',
     250: '',
   },
+  FUSDT: {
+    3: '',
+    250: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
+  },
   USDC: {
     3: '',
     250: '',
@@ -30,6 +34,10 @@ export default {
   MasterChef: {
     3: '0x42fd1A2dbc2069B6E700ae3774533B87dB4e137B',
     250: '0x42fd1a2dbc2069b6e700ae3774533b87db4e137b',
+  },
+  Sushi: {
+    3: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
+    250: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
   },
   MulltiCall: {
     3: '0x53c43764255c17bd724f74c4ef150724ac50a3ed',

@@ -7,7 +7,7 @@ const farms = [
     risk: 5,
     lpSymbol: 'DAI/FTM',
     lpAddresses: {
-      250: "",
+      250: "0xd32f2eb49e91aa160946f3538564118388d6246a",
       3: '0xe10c2de405d12a8344cc5945df6f398660857760', // SushiSwap LP Token https://ropsten.etherscan.io/token/0xe10c2de405d12a8344cc5945df6f398660857760
     },
     tokenSymbol: 'LQDR',

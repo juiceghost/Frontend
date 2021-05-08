@@ -1,11 +1,13 @@
 import BigNumber from 'bignumber.js'
 import erc20 from './config/abi/erc20.json'
 import masterchefABI from './config/abi/masterchef.json'
+import SushiAbi from './config/abi/sushi.json'
 import multicall from './utils/multicall'
-import { getMasterChefAddress } from './utils/addressHelpers'
+import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
-import { fromWei, getFullDisplayBalance } from './utils/formatNumber'
+import { fromWei, getFullDisplayBalance, toWei } from './utils/formatNumber'
 import { QuoteToken } from './config/constants/types'
+import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
 
 
 export const fetchFarms = async (web3, chainId = 250) => {
@@ -50,7 +52,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           name: 'decimals',
         },
       ]
-      console.log(calls);
+      // console.log(calls);
       const [
         tokenBalanceLP,
         quoteTokenBlanceLP,
@@ -60,9 +62,6 @@ export const fetchFarms = async (web3, chainId = 250) => {
         quoteTokenDecimals,
       ] = await multicall(web3, erc20, calls, chainId)
 
-      console.log(getFullDisplayBalance(quoteTokenBlanceLP),
-        getFullDisplayBalance(lpTokenBalanceMC),
-        getFullDisplayBalance(lpTotalSupply));
 
       let tokenAmount
       let lpTotalInQuoteToken
@@ -126,19 +125,45 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
       return {
         ...farmConfig,
-        totalStaked: getFullDisplayBalance(lpTokenBalanceMC),
+        totalStaked: fromWei(lpTokenBalanceMC).toFixed(3),
         totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
-        lpTotalInQuoteToken: lpTotalInQuoteToken.toFixed(8),
+        lpTotalInQuoteToken: lpTotalInQuoteToken,
         tokenPriceVsQuote: tokenPriceVsQuote.toFixed(8),
         poolWeight: poolWeight.toNumber(),
-        multiplier: `${allocPoint.div(100).toString()}X`,
+        multiplierShow: `${allocPoint.toString()}X`,
+        multiplier: allocPoint.div(100),
         depositFeeBP: info.depositFeeBP,
-        lqdrPerBlock: new BigNumber(lqdrPerBlock).toNumber(),
+        lqdrPerBlock: fromWei(lqdrPerBlock),
       }
     })
   )
   return data
 }
 
+export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
+  const SushiAddress = getSushiAddress(chainId)
+  const tokens = ["FTM", "WBTC", "FXS"]
+  const smallAmount = 0.001
+  const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
+
+    return {
+      address: SushiAddress,
+      name: 'getAmountsOut',
+      params: [toWei(smallAmount, DefultTokens[token].decimals).toFixed(), getSushiRoute(token, chainId)],
+    }
+  })
+  // console.log(calls);
+  const data = await Promise.all([
+    await multicall(web3, SushiAbi, calls, chainId)
+  ])
+
+  const priceMap = {}
+  for (let index = 0; index < data[0].length; index++) {
+    const out = data[0][index]
+    const amount = new BigNumber(out.amounts[out.amounts.length - 1].toString())
+    priceMap[tokens[index]] = fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber()
+  }
+  return priceMap
+}

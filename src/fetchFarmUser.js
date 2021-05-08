@@ -4,7 +4,10 @@ import masterchefABI from './config/abi/masterchef.json'
 import multicall from './utils/multicall'
 import { getMasterChefAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
-
+import { ZERO } from './config/constants/numbers'
+import { useFarms } from './hooks/useFarms'
+import { usePrices } from './hooks/usePrices'
+import { useEffect, useState } from 'react'
 
 export const fetchFarmUserAllowances = async (web3, account, chainId) => {
     const masterChefAdress = getMasterChefAddress(chainId)
@@ -14,7 +17,7 @@ export const fetchFarmUserAllowances = async (web3, account, chainId) => {
         return { address: lpContractAddress, name: 'allowance', params: [account, masterChefAdress] }
     })
 
-    const rawLpAllowances = await multicall(web3, erc20ABI, calls)
+    const rawLpAllowances = await multicall(web3, erc20ABI, calls, chainId)
     const parsedLpAllowances = rawLpAllowances.map((lpBalance) => {
         return new BigNumber(lpBalance).toJSON()
     })
@@ -31,7 +34,7 @@ export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
         }
     })
 
-    const rawTokenBalances = await multicall(web3, erc20ABI, calls)
+    const rawTokenBalances = await multicall(web3, erc20ABI, calls, chainId)
     const parsedTokenBalances = rawTokenBalances.map((tokenBalance) => {
         return new BigNumber(tokenBalance).toJSON()
     })
@@ -49,7 +52,7 @@ export const fetchFarmUserStakedBalances = async (web3, account, chainId) => {
         }
     })
 
-    const rawStakedBalances = await multicall(web3, masterchefABI, calls)
+    const rawStakedBalances = await multicall(web3, masterchefABI, calls, chainId)
     const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
         return new BigNumber(stakedBalance[0]._hex).toJSON()
     })
@@ -62,14 +65,61 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
     const calls = farmsConfig.map((farm) => {
         return {
             address: masterChefAdress,
-            name: 'pendingEgg',
+            name: 'pendingLqdr',
             params: [farm.pid, account],
         }
     })
 
-    const rawEarnings = await multicall(web3, masterchefABI, calls)
+    const rawEarnings = await multicall(web3, masterchefABI, calls, chainId)
     const parsedEarnings = rawEarnings.map((earnings) => {
         return new BigNumber(earnings).toJSON()
     })
     return parsedEarnings
+}
+
+
+export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
+    const userFarmAllowances = await fetchFarmUserAllowances(web3, account, chainId)
+    const userFarmTokenBalances = await fetchFarmUserTokenBalances(web3, account, chainId)
+    const userStakedBalances = await fetchFarmUserStakedBalances(web3, account, chainId)
+    const userFarmEarnings = await fetchFarmUserEarnings(web3, account, chainId)
+
+    const arrayOfUserDataObjects = userFarmAllowances.map((farmAllowance, index) => {
+        return {
+            index,
+            allowance: userFarmAllowances[index],
+            tokenBalance: userFarmTokenBalances[index],
+            stakedBalance: userStakedBalances[index],
+            earnings: userFarmEarnings[index],
+        }
+    })
+    return arrayOfUserDataObjects
+}
+
+
+export const useTotalValue = () => {
+    const [TVL, setTVL] = useState(ZERO)
+    const farms = useFarms();
+    const prices = usePrices()
+
+    useEffect(() => {
+        const getTVL = () => {
+            let value = ZERO;
+            for (let i = 0; i < farms.length; i++) {
+                const farm = farms[i]
+                if (farm.lpTotalInQuoteToken) {
+                    let val = farm.lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])
+                    value = value.plus(val);
+                }
+            }
+            return value
+        }
+
+
+        if (farms && prices) {
+            setTVL(getTVL())
+        }
+
+    }, [farms, prices])
+    return TVL;
 }

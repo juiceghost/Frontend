@@ -1,44 +1,51 @@
 import { useWeb3React } from '@web3-react/core';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import farms from '../config/constants/farms';
 import { useAllowance } from '../hooks/useAllowance';
 import { useApprove } from '../hooks/useApprove';
 import useFarmUser from '../hooks/useFarmUser';
 import { useStake } from '../hooks/useStake';
 import { useUnStake } from '../hooks/useUnStake';
+import { getExplorerAddress } from '../utils';
 import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
 import './farm.scss'
+import BigNumber from 'bignumber.js';
+import { isZero, ZERO } from '../config/constants/numbers';
+import { useFarmFromPid } from '../hooks/useFarmFromPid';
+import { toWei } from 'web3-utils';
+import { fromWei, getBalanceNumber } from '../utils/formatNumber';
 
-const Farm = ({ farm }) => {
+const Farm = ({ farm, prices, index }) => {
 
-    // console.log(farm);
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
     const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
     const [details, setDetails] = useState(false)
-
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
-    const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
-    // console.log("allowance ", allowance.toString());
+    const [requestedApproval, setRequestedApproval] = useState(true)
+    // const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
+
     const { onApprove } = useApprove(farm, MasterChefAddress, chainId)
     const { onStake } = useStake(farm, stakeInput)
     const { onUnStake } = useUnStake(farm, unStakeInput)
     const { onUnStake: onHarvest } = useUnStake(farm, 0)
-    const { lpBalance, stakedBalance, earnings } = useFarmUser(farm, forceUpdate)
-    // console.log("tokenBalance ", lpBalance);
-    // console.log("stakedBalance ", stakedBalance);
-    // console.log("earnings ", earnings);
+
+    const userInfo = useFarmFromPid(index, forceUpdate)
+    const lpBalance = userInfo ? getBalanceNumber(userInfo.tokenBalance, 18) : 0
+    const stakedBalance = userInfo ? getBalanceNumber(userInfo.stakedBalance) : 0
+    const earnings = userInfo ? getBalanceNumber(userInfo.earnings) : 0
+    const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO
 
     const handleApprove = useCallback(async () => {
         try {
             const tx = await onApprove()
-            setForceUpdate(forceUpdate => forceUpdate + 1)
             if (tx.status) {
+                setRequestedApproval(false)
+                setForceUpdate(forceUpdate => forceUpdate + 1)
             } else {
                 console.log("Approve Failed");
             }
@@ -76,7 +83,7 @@ const Farm = ({ farm }) => {
         }
     }, [onUnStake])
 
-    const handleHarvest = useCallback(async (amount) => {
+    const handleHarvest = useCallback(async () => {
         try {
             const tx = await onHarvest()
             if (tx.status) {
@@ -89,46 +96,46 @@ const Farm = ({ farm }) => {
         }
     }, [onHarvest])
 
-
-
+    const { lqdrPerBlock, lpTotalInQuoteToken, multiplier, poolWeight } = farm
+    const lqdrPrice = new BigNumber(prices["LQDR"])
 
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
-                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" />
+                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" onClick={() => setForceUpdate(forceUpdate => forceUpdate + 1)} />
                     <div className="text-right">
                         <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
-                        <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>4X</div>
+                        <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
                     </div>
                 </div>
                 <div className="deposit-cell-content px-4 py-2">
-                    <div className="earn-container">
+                    {account && <div className="earn-container">
                         <div>
                             <div className="text-primary small">LQDR Earned</div>
                             <div className="text-white large font-weight-bold">
-                                {earnings}
+                                {Number(earnings).toFixed(4)}
                             </div>
-                            <div className="text-primary smaller">-0.00USD</div>
+                            <div className="text-primary smaller">-{lqdrPrice.times(earnings).toFixed(2)}USD</div>
                         </div>
                         <div className="d-flex align-items-center" onClick={handleHarvest}>
                             <div className="btn btn-secondary">Harvest</div>
                         </div>
-                    </div>
+                    </div>}
                     {!account ?
                         <div className="btn btn-secondary w-100 my-4"
                             onClick={handleApprove}>
                             Connect Wallet
-                </div>
+                        </div>
                         :
-                        allowance.gt(0) ?
+                        !requestedApproval || allowance.gt(0) ?
                             <div className="text-center"><div className="col-5  center btn btn-primary w-100 my-4 mx-2"
                                 onClick={
                                     () => {
                                         setStakePopup(true)
                                     }}>
                                 Stake
-                    </div>
+                            </div>
                                 <div className="col-5 center btn btn-primary w-100 my-4 mx-2"
                                     onClick={
                                         () => {
@@ -141,18 +148,24 @@ const Farm = ({ farm }) => {
                             <div className="btn btn-primary w-100 my-4"
                                 onClick={handleApprove}>
                                 Approve Pool
-                </div>
+                            </div>
                     }
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
-                        <div className="text-white">350%</div>
+                        <div className="text-white">
+                            {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) ?
+                                new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
+                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)
+                                : "0"
+                            }
+                        </div>
                     </div>
 
-                    <div className="d-flex justify-content-between">
+                    {account && <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{stakedBalance} {farm.lpSymbol}</div>
-                    </div>
+                        <div className="text-white">{stakedBalance === 0 ? 0 : stakedBalance.toFixed(3)} {farm.lpSymbol}</div>
+                    </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
                         <span>See Details</span>
@@ -170,15 +183,11 @@ const Farm = ({ farm }) => {
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Deposit fee:</div>
-                            <div className="text-white"> {farm?.depositFeeBP} </div>
+                            <div className="text-white"> {farm?.depositFeeBP / 100}%</div>
                         </div>
-                        <div className="d-flex justify-content-between">
+                        {/* <div className="d-flex justify-content-between">
                             <div className="text-white">poolWeight:</div>
                             <div className="text-white"> {farm?.poolWeight} </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="text-white">multiplier:</div>
-                            <div className="text-white"> {farm?.multiplier} </div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">tokenPriceVsQuote:</div>
@@ -186,12 +195,12 @@ const Farm = ({ farm }) => {
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">lpTotalInQuoteToken:</div>
-                            <div className="text-white"> {farm?.lpTotalInQuoteToken} </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
+                            <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(5)} </div>
+                        </div> */}
+                        {/* <div className="d-flex justify-content-between">
                             <div className="text-white">tokenAmount:</div>
                             <div className="text-white"> {farm?.tokenAmount} </div>
-                        </div>
+                        </div> */}
                     </>
                     }
 
@@ -201,9 +210,9 @@ const Farm = ({ farm }) => {
                 </div> */}
 
                     <div className="my-2">
-                        <a className="text-white">
+                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer">
                             <i className="fas fa-clipboard" />
-                            <u className="small ml-1 pointer">View on fantomscan</u>
+                            <u className="small ml-1 pointer">View on ftmscan</u>
                         </a>
                     </div>
                 </div>

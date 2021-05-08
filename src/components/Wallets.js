@@ -7,6 +7,7 @@ import { UnsupportedChainIdError } from '@web3-react/core'
 import { NotificationManager } from 'react-notifications'
 import { injected } from '../connectors'
 import store from '../store'
+import { addRPC } from '../utils/addRPC';
 
 const Wallets = () => {
 
@@ -22,8 +23,10 @@ const Wallets = () => {
     useEffect(() => {
         if (error instanceof UnsupportedChainIdError) {
             NotificationManager.error(
-                'Please make sure to set the right network (Ropsten Test Network)',
-                'Error'
+                <>
+                    <p>Please make sure to set the right network (Fantom Network) </p>
+                    <div style={{ background: "blue", display: "inline-block", borderRadius: "6px", textAlign: "center", padding: "10px 10px", margin: "auto", marginTop: "20px" }} onClick={() => addRPC(account, 250)}>Switch to Fantom</div>
+                </>, 'Error'
             )
         }
     }, [error])
