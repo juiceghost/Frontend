@@ -7,21 +7,13 @@ export default {
     3: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
     250: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
   },
-  ETH: {
-    3: '0xb603cea165119701b58d56d10d2060fbfb3efad8',
-    250: '',
-  },
   FRAX: {
     3: '',
-    250: '',
+    250: '0xaf319E5789945197e365E7f7fbFc56B130523B33',
   },
   FXS: {
     3: '',
-    250: '',
-  },
-  USDT: {
-    3: '',
-    250: '',
+    250: '0x82F8Cb20c14F134fe6Ebf7aC3B903B2117aAfa62',
   },
   FUSDT: {
     3: '',
@@ -29,11 +21,11 @@ export default {
   },
   USDC: {
     3: '',
-    250: '',
+    250: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
   },
   MasterChef: {
     3: '0x42fd1A2dbc2069B6E700ae3774533B87dB4e137B',
-    250: '0x42fd1a2dbc2069b6e700ae3774533b87db4e137b',
+    250: '0x742474dae70fa2ab063ab786b1fbe5704e861a0c',
   },
   Sushi: {
     3: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
@@ -44,3 +36,24 @@ export default {
     250: '0x63B8310c5093ac917552931D8b15d5AB6945c0a6',
   },
 }
+
+/**
+ YFI/FTM : 4x  0x280abc0d9727f4de3a46ca9cf93c16b4a9c127d1
+DAI/FTM: 4X 0xd32f2eb49e91aa160946f3538564118388d6246a
+LINK/FTM: 4x 0x1ca86e57103564f47ffcea7259a6ce8cc1301549
+wETH/FTM: 4x 0x3d0bd54c48c2c433ea6fed609cc3d5fb7a77622b
+fUSDT/FTM: 4x 0xd019dd7c760c6431797d6ed170bffb8faee11f99
+WBTC/FTM: 4x 0xc92d97416328a461bce2f539498b505c6c97748f
+SUSHI/FTM : 4x 0x49d2e0dc99c7358d7a9a8633bf6df111d0ee7f65
+CREAM/FTM: 4x 0x147e27be8e66f74c7659d88e2e6a13188873d58b
+FRAX/FXS: 3x 0xcff4353e10a7207bd16427ca9549437d439b68df
+AAVE/USDC: 2x 0x2d89bb3b1448152002453aa37fbe4051afdbf56d
+SNX/FTM: 2x 0xfe69403cf2e22390c0d87ab05062f67d9084935b
+ICE/FTM: 2x 0x84311ecc54d7553378c067282940b0fdfb913675
+COVER/FTM: 2x 0xafa1bf9b2a89dfd60499838c331538283b3346ed
+ZOO/FTM : 1x 0x3ac28d350c59ef9054b305dfe9078fadc3cecabe
+SFI/FTM: 1x 0xc24afba17c981326aa14238fcb55abc7d0907808
+CRV/FTM: 1x 0x177e2cc843d2ee20aa884dc8af2a865adf78adb2
+fUSDT/FRAX : 2x 0x4669751cd7933c9ca2ac8147ae7043d8561f4c8d
+
+ */

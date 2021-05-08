@@ -144,7 +144,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
 export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
   const SushiAddress = getSushiAddress(chainId)
-  const tokens = ["FTM", "WBTC", "FXS"]
+  const tokens = ["FTM", "WBTC", "FXS", "USDC", "FRAX"]
   const smallAmount = 0.001
   const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
 

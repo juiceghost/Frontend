@@ -16,7 +16,7 @@ export const useFarms = (forceUpdate) => {
             try {
                 const farms = await fetchFarms(web3, chainId)
                 setFarms(farms)
-                // console.info('Farms fetched:', farms)
+                console.info('Farms fetched:', farms)
             } catch (e) {
                 console.error("Farms fetched had error", e)
             }

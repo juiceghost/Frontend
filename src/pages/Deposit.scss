@@ -1,5 +1,5 @@
 .deposit {
-  background-color: #0D143D;
+  background-color: #0d143d;
   position: fixed;
   height: 100%;
   width: 100%;
@@ -12,7 +12,7 @@
       padding-top: 1rem;
     }
   }
-  
+
   @media (min-width: 768px) {
     /* Target devices wider than 768px. */
     .top-view {
@@ -20,7 +20,6 @@
     }
   }
 
-  
   .top-img {
     z-index: -1;
     top: 0;
@@ -42,7 +41,7 @@
       border-radius: 2rem;
       margin-left: auto;
       margin-right: auto;
-      border: 1px solid #61AAFE;
+      border: 1px solid #61aafe;
       box-shadow: 0px 0px 10px 1px #61aafe;
     }
 

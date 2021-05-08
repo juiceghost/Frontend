@@ -14,7 +14,7 @@ import BigNumber from 'bignumber.js';
 import { isZero, ZERO } from '../config/constants/numbers';
 import { useFarmFromPid } from '../hooks/useFarmFromPid';
 import { toWei } from 'web3-utils';
-import { fromWei, getBalanceNumber } from '../utils/formatNumber';
+import { fromWei, getBalanceNumber, getFullDisplayBalance } from '../utils/formatNumber';
 
 const Farm = ({ farm, prices, index }) => {
 
@@ -35,9 +35,9 @@ const Farm = ({ farm, prices, index }) => {
     const { onUnStake: onHarvest } = useUnStake(farm, 0)
 
     const userInfo = useFarmFromPid(index, forceUpdate)
-    const lpBalance = userInfo ? getBalanceNumber(userInfo.tokenBalance, 18) : 0
-    const stakedBalance = userInfo ? getBalanceNumber(userInfo.stakedBalance) : 0
-    const earnings = userInfo ? getBalanceNumber(userInfo.earnings) : 0
+    const lpBalance = userInfo ? getFullDisplayBalance(userInfo.tokenBalance, 18) : 0
+    const stakedBalance = userInfo ? getFullDisplayBalance(userInfo.stakedBalance) : 0
+    const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0
     const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO
 
     const handleApprove = useCallback(async () => {
@@ -114,7 +114,7 @@ const Farm = ({ farm, prices, index }) => {
                         <div>
                             <div className="text-primary small">LQDR Earned</div>
                             <div className="text-white large font-weight-bold">
-                                {Number(earnings).toFixed(4)}
+                                {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
                             </div>
                             <div className="text-primary smaller">-{lqdrPrice.times(earnings).toFixed(2)}USD</div>
                         </div>
@@ -156,15 +156,15 @@ const Farm = ({ farm, prices, index }) => {
                         <div className="text-white">
                             {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
-                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).toFixed(2)
+                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFixed(0)
                                 : "0"
-                            }
+                            } %
                         </div>
                     </div>
 
                     {account && <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{stakedBalance === 0 ? 0 : stakedBalance.toFixed(3)} {farm.lpSymbol}</div>
+                        <div className="text-white">{isZero(stakedBalance) ? 0 : new BigNumber(stakedBalance).toFixed(3)} {farm.lpSymbol}</div>
                     </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>

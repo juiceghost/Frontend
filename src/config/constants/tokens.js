@@ -9,6 +9,13 @@ export const LDT_ETH = {
 }
 
 export const DefultTokens = {
+    "LQDR": {
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
+        }
+    },
     "FUSDT": {
         decimals: 6,
         address: {
@@ -58,13 +65,6 @@ export const DefultTokens = {
             250: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
         }
     },
-    // "DAI": {
-    //     decimals: 18,
-    //     address: {
-    //         3: '',
-    //         250: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
-    //     }
-    // },
 }
 
 const SushiRouteName = {
@@ -72,6 +72,8 @@ const SushiRouteName = {
     "FTM": ["FTM", "FUSDT"],
     "FRAX": ["FRAX", "FUSDT"],
     "FXS": ["FXS", "FRAX"],
+    "LQDR": ["LQDR", "FUSDT"],
+    "USDC": ["USDC", "FUSDT"],
 }
 
 export const getSushiRoute = (token, chainId) => {

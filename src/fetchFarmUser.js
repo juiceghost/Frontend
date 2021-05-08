@@ -19,7 +19,7 @@ export const fetchFarmUserAllowances = async (web3, account, chainId) => {
 
     const rawLpAllowances = await multicall(web3, erc20ABI, calls, chainId)
     const parsedLpAllowances = rawLpAllowances.map((lpBalance) => {
-        return new BigNumber(lpBalance).toJSON()
+        return new BigNumber(lpBalance).toString()
     })
     return parsedLpAllowances
 }
@@ -36,7 +36,7 @@ export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
 
     const rawTokenBalances = await multicall(web3, erc20ABI, calls, chainId)
     const parsedTokenBalances = rawTokenBalances.map((tokenBalance) => {
-        return new BigNumber(tokenBalance).toJSON()
+        return new BigNumber(tokenBalance).toString()
     })
     return parsedTokenBalances
 }
@@ -54,7 +54,7 @@ export const fetchFarmUserStakedBalances = async (web3, account, chainId) => {
 
     const rawStakedBalances = await multicall(web3, masterchefABI, calls, chainId)
     const parsedStakedBalances = rawStakedBalances.map((stakedBalance) => {
-        return new BigNumber(stakedBalance[0]._hex).toJSON()
+        return new BigNumber(stakedBalance[0]._hex).toString()
     })
     return parsedStakedBalances
 }
@@ -72,7 +72,7 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
 
     const rawEarnings = await multicall(web3, masterchefABI, calls, chainId)
     const parsedEarnings = rawEarnings.map((earnings) => {
-        return new BigNumber(earnings).toJSON()
+        return new BigNumber(earnings).toString()
     })
     return parsedEarnings
 }
