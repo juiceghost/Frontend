@@ -52,7 +52,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           name: 'decimals',
         },
       ]
-      console.log(calls);
+      // console.log(calls);
       const [
         tokenBalanceLP,
         quoteTokenBlanceLP,
@@ -62,9 +62,6 @@ export const fetchFarms = async (web3, chainId = 250) => {
         quoteTokenDecimals,
       ] = await multicall(web3, erc20, calls, chainId)
 
-      console.log(getFullDisplayBalance(quoteTokenBlanceLP),
-        getFullDisplayBalance(lpTokenBalanceMC),
-        getFullDisplayBalance(lpTotalSupply));
 
       let tokenAmount
       let lpTotalInQuoteToken
@@ -157,7 +154,7 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
       params: [toWei(smallAmount, DefultTokens[token].decimals).toFixed(), getSushiRoute(token, chainId)],
     }
   })
-  console.log(calls);
+  // console.log(calls);
   const data = await Promise.all([
     await multicall(web3, SushiAbi, calls, chainId)
   ])
