@@ -1,1 +1,7 @@
 node_modules
+
+# Source and Build zip files
+.vscode
+build*.zip
+src*.zip
+liq*.zip
