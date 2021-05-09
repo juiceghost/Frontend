@@ -223,6 +223,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
             </div>
         </div >
         <StakeModal
+            title="Deposit"
             show={stakePopup}
             onClose={() => setStakePopup(false)}
             onConfirm={handleStake}
@@ -233,6 +234,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
             onMax={() => setStakeInput(lpBalance)}
         />
         <StakeModal
+            title="Withdraw"
             show={unStakePopup}
             onClose={() => setUnStakePopup(false)}
             onConfirm={handleUnStake}
