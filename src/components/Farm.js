@@ -109,8 +109,8 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
                     <img src={`/img/farm_icons/${farm.icon}`} className="farm-icon ml-2" onClick={() => forceUpdate()} />
-                    <div className="text-right">
-                        <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
+                    <div className="text-right overflow-hidden">
+                        <div className="deposit-cell-header-text">{farm.lpSymbol}</div>
                         <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
                         <span>See Details</span>
-                        <i class={details ? "fas fa-sort-up" : "fas fa-sort-down"} style={details ? {
+                        <i className={details ? "fas fa-sort-up" : "fas fa-sort-down"} style={details ? {
                             marginTop: '0.5rem'
                         } : {
                             marginBottom: '0.5rem'
