@@ -1,9 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { useAllowance } from '../hooks/useAllowance';
 import { useApprove } from '../hooks/useApprove';
-import useFarmUser from '../hooks/useFarmUser';
 import { useStake } from '../hooks/useStake';
 import { useUnStake } from '../hooks/useUnStake';
 import { getExplorerAddress } from '../utils';
@@ -12,9 +10,7 @@ import StakeModal from './StakeModal';
 import './farm.scss'
 import BigNumber from 'bignumber.js';
 import { isZero, ZERO } from '../config/constants/numbers';
-import { useFarmFromPid } from '../hooks/useFarmFromPid';
-import { toWei } from 'web3-utils';
-import { fromWei, getBalanceNumber, getFullDisplayBalance } from '../utils/formatNumber';
+import { getFullDisplayBalance } from '../utils/formatNumber';
 import store from '../store'
 
 const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
