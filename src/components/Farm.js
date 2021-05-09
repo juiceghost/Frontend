@@ -231,6 +231,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
             inputAmount={stakeInput}
             setInputAmount={setStakeInput}
             onMax={() => setStakeInput(lpBalance)}
+            type="Deposit"
         />
         <StakeModal
             show={unStakePopup}
@@ -241,6 +242,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
             inputAmount={unStakeInput}
             setInputAmount={setUnStakeInput}
             onMax={() => setUnStakeInput(stakedBalance)}
+            type="Withdraw"
         />
     </>);
 }

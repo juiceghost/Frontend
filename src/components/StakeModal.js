@@ -3,7 +3,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import store from '../store';
 
-const StakeModal = ({ show, onClose, onConfirm, amount, symbol, inputAmount, setInputAmount, onMax }) => {
+const StakeModal = ({ show, onClose, onConfirm, amount, symbol, inputAmount, setInputAmount, onMax, type }) => {
     return (<Modal
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
@@ -13,7 +13,7 @@ const StakeModal = ({ show, onClose, onConfirm, amount, symbol, inputAmount, set
         onHide={onClose}
     >
         <Modal.Header closeButton>
-            <Modal.Title>Deposit {symbol} Tokens</Modal.Title>
+            <Modal.Title>{type} {symbol} Tokens</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4">
             <div className="text-right small">{amount} {symbol} available</div>
