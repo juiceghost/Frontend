@@ -108,7 +108,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
         <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
-                    <img src="/img/farm_icons/link_ftm.png" className="farm-icon ml-2" onClick={() => forceUpdate()} />
+                    <img src={`/img/farm_icons/${farm.icon}`} className="farm-icon ml-2" onClick={() => forceUpdate()} />
                     <div className="text-right">
                         <div className="deposit-cell-header-text">{farm.lpSymbol} Pool</div>
                         <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
