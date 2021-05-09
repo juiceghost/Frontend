@@ -238,7 +238,7 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: ''
+    icon: 'ZOO-FTM.png'
   },
   {
     pid: 13,
