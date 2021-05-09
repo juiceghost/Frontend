@@ -40,7 +40,7 @@ function DepositPage() {
                 readOnly
               />
               <label className="custom-control-label" htmlFor="stake">
-                Stacked Only
+                Staked Only
               </label>
             </div>
 
