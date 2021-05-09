@@ -60,7 +60,7 @@ const Wallets = () => {
                         alt="logo"
                     />
                 </div>
-
+{/* 
                 <div className="connect-wallet-row disabled">
                     <div>Trust Wallet</div>
                     <img
@@ -86,7 +86,7 @@ const Wallets = () => {
                         className="logo"
                         alt="logo"
                     />
-                </div>
+                </div> */}
 
                 <div className="text-center">
                     <a className="btn btn-link" role="button">
