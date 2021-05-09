@@ -10,7 +10,7 @@ export const approve = async (lpContract, contractAddress, account) => {
 
 export const stake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
-    .deposit(pid, toWei(amount).toString())
+    .deposit(pid, toWei(amount).toFixed())
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
@@ -19,7 +19,7 @@ export const stake = async (masterChefContract, pid, amount, account) => {
 
 export const unstake = async (masterChefContract, pid, amount, account) => {
   return masterChefContract.methods
-    .withdraw(pid, toWei(amount).toString())
+    .withdraw(pid, toWei(amount).toFixed())
     .send({ from: account })
     .on('transactionHash', (tx) => {
       return tx.transactionHash
