@@ -22,11 +22,11 @@ function HomePage() {
       <a
         className="font-weight-bold btn btn-primary rounded-2 px-4"
         onClick={() => {
-          // history.push('/deposit')
-          NotificationManager.info(
-            'Coming soon!',
-            ' Crazy Yields coming soon !'
-          )
+          history.push('/deposit')
+          // NotificationManager.info(
+          //   'Coming soon!',
+          //   ' Crazy Yields coming soon !'
+          // )
         }}
       >
         Launch LiquidDriver{' '}
