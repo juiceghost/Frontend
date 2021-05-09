@@ -14,7 +14,7 @@ export const usePrices = (forceUpdate) => {
                 const prices = await fetchQuoteTokenPrices(web3, 250)
                 prices["LQDR"] = 0
                 setPrices(prices)
-                console.info('fetchQuoteTokenPrices fetched:', prices)
+                // console.info('fetchQuoteTokenPrices fetched:', prices)
             } catch (e) {
                 console.error("fetchQuoteTokenPrices fetched had error", e)
             }

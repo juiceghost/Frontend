@@ -13,3 +13,8 @@ export const getExplorerAddress = (tokenAddresses, chainId = 250) => {
         return `https://ftmscan.com/address/${tokenAddresses[chainId]}`
     }
 }
+
+export const isDesktop = () => {
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    return ((typeof window.orientation === "undefined") || (navigator.userAgent.indexOf('IEMobile') === -1)) && !(isMobile);
+};
