@@ -214,7 +214,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                 </div> */}
 
                     <div className="my-2">
-                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer">
+                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer" target="_blank">
                             <i className="fas fa-clipboard" />
                             <u className="small ml-1 pointer">View on ftmscan</u>
                         </a>
