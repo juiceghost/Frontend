@@ -13,7 +13,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -30,7 +30,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -64,7 +64,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -81,7 +81,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -98,7 +98,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -115,7 +115,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -132,7 +132,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
@@ -149,7 +149,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FXS,
     quoteTokenAdresses: contracts.FXS,
@@ -166,14 +166,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.USDC,
     quoteTokenAdresses: contracts.USDC,
     icon: 'AAVE-USDC.png'
   },
   {
-    pid: 9,
+    pid: 10,
     risk: 5,
     lpSymbol: 'SNX/FTM',
     lpAddresses: {
@@ -183,14 +183,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'SNX-FTM.png'
   },
   {
-    pid: 10,
+    pid: 11,
     risk: 5,
     lpSymbol: 'ICE/FTM',
     lpAddresses: {
@@ -200,14 +200,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'ICE-FTM.png'
   },
   {
-    pid: 11,
+    pid: 12,
     risk: 5,
     lpSymbol: 'COVER/FTM',
     lpAddresses: {
@@ -217,14 +217,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'COVER-FTM.png'
   },
   {
-    pid: 12,
+    pid: 13,
     risk: 5,
     lpSymbol: 'ZOO/FTM',
     lpAddresses: {
@@ -234,14 +234,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'ZOO-FTM.png'
   },
   {
-    pid: 13,
+    pid: 14,
     risk: 5,
     lpSymbol: 'SFI/FTM',
     lpAddresses: {
@@ -251,14 +251,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'SFI-FTM.png'
   },
   {
-    pid: 14,
+    pid: 15,
     risk: 5,
     lpSymbol: 'CRV/FTM',
     lpAddresses: {
@@ -268,14 +268,14 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
     icon: 'CRV-FTM.png'
   },
   {
-    pid: 14,
+    pid: 16,
     risk: 5,
     lpSymbol: 'fUSDT/FRAX',
     lpAddresses: {
@@ -285,7 +285,7 @@ const farms = [
     tokenSymbol: 'LQDR',
     tokenAddresses: {
       250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '0x6491FC29E175CdE591f705a9694F48F4eFFd5d07',
+      3: '',
     },
     quoteTokenSymbol: QuoteToken.FRAX,
     quoteTokenAdresses: contracts.FRAX,

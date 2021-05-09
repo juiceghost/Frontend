@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react'
 import Farm from '../components/Farm'
-import './Deposit.scss'
 import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
 import { useFarmsUser } from '../hooks/useFarmsUser'
+import './Deposit.scss'
 // const deposits = [1]
 
 function DepositPage() {
@@ -15,7 +15,6 @@ function DepositPage() {
 
   const forceUpdate = () => {
     setUpdate(update => update + 1)
-    console.log(update);
   }
 
 

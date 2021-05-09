@@ -5,7 +5,7 @@ import SushiAbi from './config/abi/sushi.json'
 import multicall from './utils/multicall'
 import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
-import { fromWei, getFullDisplayBalance, toWei } from './utils/formatNumber'
+import { fromWei, toWei } from './utils/formatNumber'
 import { QuoteToken } from './config/constants/types'
 import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
 
