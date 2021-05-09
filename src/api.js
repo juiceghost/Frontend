@@ -125,7 +125,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
       return {
         ...farmConfig,
-        totalStaked: fromWei(lpTokenBalanceMC).toFixed(3),
+        totalStaked: fromWei(lpTokenBalanceMC).toFixed(4),
         totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
