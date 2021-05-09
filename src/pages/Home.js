@@ -18,16 +18,10 @@ function HomePage() {
         First Shippers of Deep Liquidity for sushiswap on{' '}
       </h2>
       <h2 className="font-weight-extra-bold">Fantom Opera</h2>
-      <p className="py-4">Total Value Locked: {isZero(tvl) ? "" : `$${tvl.toFixed(2)}`}</p>
+      <p className="py-4">Total Value Locked: {isZero(tvl) ? "" : `$${tvl.toFormat(0)}`}</p>
       <a
         className="font-weight-bold btn btn-primary rounded-2 px-4"
-        onClick={() => {
-          // history.push('/deposit')
-          NotificationManager.info(
-            'Coming soon!',
-            ' Crazy Yields coming soon !'
-          )
-        }}
+        href="/deposit"
       >
         Launch LiquidDriver{' '}
       </a>
