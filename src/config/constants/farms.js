@@ -173,7 +173,7 @@ const farms = [
     icon: 'AAVE-USDC.png'
   },
   {
-    pid: 9,
+    pid: 10,
     risk: 5,
     lpSymbol: 'SNX/FTM',
     lpAddresses: {
@@ -190,7 +190,7 @@ const farms = [
     icon: 'SNX-FTM.png'
   },
   {
-    pid: 10,
+    pid: 11,
     risk: 5,
     lpSymbol: 'ICE/FTM',
     lpAddresses: {
@@ -207,7 +207,7 @@ const farms = [
     icon: 'ICE-FTM.png'
   },
   {
-    pid: 11,
+    pid: 12,
     risk: 5,
     lpSymbol: 'COVER/FTM',
     lpAddresses: {
@@ -224,7 +224,7 @@ const farms = [
     icon: 'COVER-FTM.png'
   },
   {
-    pid: 12,
+    pid: 13,
     risk: 5,
     lpSymbol: 'ZOO/FTM',
     lpAddresses: {
@@ -241,7 +241,7 @@ const farms = [
     icon: 'ZOO-FTM.png'
   },
   {
-    pid: 13,
+    pid: 14,
     risk: 5,
     lpSymbol: 'SFI/FTM',
     lpAddresses: {
@@ -258,7 +258,7 @@ const farms = [
     icon: 'SFI-FTM.png'
   },
   {
-    pid: 14,
+    pid: 15,
     risk: 5,
     lpSymbol: 'CRV/FTM',
     lpAddresses: {
@@ -275,7 +275,7 @@ const farms = [
     icon: 'CRV-FTM.png'
   },
   {
-    pid: 14,
+    pid: 16,
     risk: 5,
     lpSymbol: 'fUSDT/FRAX',
     lpAddresses: {
