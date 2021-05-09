@@ -15,6 +15,7 @@ import { isZero, ZERO } from '../config/constants/numbers';
 import { useFarmFromPid } from '../hooks/useFarmFromPid';
 import { toWei } from 'web3-utils';
 import { fromWei, getBalanceNumber, getFullDisplayBalance } from '../utils/formatNumber';
+import store from '../store'
 
 const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
@@ -129,7 +130,9 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                     </div>}
                     {!account ?
                         <div className="btn btn-secondary w-100 my-4"
-                            onClick={handleApprove}>
+                            onClick={() => {
+                                store.showConnectPopup()
+                            }}>
                             Connect Wallet
                         </div>
                         :
