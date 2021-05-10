@@ -12,10 +12,12 @@ function DepositPage() {
   const farms = useFarms(update)
   const prices = usePrices(update)
   const users = useFarmsUser(update)
-
+  const [active, setActive] = useState(false)
   const forceUpdate = () => {
     setUpdate(update => update + 1)
   }
+
+  // userInfo && isZero(stakedBalance)
 
 
   return (
@@ -49,6 +51,8 @@ function DepositPage() {
                 type="checkbox"
                 className="custom-control-input"
                 id="active"
+                checked={active}
+                onClick={() => setActive(active => !active)}
                 readOnly
               />
               <label className="custom-control-label" htmlFor="active">
@@ -60,6 +64,7 @@ function DepositPage() {
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, index) => (
+
               <Farm key={index} index={index} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
             ))}
           </div>
