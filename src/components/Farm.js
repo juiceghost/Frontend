@@ -17,23 +17,16 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
-    // const [forceUpdate, setForceUpdate] = useState(0)
     const [stakePopup, setStakePopup] = useState(false)
     const [unStakePopup, setUnStakePopup] = useState(false)
     const [details, setDetails] = useState(false)
     const [stakeInput, setStakeInput] = useState(0)
     const [unStakeInput, setUnStakeInput] = useState(0)
     const [requestedApproval, setRequestedApproval] = useState(true)
-    // const allowance = useAllowance(farm, MasterChefAddress, chainId, forceUpdate)
-
     const { onApprove } = useApprove(farm, MasterChefAddress, chainId)
     const { onStake } = useStake(farm, stakeInput)
     const { onUnStake } = useUnStake(farm, unStakeInput)
     const { onUnStake: onHarvest } = useUnStake(farm, 0)
-
-    // const userInfo = useFarmFromPid(index, forceUpdate)
-
-    // const userInfo = users ? users[index] : null
     const lpBalance = userInfo ? getFullDisplayBalance(userInfo.tokenBalance, 18) : 0
     const stakedBalance = userInfo ? getFullDisplayBalance(userInfo.stakedBalance) : 0
     const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0
@@ -157,7 +150,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
-                        <div className="text-white">
+                        <div className="text-white" style={{ textAlign: "right" }}>
                             {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
                                     .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFixed(0)
@@ -168,7 +161,9 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
 
                     {account && <div className="d-flex justify-content-between">
                         <div className="text-white">Your Stake:</div>
-                        <div className="text-white">{isZero(stakedBalance) ? 0 : new BigNumber(stakedBalance).toFixed(3)} {farm.lpSymbol}</div>
+                        <div className="text-white" style={{ textAlign: "right" }}>{isZero(stakedBalance) ? 0 :
+                            new BigNumber(stakedBalance).isLessThan(0.00001) ? "<0.00001" :
+                                new BigNumber(stakedBalance).toFixed(5)} {farm.lpSymbol}</div>
                     </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
@@ -183,11 +178,11 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                     {details && <>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Total Staked:</div>
-                            <div className="text-white"> {farm?.totalStaked}  {farm.lpSymbol}</div>
+                            <div className="text-white" style={{ textAlign: "right" }}> {farm?.totalStaked} </div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Deposit fee:</div>
-                            <div className="text-white"> {farm?.depositFeeBP / 100}%</div>
+                            <div className="text-white" style={{ textAlign: "right" }}> {farm?.depositFeeBP / 100}%</div>
                         </div>
                         {/* <div className="d-flex justify-content-between">
                             <div className="text-white">poolWeight:</div>
