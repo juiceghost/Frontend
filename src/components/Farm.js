@@ -152,7 +152,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white" style={{ textAlign: "right" }}>
-                            {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
+                            {prices && prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
                                     .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFormat(0)
                                 : "0"
