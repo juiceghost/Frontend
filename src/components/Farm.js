@@ -153,7 +153,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                         <div className="text-white" style={{ textAlign: "right" }}>
                             {prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
-                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFixed(0)
+                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFormat(0)
                                 : "0"
                             } %
                         </div>
@@ -163,7 +163,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                         <div className="text-white">Your Stake:</div>
                         <div className="text-white" style={{ textAlign: "right" }}>{isZero(stakedBalance) ? 0 :
                             new BigNumber(stakedBalance).isLessThan(0.00001) ? "<0.00001" :
-                                new BigNumber(stakedBalance).toFixed(5)} {farm.lpSymbol}</div>
+                                new BigNumber(stakedBalance).toFormat(5)} {farm.lpSymbol}</div>
                     </div>}
 
                     <div className="w-100 my-4 see-details" onClick={() => setDetails(!details)}>
@@ -178,7 +178,7 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                     {details && <>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Total Staked:</div>
-                            <div className="text-white" style={{ textAlign: "right" }}> {farm?.totalStaked} </div>
+                            <div className="text-white" style={{ textAlign: "right" }}> {new BigNumber(farm?.totalStaked).toFormat(4)}</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Deposit fee:</div>

@@ -82,7 +82,7 @@ export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
     const userFarmAllowances = await fetchFarmUserAllowances(web3, account, chainId)
     const userFarmTokenBalances = await fetchFarmUserTokenBalances(web3, account, chainId)
     const userStakedBalances = await fetchFarmUserStakedBalances(web3, account, chainId)
-    // const userFarmEarnings = await fetchFarmUserEarnings(web3, account, chainId)
+    const userFarmEarnings = await fetchFarmUserEarnings(web3, account, chainId)
 
     const arrayOfUserDataObjects = userFarmAllowances.map((farmAllowance, index) => {
         return {
@@ -90,7 +90,7 @@ export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
             allowance: userFarmAllowances[index],
             tokenBalance: userFarmTokenBalances[index],
             stakedBalance: userStakedBalances[index],
-            earnings: 0,
+            earnings: userFarmEarnings[index],
         }
     })
     return arrayOfUserDataObjects

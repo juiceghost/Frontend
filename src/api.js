@@ -125,7 +125,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
       return {
         ...farmConfig,
-        totalStaked: fromWei(lpTokenBalanceMC).toFixed(4),
+        totalStaked: fromWei(lpTokenBalanceMC),
         totalSupply: lpTotalSupply,
         tokenAmount: tokenAmount.toJSON(),
         // quoteTokenAmount: quoteTokenAmount.toNumber(),
@@ -144,7 +144,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
 export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
   const SushiAddress = getSushiAddress(chainId)
-  const tokens = ["FTM", "WBTC", "FXS", "USDC", "FRAX"]
+  const tokens = ["FTM", "WBTC", "FXS", "USDC", "FRAX", "LQDR"]
   const smallAmount = 0.001
   const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
 

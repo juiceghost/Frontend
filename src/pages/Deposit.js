@@ -5,7 +5,6 @@ import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
 import { useFarmsUser } from '../hooks/useFarmsUser'
 import './Deposit.scss'
-// const deposits = [1]
 
 function DepositPage() {
   const [update, setUpdate] = useState(0)
@@ -16,9 +15,6 @@ function DepositPage() {
   const forceUpdate = () => {
     setUpdate(update => update + 1)
   }
-
-  // userInfo && isZero(stakedBalance)
-
 
   return (
     <div className="deposit">
