@@ -184,18 +184,23 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                             <div className="text-white">Deposit fee:</div>
                             <div className="text-white" style={{ textAlign: "right" }}> {farm?.depositFeeBP / 100}%</div>
                         </div>
-                        {/* <div className="d-flex justify-content-between">
-                            <div className="text-white">poolWeight:</div>
-                            <div className="text-white"> {farm?.poolWeight} </div>
-                        </div>
                         <div className="d-flex justify-content-between">
+                            <div className="text-white">LP Price:</div>
+                            <div className="text-white"> ${lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol]).div(farm?.totalStaked).toFormat(1)} </div>
+                        </div>
+
+                        <div className="d-flex justify-content-between">
+                            <div className="text-white">TVL:</div>
+                            <div className="text-white"> ${lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol]).toFormat(0)} </div>
+                        </div>
+                        {/*    <div className="d-flex justify-content-between">
                             <div className="text-white">tokenPriceVsQuote:</div>
                             <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">lpTotalInQuoteToken:</div>
                             <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(5)} </div>
-                        </div> */}
+                        </div> *
                         {/* <div className="d-flex justify-content-between">
                             <div className="text-white">tokenAmount:</div>
                             <div className="text-white"> {farm?.tokenAmount} </div>

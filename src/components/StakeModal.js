@@ -1,7 +1,5 @@
-import { observer } from 'mobx-react';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import store from '../store';
 
 const StakeModal = ({ show, title, onClose, onConfirm, amount, symbol, inputAmount, setInputAmount, onMax }) => {
     return (<Modal
