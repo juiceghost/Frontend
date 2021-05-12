@@ -6,7 +6,6 @@ import multicall from './utils/multicall'
 import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
 import { fromWei, toWei } from './utils/formatNumber'
-import { QuoteToken } from './config/constants/types'
 import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
 
 
@@ -68,13 +67,9 @@ export const fetchFarms = async (web3, chainId = 250) => {
       let tokenPriceVsQuote
 
       if (farmConfig.isTokenOnly) {
+        //TODO Decimals
         tokenAmount = fromWei(lpTokenBalanceMC, tokenDecimals)
-        if ((farmConfig.tokenSymbol === QuoteToken.USDC && farmConfig.quoteTokenSymbol === QuoteToken.USDC)) {
-          tokenPriceVsQuote = new BigNumber(1)
-        } else {
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP))
-        }
-        lpTotalInQuoteToken = tokenAmount.times(tokenPriceVsQuote)
+        lpTotalInQuoteToken = tokenAmount
       } else {
         // Ratio in % a LP tokens that are in staking, vs the total number in circulation
         const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
@@ -147,7 +142,6 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
   const tokens = ["FTM", "WBTC", "FXS", "USDC", "FRAX", "LQDR"]
   const smallAmount = 0.001
   const calls = tokens.filter(token => DefultTokens[token][chainId] !== "").map((token) => {
-
     return {
       address: SushiAddress,
       name: 'getAmountsOut',

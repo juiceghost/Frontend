@@ -14,7 +14,7 @@ import { getFullDisplayBalance } from '../utils/formatNumber';
 import store from '../store'
 import { addToken } from '../utils/AddToken';
 
-const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
+const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
 
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
@@ -127,13 +127,20 @@ const Farm = ({ farm, prices, userInfo, index, forceUpdate }) => {
                         </div>
                         :
                         !requestedApproval || allowance.gt(0) ?
-                            <div className="text-center"><div className="col-5  center btn btn-primary w-100 my-4 mx-2"
-                                onClick={
-                                    () => {
-                                        setStakePopup(true)
-                                    }}>
-                                Stake
-                            </div>
+                            <div className="text-center">
+
+                                {farm.isDisable ?
+                                    <div className="col-5  center btn btn-secondary w-100 my-4 mx-2">
+                                        Stake
+                                    </div> :
+                                    <div className="col-5  center btn btn-primary w-100 my-4 mx-2"
+                                        onClick={
+                                            () => {
+                                                setStakePopup(true)
+                                            }}>
+                                        Stake
+                                    </div>
+                                }
                                 <div className="col-5 center btn btn-primary w-100 my-4 mx-2"
                                     onClick={
                                         () => {

@@ -24,6 +24,7 @@ export const fetchFarmUserAllowances = async (web3, account, chainId) => {
     return parsedLpAllowances
 }
 
+//Todo
 export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
     const calls = farmsConfig.map((farm) => {
         const lpContractAddress = farm.isTokenOnly ? farm.tokenAddresses[chainId] : farm.lpAddresses[chainId]

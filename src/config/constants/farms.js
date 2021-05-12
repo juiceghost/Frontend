@@ -258,24 +258,6 @@ const farms = [
     icon: 'ZOO-FTM.png'
   },
   {
-    pid: 14,
-    risk: 5,
-    lpSymbol: 'SFI/FTM',
-    lpShortSymbol: 'SLP-SF',
-    lpAddresses: {
-      250: '0xc24afba17c981326aa14238fcb55abc7d0907808',
-      3: '',
-    },
-    tokenSymbol: 'LQDR',
-    tokenAddresses: {
-      250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
-      3: '',
-    },
-    quoteTokenSymbol: QuoteToken.FTM,
-    quoteTokenAdresses: contracts.FTM,
-    icon: 'SFI-FTM.png'
-  },
-  {
     pid: 15,
     risk: 5,
     lpSymbol: 'CRV/FTM',
@@ -310,6 +292,25 @@ const farms = [
     quoteTokenSymbol: QuoteToken.FRAX,
     quoteTokenAdresses: contracts.FRAX,
     icon: 'fUSDT-FRAX.png'
+  },
+  {
+    pid: 14,
+    risk: 5,
+    lpSymbol: 'SFI/FTM',
+    lpShortSymbol: 'SLP-SF',
+    lpAddresses: {
+      250: '0xc24afba17c981326aa14238fcb55abc7d0907808',
+      3: '',
+    },
+    tokenSymbol: 'LQDR',
+    tokenAddresses: {
+      250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
+      3: '',
+    },
+    quoteTokenSymbol: QuoteToken.FTM,
+    quoteTokenAdresses: contracts.FTM,
+    icon: 'SFI-FTM.png',
+    isDisable: true
   },
 ]
 
