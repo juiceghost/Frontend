@@ -12,6 +12,7 @@ function DepositPage() {
   const prices = usePrices(update)
   const users = useFarmsUser(update)
   const [active, setActive] = useState(false)
+  const [stakeOnly, setStakeOnly] = useState(false)
 
   const forceUpdate = () => {
     setUpdate(update => update + 1)
