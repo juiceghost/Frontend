@@ -93,7 +93,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
         }
     }, [onHarvest])
     const priceQuoteToken = farm.quoteTokenSymbol === QuoteToken.FUSDT ? 1 : prices[farm.quoteTokenSymbol]
-    const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight } = farm
+    const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight, isTokenOnly } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
     // console.log(farm.lpSymbol, lpTotalInQuoteToken.toString(), priceQuoteToken, farm?.totalStaked.toFixed());
     // console.log(lpTotalInQuoteToken.times(priceQuoteToken).div(farm?.totalStaked).toFormat(1));
@@ -195,7 +195,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
                             <div className="text-white" style={{ textAlign: "right" }}> {farm?.depositFeeBP / 100}%</div>
                         </div>
                         <div className="d-flex justify-content-between">
-                            <div className="text-white">LP Price:</div>
+                            <div className="text-white">{isTokenOnly ? "LQDR" : "LP"} Price:</div>
                             <div className="text-white"> ${(priceQuoteToken && !isZero(totalStaked)) ? lpTotalInQuoteToken.times(priceQuoteToken).div(totalStaked).toFormat(1) : 0} </div>
                         </div>
 
