@@ -203,26 +203,8 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
                             <div className="text-white">TVL:</div>
                             <div className="text-white"> ${!priceQuoteToken ? 0 : lpTotalInQuoteToken.times(priceQuoteToken).toFormat(0)} </div>
                         </div>
-                        {/*    <div className="d-flex justify-content-between">
-                            <div className="text-white">tokenPriceVsQuote:</div>
-                            <div className="text-white"> {farm?.tokenPriceVsQuote} </div>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="text-white">lpTotalInQuoteToken:</div>
-                            <div className="text-white"> {farm?.lpTotalInQuoteToken.toFixed(5)} </div>
-                        </div> *
-                        {/* <div className="d-flex justify-content-between">
-                            <div className="text-white">tokenAmount:</div>
-                            <div className="text-white"> {farm?.tokenAmount} </div>
-                        </div> */}
                     </>
                     }
-
-                    {/* <div className="d-flex justify-content-between">
-                    <div className="text-white">End:</div>
-                    <div className="text-white">0SUSHI</div>
-                </div> */}
-
                     <div className="my-2">
                         <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer" target="_blank">
                             <i className="fas fa-clipboard" />

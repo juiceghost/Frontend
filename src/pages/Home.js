@@ -1,14 +1,11 @@
 import { observer } from 'mobx-react'
-import { useHistory } from 'react-router-dom'
-import { NotificationManager } from 'react-notifications'
 import { useTotalValue } from '../fetchFarmUser'
 import { isZero } from '../config/constants/numbers'
-import './Home.scss'
 import { usePrices } from '../hooks/usePrices'
 import { useLqdr } from '../hooks/useLqdr'
+import './Home.scss'
 
 function HomePage() {
-  // const history = useHistory()
   const tvl = useTotalValue()
   const prices = usePrices()
   const market = useLqdr()
