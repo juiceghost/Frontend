@@ -52,7 +52,7 @@ function HomePage() {
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
-            <div className="small">SUPPLY BURNED</div>
+            <div className="small">TOTAL BURNED</div>
             <h2 className="pt-2">{market && market["burnerAmounts"].toFormat(0) || "N/A"}</h2>
           </div>
         </div>
