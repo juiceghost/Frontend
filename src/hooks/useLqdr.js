@@ -16,7 +16,7 @@ export const useLqdr = (forceUpdate) => {
             try {
                 const data = await fechLqdr(web3, chainId)
                 setLqdrs(data)
-                console.info('getLqdr :', data)
+                // console.info('getLqdr :', data)
             } catch (e) {
                 console.error("Farms fetched had error", e)
             }

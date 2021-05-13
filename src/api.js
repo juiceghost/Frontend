@@ -164,7 +164,6 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
 export const fechLqdr = async (web3, chainId = 250) => {
   const BurnerContract = contracts.Burner[chainId]
   const LqdrContract = contracts.LQDR[chainId]
-  console.log(LqdrContract);
   const calls = [
     {
       address: LqdrContract,

@@ -12,8 +12,7 @@ function HomePage() {
   const tvl = useTotalValue()
   const prices = usePrices()
   const market = useLqdr()
-  if (market)
-    console.log(market["totalSupply"].toFixed(0), market["circulating"].toFixed(0));
+
   return (
     <div className="text-center d-flex flex-column position-fixed w-100 h-100 justify-content-center align-items-center text-white">
       <img
