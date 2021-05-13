@@ -4,10 +4,16 @@ import { NotificationManager } from 'react-notifications'
 import { useTotalValue } from '../fetchFarmUser'
 import { isZero } from '../config/constants/numbers'
 import './Home.scss'
+import { usePrices } from '../hooks/usePrices'
+import { useLqdr } from '../hooks/useLqdr'
 
 function HomePage() {
-  const history = useHistory()
+  // const history = useHistory()
   const tvl = useTotalValue()
+  const prices = usePrices()
+  const market = useLqdr()
+  if (market)
+    console.log(market["totalSupply"].toFixed(0), market["circulating"].toFixed(0));
   return (
     <div className="text-center d-flex flex-column position-fixed w-100 h-100 justify-content-center align-items-center text-white">
       <img
@@ -29,25 +35,25 @@ function HomePage() {
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">MARKET CAP</div>
-            <h2 className="pt-2"> N/A</h2>
+            <h2 className="pt-2"> {prices && market && "$" + market["circulating"].times(prices["LQDR"]).toFormat(0) || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">LQDR PRICE</div>
-            <h2 className="pt-2"> N/A</h2>
+            <h2 className="pt-2"> {prices && "$" + prices["LQDR"] || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">CIRCULATING SUPPLY</div>
-            <h2 className="pt-2"> N/A</h2>
+            <h2 className="pt-2"> {market && market["circulating"].toFormat(0) || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">SUPPLY BURNED</div>
-            <h2 className="pt-2"> N/A</h2>
+            <h2 className="pt-2">{market && market["burnerAmounts"].toFormat(0) || "N/A"}</h2>
           </div>
         </div>
       </div>

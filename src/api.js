@@ -7,6 +7,7 @@ import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
 import farmsConfig from './config/constants/farms'
 import { fromWei, toWei } from './utils/formatNumber'
 import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
+import contracts from './config/constants/contracts'
 
 
 export const fetchFarms = async (web3, chainId = 250) => {
@@ -158,4 +159,28 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
     priceMap[tokens[index]] = fromWei(amount, DefultTokens[getLastRouteName(tokens[index])].decimals).div(smallAmount).toNumber()
   }
   return priceMap
+}
+
+export const fechLqdr = async (web3, chainId = 250) => {
+  const BurnerContract = contracts.Burner[chainId]
+  const LqdrContract = contracts.LQDR[chainId]
+  console.log(LqdrContract);
+  const calls = [
+    {
+      address: LqdrContract,
+      name: 'balanceOf',
+      params: [BurnerContract],
+    },
+    {
+      address: LqdrContract,
+      name: 'totalSupply',
+    }
+  ]
+  const [burnerAmounts, totalSupply] = await multicall(web3, erc20, calls, chainId)
+
+  return {
+    burnerAmounts: fromWei(burnerAmounts, 18),
+    totalSupply: fromWei(totalSupply, 18),
+    circulating: fromWei(totalSupply, 18).minus(fromWei(burnerAmounts, 18))
+  }
 }
