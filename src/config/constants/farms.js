@@ -1,7 +1,62 @@
 import contracts from './contracts'
 import { QuoteToken } from './types'
-//0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9
+
 const farms = [
+  {
+    pid: 19,
+    risk: 5,
+    lpSymbol: 'LQDR',
+    lpAddresses: {
+      250: "0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9",
+      3: '',
+    },
+    tokenSymbol: 'LQDR',
+    lpShortSymbol: 'LQDR',
+    tokenAddresses: {
+      250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
+      3: '',
+    },
+    quoteTokenSymbol: QuoteToken.LQDR,
+    quoteTokenAdresses: contracts.LQDR,
+    isTokenOnly: true,
+    icon: 'LQDR.png'
+  },
+  {
+    pid: 18,
+    risk: 5,
+    lpSymbol: 'LQDR/FTM',
+    lpShortSymbol: 'SLP-LF',
+    lpAddresses: {
+      250: "0xfa7ca6e6d17368e0a1fa9c75f2ebe5a8d7be9fc6",
+      3: '',
+    },
+    tokenSymbol: 'LQDR',
+    tokenAddresses: {
+      250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
+      3: '',
+    },
+    quoteTokenSymbol: QuoteToken.FTM,
+    quoteTokenAdresses: contracts.FTM,
+    icon: 'LQDR-FTM.png'
+  },
+  {
+    pid: 17,
+    risk: 5,
+    lpSymbol: 'LQDR/fUSDT',
+    lpShortSymbol: 'SLP-Lf',
+    lpAddresses: {
+      250: "0xa1bb6830fabddb99ed365c0611a33741c5e6173f",
+      3: '',
+    },
+    tokenSymbol: 'LQDR',
+    tokenAddresses: {
+      250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
+      3: '',
+    },
+    quoteTokenSymbol: QuoteToken.FUSDT,
+    quoteTokenAdresses: contracts.FUSDT,
+    icon: 'LQDR-USDT.png'
+  },
   {
     pid: 0,
     risk: 5,

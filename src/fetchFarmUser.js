@@ -110,7 +110,8 @@ export const useTotalValue = () => {
                 const farm = farms[i]
                 if (farm.lpTotalInQuoteToken) {
                     let val = farm.lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])
-                    value = value.plus(val);
+                    if (!isNaN(val))
+                        value = value.plus(val);
                 }
             }
             return value

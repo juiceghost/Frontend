@@ -13,6 +13,7 @@ import { isZero, ZERO } from '../config/constants/numbers';
 import { getFullDisplayBalance } from '../utils/formatNumber';
 import store from '../store'
 import { addToken } from '../utils/AddToken';
+import { QuoteToken } from '../config/constants/types';
 
 const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
 
@@ -91,10 +92,11 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
             console.error(e)
         }
     }, [onHarvest])
-
-    const { lqdrPerBlock, lpTotalInQuoteToken, multiplier, poolWeight } = farm
+    const priceQuoteToken = farm.quoteTokenSymbol === QuoteToken.FUSDT ? 1 : prices[farm.quoteTokenSymbol]
+    const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
-
+    // console.log(farm.lpSymbol, lpTotalInQuoteToken.toString(), priceQuoteToken, farm?.totalStaked.toFixed());
+    // console.log(lpTotalInQuoteToken.times(priceQuoteToken).div(farm?.totalStaked).toFormat(1));
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
@@ -159,9 +161,9 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
                     <div className="d-flex justify-content-between">
                         <div className="text-white">APR:</div>
                         <div className="text-white" style={{ textAlign: "right" }}>
-                            {prices && prices[farm.quoteTokenSymbol] !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
+                            {prices && priceQuoteToken !== 0 && !isZero(lpTotalInQuoteToken) && !isNaN(poolWeight) ?
                                 new BigNumber(lqdrPerBlock.times(poolWeight).times(prices["LQDR"]).times(31536000))
-                                    .div(lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol])).times(100).toFormat(0)
+                                    .div(lpTotalInQuoteToken.times(priceQuoteToken)).times(100).toFormat(0)
                                 : "0"
                             } %
                         </div>
@@ -186,7 +188,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
                     {details && <>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Total Staked:</div>
-                            <div className="text-white" style={{ textAlign: "right" }}> {new BigNumber(farm?.totalStaked).toFormat(4)}</div>
+                            <div className="text-white" style={{ textAlign: "right" }}> {new BigNumber(totalStaked).toFormat(4)}</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">Deposit fee:</div>
@@ -194,12 +196,12 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="text-white">LP Price:</div>
-                            <div className="text-white"> ${lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol]).div(farm?.totalStaked).toFormat(1)} </div>
+                            <div className="text-white"> ${(priceQuoteToken && !isZero(totalStaked)) ? lpTotalInQuoteToken.times(priceQuoteToken).div(totalStaked).toFormat(1) : 0} </div>
                         </div>
 
                         <div className="d-flex justify-content-between">
                             <div className="text-white">TVL:</div>
-                            <div className="text-white"> ${lpTotalInQuoteToken.times(prices[farm.quoteTokenSymbol]).toFormat(0)} </div>
+                            <div className="text-white"> ${!priceQuoteToken ? 0 : lpTotalInQuoteToken.times(priceQuoteToken).toFormat(0)} </div>
                         </div>
                         {/*    <div className="d-flex justify-content-between">
                             <div className="text-white">tokenPriceVsQuote:</div>
