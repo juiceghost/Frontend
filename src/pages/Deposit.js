@@ -5,6 +5,7 @@ import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
 import { useFarmsUser } from '../hooks/useFarmsUser'
 import './Deposit.scss'
+import { isZero } from '../config/constants/numbers'
 
 function DepositPage() {
   const [update, setUpdate] = useState(0)
@@ -17,6 +18,10 @@ function DepositPage() {
   const forceUpdate = () => {
     setUpdate(update => update + 1)
   }
+
+  // const filterFarms = users ?
+  //   stakeOnly ? farms.filter((farm, index) => isZero(users[index].stakedBalance)) : farms
+  //   : farms
 
   return (
     <div className="deposit">
@@ -37,6 +42,7 @@ function DepositPage() {
                 type="checkbox"
                 className="custom-control-input"
                 id="stake"
+                onClick={() => setStakeOnly(stakeOnly => !stakeOnly)}
                 readOnly
               />
               <label className="custom-control-label" htmlFor="stake">
@@ -62,8 +68,7 @@ function DepositPage() {
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, index) => (
-
-              <Farm key={index} index={index} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
+              <Farm key={index} index={index} active={active} stakeOnly={stakeOnly} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
             ))}
           </div>
         </div>

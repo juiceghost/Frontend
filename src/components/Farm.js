@@ -15,7 +15,7 @@ import store from '../store'
 import { addToken } from '../utils/AddToken';
 import { QuoteToken } from '../config/constants/types';
 
-const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
+const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
 
     const { account, chainId } = useWeb3React()
     const MasterChefAddress = getMasterChefAddress(chainId)
@@ -97,6 +97,10 @@ const Farm = ({ farm, prices, userInfo, forceUpdate }) => {
     const lqdrPrice = new BigNumber(prices["LQDR"])
     // console.log(farm.lpSymbol, lpTotalInQuoteToken.toString(), priceQuoteToken, farm?.totalStaked.toFixed());
     // console.log(lpTotalInQuoteToken.times(priceQuoteToken).div(farm?.totalStaked).toFormat(1));
+    if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && isZero(poolWeight))) {
+        return (<></>)
+    }
+
     return (<>
         <div className="col-md-4">
             <div className="deposit-cell">
