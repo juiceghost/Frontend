@@ -39,13 +39,16 @@ $theme-colors: (
   font-weight: 800;
 }
 
-.connect-wallet {
-
-}
 
 .btn-primary:active {
   color: #2376D6 !important;
   background-color: white !important;
+}
+
+
+html,body,#root,.main{
+  height:100%;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 @import "~bootstrap/scss/bootstrap";
