@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core"
 import { useEffect, useState } from "react"
-import { fetchFarms } from "../api";
+import { fetchFarms } from "../utils/api";
 import useRefresh from "./useRefresh";
 import useWeb3 from "./useWeb3";
 
@@ -24,7 +24,7 @@ export const useFarms = (forceUpdate) => {
         if (web3) {
             getPools()
         }
-    }, [web3, fastRefresh, forceUpdate])
+    }, [web3, chainId, fastRefresh, forceUpdate])
 
     return farms
 }

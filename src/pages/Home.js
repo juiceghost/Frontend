@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react'
-import { useTotalValue } from '../fetchFarmUser'
 import { isZero } from '../config/constants/numbers'
 import { usePrices } from '../hooks/usePrices'
 import { useLqdr } from '../hooks/useLqdr'
+import { useTotalValue } from '../utils/fetchFarmUser'
 import './Home.scss'
 
 function HomePage() {
@@ -15,6 +15,7 @@ function HomePage() {
       <img
         src={`${process.env.PUBLIC_URL}/img/back.jpg`}
         className="position-fixed w-100 h-100 fixed-top back-img"
+        alt="back"
       />
       <h2 className="font-weight-extra-bold">
         First Shippers of Deep Liquidity for sushiswap on{' '}
@@ -31,25 +32,25 @@ function HomePage() {
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">MARKET CAP</div>
-            <h2 className="pt-2"> {prices && market && "$" + market["circulating"].times(prices["LQDR"]).toFormat(0) || "N/A"}</h2>
+            <h2 className="pt-2"> {(prices && market && "$" + market["circulating"].times(prices["LQDR"]).toFormat(0)) || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">LQDR PRICE</div>
-            <h2 className="pt-2"> {prices && "$" + prices["LQDR"] || "N/A"}</h2>
+            <h2 className="pt-2"> {(prices && "$" + prices["LQDR"]) || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">CIRCULATING SUPPLY</div>
-            <h2 className="pt-2"> {market && market["circulating"].toFormat(0) || "N/A"}</h2>
+            <h2 className="pt-2"> {(market && market["circulating"].toFormat(0)) || "N/A"}</h2>
           </div>
         </div>
         <div className="col-md-3">
           <div className="tile text-white">
             <div className="small">TOTAL BURNED</div>
-            <h2 className="pt-2">{market && market["burnerAmounts"].toFormat(0) || "N/A"}</h2>
+            <h2 className="pt-2">{(market && market["burnerAmounts"].toFormat(0)) || "N/A"}</h2>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-export default {
+const contracts = {
   LQDR: {
     3: '0x6491fc29e175cde591f705a9694f48f4effd5d07',
     250: '0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9',
@@ -40,3 +40,4 @@ export default {
     250: '0x63B8310c5093ac917552931D8b15d5AB6945c0a6',
   },
 }
+export default contracts

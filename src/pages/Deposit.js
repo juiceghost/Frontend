@@ -5,7 +5,6 @@ import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
 import { useFarmsUser } from '../hooks/useFarmsUser'
 import './Deposit.scss'
-import { isZero } from '../config/constants/numbers'
 
 function DepositPage() {
   const [update, setUpdate] = useState(0)
@@ -30,6 +29,7 @@ function DepositPage() {
           <img
             src={`${process.env.PUBLIC_URL}/img/top_bg.jpg`}
             className="w-100 position-absolute top-img"
+            alt="top_bg"
           />
           <h2 className="font-weight-extra-bold">LIQUID CONTAINERS</h2>
           <p className="pt-2 pb-4">Stake SUSHI LP Tokens, Earn LQDR</p>
@@ -65,6 +65,7 @@ function DepositPage() {
             </div>
           </div>
         </div>
+
         <div className="pools w-100 my-5 px-4">
           <div className="row p-0 cell-row">
             {farms && farms.map((farm, index) => (
@@ -74,7 +75,6 @@ function DepositPage() {
         </div>
         <div style={{ height: '64px' }}></div>
       </div>
-
     </div>
   )
 }

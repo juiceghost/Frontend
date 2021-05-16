@@ -7,13 +7,13 @@ import { useUnStake } from '../hooks/useUnStake';
 import { getExplorerAddress } from '../utils';
 import { getMasterChefAddress } from '../utils/addressHelpers';
 import StakeModal from './StakeModal';
-import './farm.scss'
 import BigNumber from 'bignumber.js';
 import { isZero, ZERO } from '../config/constants/numbers';
 import { getFullDisplayBalance } from '../utils/formatNumber';
 import store from '../store'
 import { addToken } from '../utils/AddToken';
 import { QuoteToken } from '../config/constants/types';
+import './farm.scss'
 
 const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
 
@@ -46,7 +46,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         } catch (e) {
             console.error(e)
         }
-    }, [onApprove])
+    }, [onApprove, forceUpdate])
 
     const handleStake = useCallback(async () => {
         try {
@@ -62,7 +62,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         } catch (e) {
             console.error(e)
         }
-    }, [onStake])
+    }, [onStake, forceUpdate])
 
     const handleUnStake = useCallback(async (amount) => {
         try {
@@ -77,7 +77,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         } catch (e) {
             console.error(e)
         }
-    }, [onUnStake])
+    }, [onUnStake, forceUpdate])
 
     const handleHarvest = useCallback(async () => {
         try {
@@ -91,7 +91,8 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         } catch (e) {
             console.error(e)
         }
-    }, [onHarvest])
+    }, [onHarvest, forceUpdate])
+
     const priceQuoteToken = farm.quoteTokenSymbol === QuoteToken.FUSDT ? 1 : prices[farm.quoteTokenSymbol]
     const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight, isTokenOnly } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
@@ -105,7 +106,12 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         <div className="col-md-4">
             <div className="deposit-cell">
                 <div className="deposit-cell-header px-4">
-                    <img src={`/img/farm_icons/${farm.icon}`} className="farm-icon ml-2" style={{ cursor: "pointer" }} onClick={() => addToken(farm.lpAddresses[250], farm.lpShortSymbol)} />
+                    <img src={`/img/farm_icons/${farm.icon}`}
+                        className="farm-icon ml-2"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => addToken(farm.lpAddresses[250], farm.lpShortSymbol)}
+                        alt="deposit"
+                    />
                     <div className="text-right overflow-hidden">
                         <div className="deposit-cell-header-text">{farm.lpSymbol}</div>
                         <div className="px-3 text-bold text-center text-primary d-inline rounded-2" style={{ background: '#61AAFE' }}>{farm?.multiplierShow}</div>
@@ -210,7 +216,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                     </>
                     }
                     <div className="my-2">
-                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="none refer" target="_blank">
+                        <a className="text-white" href={getExplorerAddress(farm.lpAddresses, chainId)} rel="noreferrer" target="_blank">
                             <i className="fas fa-clipboard" />
                             <u className="small ml-1 pointer">View on ftmscan</u>
                         </a>

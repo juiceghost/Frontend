@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js'
-import erc20 from './config/abi/erc20.json'
-import masterchefABI from './config/abi/masterchef.json'
-import SushiAbi from './config/abi/sushi.json'
-import multicall from './utils/multicall'
-import { getMasterChefAddress, getSushiAddress } from './utils/addressHelpers'
-import farmsConfig from './config/constants/farms'
-import { fromWei, toWei } from './utils/formatNumber'
-import { DefultTokens, getSushiRoute, getLastRouteName } from './config/constants/tokens'
-import contracts from './config/constants/contracts'
+import erc20 from '../config/abi/erc20.json'
+import masterchefABI from '../config/abi/masterchef.json'
+import SushiAbi from '../config/abi/sushi.json'
+import multicall from './multicall'
+import { getMasterChefAddress, getSushiAddress } from './addressHelpers'
+import farmsConfig from '../config/constants/farms'
+import { fromWei, toWei } from './formatNumber'
+import { DefultTokens, getSushiRoute, getLastRouteName } from '../config/constants/tokens'
+import contracts from '../config/constants/contracts'
 
 
 export const fetchFarms = async (web3, chainId = 250) => {
@@ -65,7 +65,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
       let tokenAmount
       let lpTotalInQuoteToken
-      let tokenPriceVsQuote
+      // let tokenPriceVsQuote
 
       if (farmConfig.isTokenOnly) {
         //TODO Decimals
@@ -83,15 +83,15 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
         // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
         tokenAmount = new BigNumber(tokenBalanceLP).div(new BigNumber(10).pow(tokenDecimals)).times(lpTokenRatio)
-        const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
-          .div(new BigNumber(10).pow(quoteTokenDecimals))
-          .times(lpTokenRatio)
+        // const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
+        //   .div(new BigNumber(10).pow(quoteTokenDecimals))
+        //   .times(lpTokenRatio)
 
-        if (tokenAmount.comparedTo(0) > 0) {
-          tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
-        } else {
-          tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
-        }
+        // if (tokenAmount.comparedTo(0) > 0) {
+        //   tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
+        // } else {
+        //   tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
+        // }
       }
 
 

@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core"
 import { useEffect, useState } from "react"
-import { fechLqdr } from "../api";
+import { fechLqdr } from "../utils/api";
 import useRefresh from "./useRefresh";
 import useWeb3 from "./useWeb3";
 
@@ -24,7 +24,7 @@ export const useLqdr = (forceUpdate) => {
         if (web3) {
             getLqdr()
         }
-    }, [web3, fastRefresh, forceUpdate])
+    }, [web3, chainId, fastRefresh, forceUpdate])
 
     return lqdrs
 }

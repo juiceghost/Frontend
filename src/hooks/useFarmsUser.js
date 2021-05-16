@@ -1,9 +1,8 @@
 import { useWeb3React } from "@web3-react/core"
 import { useEffect, useState } from "react"
+import { fetchFarmUserDataAsync } from "../utils/fetchFarmUser";
 import useRefresh from "./useRefresh";
-import { fetchFarmUserDataAsync } from "../fetchFarmUser";
 import useWeb3 from "./useWeb3";
-
 
 export const useFarmsUser = (forceUpdate) => {
     const [users, setUsers] = useState(null)
@@ -24,7 +23,7 @@ export const useFarmsUser = (forceUpdate) => {
         if (web3 && account) {
             getUserData()
         }
-    }, [account, chainId, fastRefresh, forceUpdate])
+    }, [account, chainId, web3, fastRefresh, forceUpdate])
 
     return users
 }

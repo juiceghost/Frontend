@@ -1,13 +1,13 @@
-import BigNumber from 'bignumber.js'
-import erc20ABI from './config/abi/erc20.json'
-import masterchefABI from './config/abi/masterchef.json'
-import multicall from './utils/multicall'
-import { getMasterChefAddress } from './utils/addressHelpers'
-import farmsConfig from './config/constants/farms'
-import { ZERO } from './config/constants/numbers'
-import { useFarms } from './hooks/useFarms'
-import { usePrices } from './hooks/usePrices'
 import { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
+import erc20ABI from '../config/abi/erc20.json'
+import masterchefABI from '../config/abi/masterchef.json'
+import multicall from './multicall'
+import { getMasterChefAddress } from './addressHelpers'
+import farmsConfig from '../config/constants/farms'
+import { ZERO } from '../config/constants/numbers'
+import { useFarms } from '../hooks/useFarms'
+import { usePrices } from '../hooks/usePrices'
 
 export const fetchFarmUserAllowances = async (web3, account, chainId) => {
     const masterChefAdress = getMasterChefAddress(chainId)

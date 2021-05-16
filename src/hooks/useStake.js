@@ -4,7 +4,7 @@ import { useMasterChef } from './useContract'
 import { stake } from '../utils/callHelpers'
 
 export const useStake = (farm, amount) => {
-    const { account, chainId } = useWeb3React()
+    const { account } = useWeb3React()
     const masterChefContract = useMasterChef()
 
     const handleStake = useCallback(async () => {
@@ -19,7 +19,7 @@ export const useStake = (farm, amount) => {
         } catch (e) {
             return false
         }
-    }, [account, chainId, amount, masterChefContract])
+    }, [account, amount, masterChefContract, farm])
 
     return { onStake: handleStake }
 }

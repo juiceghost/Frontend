@@ -5,9 +5,9 @@ import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
 import { UnsupportedChainIdError } from '@web3-react/core'
 import { NotificationManager } from 'react-notifications'
-import { injected } from '../connectors'
 import store from '../store'
 import { addRPC } from '../utils/addRPC';
+import { injected } from '../utils/connectors';
 
 const Wallets = () => {
 
@@ -29,7 +29,7 @@ const Wallets = () => {
                 </>, 'Error'
             )
         }
-    }, [error])
+    }, [error, account])
 
     return (
         <Modal
@@ -59,40 +59,6 @@ const Wallets = () => {
                         className="logo"
                         alt="logo"
                     />
-                </div>
-{/* 
-                <div className="connect-wallet-row disabled">
-                    <div>Trust Wallet</div>
-                    <img
-                        src={`${process.env.PUBLIC_URL}/img/trust_wallet.png`}
-                        className="logo"
-                        alt="logo"
-                    />
-                </div>
-
-                <div className="connect-wallet-row disabled">
-                    <div>TokenPocket Wallet</div>
-                    <img
-                        src={`${process.env.PUBLIC_URL}/img/token_pocket_wallet.png`}
-                        className="logo"
-                        alt="logo"
-                    />
-                </div>
-
-                <div className="connect-wallet-row disabled">
-                    <div>WalletConnect</div>
-                    <img
-                        src={`${process.env.PUBLIC_URL}/img/wallet_connect.png`}
-                        className="logo"
-                        alt="logo"
-                    />
-                </div> */}
-
-                <div className="text-center">
-                    <a className="btn btn-link" role="button">
-                        <i className="far fa-question-circle h5 mr-1" />
-              Learn how to connect wallet
-            </a>
                 </div>
             </Modal.Body>
         </Modal>);

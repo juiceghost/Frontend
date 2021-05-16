@@ -20,7 +20,7 @@ export const useApprove = (farm, contractAddress) => {
         } catch (e) {
             return false
         }
-    }, [account, chainId, lpAddress, contract, contractAddress])
+    }, [account, contract, contractAddress])
 
     return { onApprove: handleApprove }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchQuoteTokenPrices } from "../api";
+import { fetchQuoteTokenPrices } from "../utils/api";
 import useRefresh from "./useRefresh";
 import useWeb3 from "./useWeb3";
 
