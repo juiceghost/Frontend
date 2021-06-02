@@ -1,32 +1,32 @@
 .connect-wallet-popup {
   display: block;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    // height: 314px;
-    width: 350px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  // height: 314px;
+  width: 350px;
 
   .modal-title {
     flex: 1;
   }
   .modal-header {
     border-bottom-color: #00000016 !important;
-    padding:0 30px;
-    padding-top:20px;
-    padding-bottom:10px;
-    display:flex;
+    padding: 0 30px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: flex;
     justify-content: space-between;
     text-align: center;
   }
   .modal-content {
     border-radius: 2rem;
     background-color: #add8e6;
-        height: 126px;
+    height: 126px;
   }
   .connect-wallet-row {
-    cursor:pointer;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     margin-left: 2rem;
@@ -120,5 +120,18 @@
 }
 .navy-button {
   background: #030629;
+  color: #4dd9f6;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.lqdr-blue {
   color: #4dd9f6;
 }

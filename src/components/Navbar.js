@@ -37,7 +37,7 @@ const Navbar = () => {
                     <p>Documentation</p>
                 </li>
             </ul>
-            <ConnectWallet style={{margin:"0 10px"}}/>
+            <ConnectWallet style={{ margin: "0 10px" }} />
         </div>
     );
 }

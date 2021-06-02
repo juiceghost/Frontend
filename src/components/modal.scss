@@ -1,0 +1,77 @@
+.buy-ticket-modal {
+    .title-wrap {
+        display: flex;
+        font-weight: bold;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        svg {
+            cursor: pointer;
+        }
+        padding-bottom: 7px;
+        border-bottom: 1px solid rgba(11, 80, 121, 0.6);
+    }
+    .amounts-wrap {
+        margin: 14px auto;
+        display: flex;
+        justify-content: space-between;
+        p:first-child {
+            color: #ffffff;
+        }
+        p:last-child {
+            color: #4dd9f6;
+        }
+    }
+    .input-wrap {
+        display: flex;
+        border: 1px solid #0b5079;
+        border-radius: 12px;
+        height: 40px;
+        // padding: 10px 0;
+        input {
+            box-sizing: border-box;
+            padding-left: 20px;
+            color: #ffffff;
+            border: 0;
+            border-radius: 12px;
+            font-size: 14px;
+            width: 100%;
+            background: transparent;
+            outline: none;
+        }
+        .max-btn {
+            border-radius: 6px;
+            margin: 5px;
+            margin-right: 10px;
+            padding: 10px 8px;
+            border: 1px solid #4dd9f6;
+        }
+    }
+    .spend {
+        text-align: center;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 20px 0;
+    }
+    .action-btns {
+        display: flex;
+        justify-content: space-between;
+        .buy,
+        .cancel {
+            padding: 0;
+            width: 45%;
+            height: 40px;
+            border-radius: 12px;
+        }
+        .cancel {
+            border: 1px solid #4dd9f6;
+        }
+    }
+    .purchases {
+        text-align: center;
+        margin-top: 22px;
+        font-weight: 600;
+        font-size: 11px;
+    }
+}

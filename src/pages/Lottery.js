@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react'
 import ConnectWallet from '../components/ConnetWallet';
 import { useWeb3React } from '@web3-react/core';
+import BuyTicket from '../components/BuyTicket';
 
 import './lottery.scss'
 
@@ -10,6 +11,8 @@ const Lottery = () => {
     const { account } = useWeb3React()
 
     const [inputNumber, setInputNumber] = useState(1)
+    const [modalIsOpen, setIsOpen] = useState(false);
+
     return (<>
         <div className="lottery-wrap">
             <p className="main-title">The LQDR Lottery</p>
@@ -84,10 +87,8 @@ const Lottery = () => {
                             <span> 11.09</span>
                         </div>
                         <div className="clear-both"></div>
-
-
                         <div className="buy-ticket">
-                            {account ? <div className="lq-button blue-button">Buy Ticket</div> : <ConnectWallet />}
+                            {account ? <div className="lq-button blue-button" onClick={() => setIsOpen(true)}>Buy Ticket</div> : <ConnectWallet />}
                         </div>
 
                     </div>
@@ -97,6 +98,7 @@ const Lottery = () => {
                 <div className="history"></div>
 
             </div>
+            <BuyTicket modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
 
         </div>
 
