@@ -1,0 +1,18 @@
+.home2-wrap {
+    display: flex;
+    justify-content: center;
+    background-image: url(../assets/imgs/BG.svg);
+    background-size: cover;
+    background-color: #00123f;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: bottom;
+    text-align: center;
+
+    margin: auto;
+    // background-size: cover;
+    // background-position: top;
+    // background-size: auto;
+    height: 100%;
+    width: 100%;
+}

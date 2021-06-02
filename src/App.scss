@@ -44,3 +44,8 @@
 .notification {
   z-index: 10000;
 }
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}

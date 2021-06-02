@@ -1,9 +1,82 @@
-@media (max-width: 767px) {
-  .account-bt {
-    margin-top: 0.5rem;
-  }
-}
+.navbar-wrap {
+  width: 280px;
+  height: 100%;
+  background: #030629;
+  color: #e5e5e5;
+  .logo-wrap {
+    display: flex;
+    cursor: pointer;
 
-@media (min-width: 768px) {
-  /* Target devices wider than 768px. */
+    // justify-content: center;
+    align-items: center;
+    padding-top: 17px;
+    padding-left: 20px;
+    padding-bottom: 17px;
+    .name {
+      margin-top: 4px;
+      margin-left: 15px;
+    }
+    border-bottom: 2px solid #0b5079;
+  }
+  ul {
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    padding-top: 32px;
+    // line-height: 290%;
+    letter-spacing: 0.07em;
+    li {
+      cursor: pointer;
+      margin-bottom: 20px;
+      padding: 10px;
+      // padding-left:21px;
+      padding-right: 0;
+      display: flex;
+      //  justify-content: center;
+      align-items: center;
+      .icon-wrap {
+        width: 50px;
+      }
+      img {
+        width: 25px;
+      }
+      .lottery {
+        margin-top: 5px;
+      }
+      &:hover {
+        background: #222222;
+      }
+    }
+  }
+  .connect-wallet-wrap {
+    padding: 15px 0;
+    border: 1px solid #0b5079;
+    border-left: 0;
+    border-right: 0;
+  }
+  .connect-wallet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #4dd9f6;
+    border-radius: 12px;
+    height: 40px;
+    margin: 0 20px;
+    padding-right: 17px;
+    padding-left: 15px;
+
+    cursor: pointer;
+    p {
+      font-family: Nunito;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      color: #080b3a;
+    }
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
 }
