@@ -2,17 +2,17 @@
     display: flex;
     justify-content: center;
     background-image: url(../assets/imgs/BG.svg);
-    background-size: cover;
-    background-color: #00123f;
+    background-size: contain;
+    background-color: #000d36;
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: bottom;
+    background: #000d36;
+    background: -webkit-linear-gradient(bottom, #000d36, #001f58);
+    background: -moz-linear-gradient(bottom, #000d36, #001f58);
+    background: linear-gradient(to top, #000d36, #001f58);
     text-align: center;
-
     margin: auto;
-    // background-size: cover;
-    // background-position: top;
-    // background-size: auto;
     height: 100%;
     width: 100%;
 }

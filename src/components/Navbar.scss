@@ -2,6 +2,7 @@
   width: 280px;
   height: 100%;
   background: #030629;
+  overflow-y: auto;
   color: #e5e5e5;
   .logo-wrap {
     display: flex;
@@ -16,7 +17,7 @@
       margin-top: 4px;
       margin-left: 15px;
     }
-    border-bottom: 2px solid #0b5079;
+    border-bottom: 1px solid #0b5079;
   }
   ul {
     font-family: Nunito;

@@ -1,47 +1,43 @@
 import React from 'react';
 import './Navbar.scss'
+import ConnectWallet from './ConnetWallet';
 
 const Navbar = () => {
     return (
         <div className="navbar-wrap">
-            <a to="/" className="logo-wrap">
-                <img src="/img/svg/liquid-logo.svg" />
-                <img className="name" src="/img/svg/liquid-name.svg" />
+            <a href="/" className="logo-wrap">
+                <img alt={"icon"} src="/img/svg/liquid-logo.svg" />
+                <img alt={"icon"} className="name" src="/img/svg/liquid-name.svg" />
             </a>
 
             <ul>
                 <li>
 
-                    <div className="icon-wrap"> <img src="/img/svg/Home.svg" /></div>
+                    <div className="icon-wrap"> <img alt={"icon"} src="/img/svg/Home.svg" /></div>
                     <p>Home</p>
                 </li>
                 <li>
-                    <div className="icon-wrap"><img className="lottery" src="/img/svg/Lottery.svg" /></div>
+                    <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Lottery.svg" /></div>
                     <p>Lottery</p>
                 </li>
                 <li>
-                    <div className="icon-wrap">   <img src="/img/svg/Github.svg" /></div>
+                    <div className="icon-wrap">   <img alt={"icon"} src="/img/svg/Github.svg" /></div>
                     <p>Github</p>
                 </li>
                 <li>
-                    <div className="icon-wrap"> <img src="/img/svg/Bridge.svg" /></div>
+                    <div className="icon-wrap"> <img alt={"icon"} src="/img/svg/Bridge.svg" /></div>
                     <p>Bridge</p>
                 </li>
                 <li>
-                    <div className="icon-wrap">   <img src="/img/svg/Medium.svg" /></div>
+                    <div className="icon-wrap">   <img alt={"icon"} src="/img/svg/Medium.svg" /></div>
                     <p>Medium</p>
                 </li>
                 <li>
-                    <div className="icon-wrap">    <img src="/img/svg/Document.svg" /></div>
+                    <div className="icon-wrap">    <img alt={"icon"} src="/img/svg/Document.svg" /></div>
                     <p>Documentation</p>
                 </li>
             </ul>
-            <div className="connect-wallet-wrap">
-                <div className="connect-wallet">
-                    <p> Connect Wallet</p>
-                    <img src="/img/svg/Wallet.svg" />
-                </div>
-            </div>
+            <ConnectWallet style={{margin:"0 10px"}}/>
         </div>
     );
 }

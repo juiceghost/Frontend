@@ -1,0 +1,216 @@
+.lottery-wrap {
+    .main-title {
+        margin-top: 115px;
+        font-weight: bold;
+        font-size: 52px;
+        text-align: center;
+    }
+    .ticket {
+        margin-top: 12px;
+        font-weight: bold;
+        font-size: 21px;
+        line-height: 29px;
+        text-align: center;
+    }
+    .timer-wrap {
+        width: 245px;
+        height: 12px;
+        border: 1px solid #4dd9f6;
+        border-radius: 24px;
+        overflow: hidden;
+        // padding: 0.5px;
+        margin: auto;
+        margin-top: 20px;
+        .timer {
+            height: 100%;
+            width: 60%;
+            background: #4dd9f6;
+            border-radius: 26px 0px 0px 24px;
+        }
+    }
+    .timer-text {
+        margin-top: 7px;
+        font-size: 16px;
+        letter-spacing: 0.02em;
+        font-weight: 400;
+        .bold {
+            font-weight: 700;
+        }
+    }
+    .draw-btns {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        .blue-button {
+            margin-left: 5px;
+        }
+        .navy-button {
+            margin-right: 5px;
+        }
+    }
+
+    .lottery-info {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        .winner {
+            margin: 10px;
+            width: 488px;
+            // height: 413px;
+            background: rgba(3, 6, 41, 0.72);
+            box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+            .search-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 22px;
+                color: #4dd9f6;
+                .input-wrap {
+                    display: flex;
+                    font-weight: 600;
+                    font-size: 16px;
+                    letter-spacing: 0.02em;
+
+                    .input-box,
+                    .search-btn {
+                        width: 100px;
+                        height: 28px;
+                    }
+                    .input-box {
+                        border: 1px solid #0b5079;
+                        box-sizing: border-box;
+                        border-radius: 12px 0px 0px 12px;
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        input {
+                            background: transparent;
+                            border: 0;
+                            width: 100%;
+                            outline: none;
+                            text-align: center;
+                            color: #ffffff;
+                        }
+                        input::-webkit-outer-spin-button,
+                        input::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+                        input[type="number"] {
+                            -moz-appearance: textfield;
+                        }
+                        &:focus-within {
+                            box-shadow: 0px 0px 3px 1px #4dd9f6;
+                        }
+                    }
+                    .search-btn {
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        border: 1px solid #4dd9f6;
+                        box-sizing: border-box;
+                        border-radius: 0px 12px 12px 0px;
+                        color: #4dd9f6;
+                        cursor: pointer;
+                        &:hover {
+                            filter: brightness(1.2);
+                        }
+                    }
+                }
+            }
+
+            .round-wrap {
+                padding: 15px 0;
+                border-bottom: 1px solid #0b5079;
+                border-top: 1px solid #0b5079;
+
+                .round-title {
+                    font-size: 24px;
+                    line-height: 33px;
+                    letter-spacing: 0.02em;
+                    font-weight: bold;
+                    text-align: left;
+                    color: #ffffff;
+                }
+                .prize-wrap {
+                    font-weight: 600;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 8px;
+                    .win-numbers:last-child {
+                        margin-right: 40px;
+                    }
+                    .win-numbers {
+                        .w-title {
+                            color: #4dd9f6;
+                            font-size: 12px;
+                            text-align: left;
+                        }
+                        .w-numbers {
+                            // color: #4dd9f6;
+                            text-align: left;
+
+                            font-size: 28px;
+                        }
+                    }
+                }
+            }
+            .result-wrap {
+                .matched {
+                    padding-top: 12px;
+                    padding-bottom: 8px;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    .m-title {
+                        color: #4dd9f6;
+                        margin-bottom: 10px;
+                        // text-align: left;
+                    }
+                    p {
+                        text-align: right;
+                    }
+                    p:nth-child(3n + 1) {
+                        text-align: left;
+                    }
+                }
+                .burned {
+                    display: inline-flex;
+                    float: right;
+                    align-items: baseline;
+                    padding-top: 9px;
+                    padding-bottom: 8px;
+                    padding-left: 100px;
+                    border-top: 2px solid #0b5079;
+                    font-weight: 600;
+                    font-size: 14px;
+                    .b-title {
+                        color: #4dd9f6;
+                        margin-right: 3px;
+                        font-size: 12px;
+                    }
+                }
+
+                .buy-ticket {
+                    border-top: 1px solid #0b5079;
+
+                    padding-top: 20px;
+                }
+            }
+        }
+
+        .history {
+            margin: 10px;
+            width: 488px;
+            height: 413px;
+            background: rgba(3, 6, 41, 0.72);
+            box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+            border-radius: 24px;
+        }
+    }
+}

@@ -36,7 +36,7 @@ const Wallets = () => {
             size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            className="connect-wallet"
+            className="connect-wallet-popup"
             show={store.show_connect}
             onHide={() => {
                 store.hideConnectPopup()

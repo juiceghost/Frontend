@@ -1,16 +1,16 @@
-// @import "~bootstrap/scss/functions";
-// @import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 
 @import url('https://fonts.googleapis.com/css?family=Inter:100,200,300,400,500,600,700,800,900');
 @import url('https://fonts.googleapis.com/css?family=Nunito:100,200,300,400,500,600,700,800,900');
 // @import url('https://fonts.googleapis.com/css?family=Amaranth:100,200,300,400,500,600,700,800,900');
-
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
+
 body {
   font-family: 'Inter' !important;
 
@@ -21,11 +21,11 @@ $theme-colors: (
   "primary": #2376D6
 );
 
-.title {
-  font-family: 'Amaranth' !important;
-  font-weight: bold;
-  font-size: 24px;
-}
+// .title {
+//   font-family: 'Amaranth' !important;
+//   font-weight: bold;
+//   font-size: 24px;
+// }
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -60,3 +60,4 @@ html,body,#root,.main{
 }
 
 // @import "~bootstrap/scss/bootstrap";
+
