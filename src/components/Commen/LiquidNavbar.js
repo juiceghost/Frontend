@@ -4,7 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
 import { useMediaQuery } from 'react-responsive'
-import store from '../store'
+import store from '../../store'
 import './Navbar.scss'
 
 const LiquidNavbar = () => {

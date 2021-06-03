@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react'
-import Farm from '../components/Farm'
+import Farm from '../components/Farm/Farm'
 import { useFarms } from '../hooks/useFarms'
 import { usePrices } from '../hooks/usePrices'
 import { useFarmsUser } from '../hooks/useFarmsUser'

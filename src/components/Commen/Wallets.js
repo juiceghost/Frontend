@@ -5,9 +5,9 @@ import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
 import { UnsupportedChainIdError } from '@web3-react/core'
 import { NotificationManager } from 'react-notifications'
-import store from '../store'
-import { addRPC } from '../utils/addRPC';
-import { injected } from '../utils/connectors';
+import store from '../../store'
+import { addRPC } from '../../utils/addRPC';
+import { injected } from '../../utils/connectors';
 
 const Wallets = () => {
 

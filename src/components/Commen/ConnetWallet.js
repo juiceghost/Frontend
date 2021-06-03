@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
 
-import store from '../store'
+import store from '../../store'
 
 const ConnectWallet = ({ style, rest }) => {
     const { account } = useWeb3React()

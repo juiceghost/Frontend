@@ -1,18 +1,18 @@
 import { useWeb3React } from '@web3-react/core';
 import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
-import { useApprove } from '../hooks/useApprove';
-import { useStake } from '../hooks/useStake';
-import { useUnStake } from '../hooks/useUnStake';
-import { getExplorerAddress } from '../utils';
-import { getMasterChefAddress } from '../utils/addressHelpers';
+import { useApprove } from '../../hooks/useApprove';
+import { useStake } from '../../hooks/useStake';
+import { useUnStake } from '../../hooks/useUnStake';
+import { getExplorerAddress } from '../../utils';
+import { getMasterChefAddress } from '../../utils/addressHelpers';
 import StakeModal from './StakeModal';
 import BigNumber from 'bignumber.js';
-import { isZero, ZERO } from '../config/constants/numbers';
-import { getFullDisplayBalance } from '../utils/formatNumber';
-import store from '../store'
-import { addToken } from '../utils/AddToken';
-import { QuoteToken } from '../config/constants/types';
+import { isZero, ZERO } from '../../config/constants/numbers';
+import { getFullDisplayBalance } from '../../utils/formatNumber';
+import store from '../../store'
+import { addToken } from '../../utils/AddToken';
+import { QuoteToken } from '../../config/constants/types';
 import './farm.scss'
 
 const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {

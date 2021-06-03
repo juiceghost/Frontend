@@ -5,7 +5,7 @@ import './modal.scss'
 
 Modal.setAppElement('#root')
 
-const BuyTicket = ({ modalIsOpen, setIsOpen }) => {
+const BuyTicketModal = ({ modalIsOpen, setIsOpen }) => {
 
 
     function afterOpenModal() {
@@ -37,7 +37,6 @@ const BuyTicket = ({ modalIsOpen, setIsOpen }) => {
                 right: 'auto',
                 bottom: 'auto',
                 color: "#ffffff",
-                // marginRight: '-50%',
                 transform: 'translate(-50%, -50%)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -82,7 +81,7 @@ const BuyTicket = ({ modalIsOpen, setIsOpen }) => {
 
             <div className="action-btns">
 
-                <div className=" lq-button navy-button cancel">
+                <div className=" lq-button navy-button cancel" onClick={closeModal}>
                     Cancel
                 </div>
 
@@ -96,12 +95,10 @@ const BuyTicket = ({ modalIsOpen, setIsOpen }) => {
                 Ticket purchases are final. Your LQDR cannot be returned after buying tickets!
             </div>
 
-
-
         </div>
 
 
     </Modal>);
 }
 
-export default BuyTicket;
+export default BuyTicketModal;
