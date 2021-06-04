@@ -79,3 +79,41 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .home2-wrap {
+        width: 95%;
+        margin: auto;
+        .liquid-home-logo {
+            margin-top: 40px;
+            width: 80px;
+            height: 80px;
+        }
+        .main-title {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            margin-top: 15px;
+            font-size: 30px;
+        }
+        .tvl-title {
+            margin-top: 25px;
+            font-size: 19px;
+        }
+        .btn-wrap {
+            font-size: 20px;
+        }
+        .tvl-amount {
+            font-weight: bold;
+            font-size: 32px;
+        }
+        .markets {
+            gap: 17px 17px;
+
+            .market {
+                padding: 24px 30px 20px 30px;
+                max-width: 340px;
+            }
+        }
+    }
+}

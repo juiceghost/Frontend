@@ -1,9 +1,13 @@
 .navbar-wrap {
   width: 280px;
+  min-width: 280px;
   background: #030629;
   overflow-y: auto;
   min-height: 100%;
   color: #e5e5e5;
+  .close {
+    display: none;
+  }
   .logo-wrap {
     display: flex;
     cursor: pointer;
@@ -91,6 +95,50 @@
     }
     &:hover {
       filter: brightness(1.1);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .opened-nav {
+    height: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .logo-wrap {
+      display: block !important;
+      border-bottom: 1px solid #0b5079 !important;
+    }
+    .nav-content {
+      display: block !important;
+    }
+  }
+  .navbar-wrap {
+    z-index: 10;
+    background: #030629; //TODO transparetn
+    .logo-wrap {
+      display: inline-block;
+      border: 0;
+    }
+    .nav-content {
+      display: none;
+    }
+    .hide {
+      display: none;
+    }
+    .show {
+      display: block;
+    }
+
+    width: 100%;
+    min-height: unset;
+    .close {
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      top: 28px;
+      right: 20px;
     }
   }
 }
