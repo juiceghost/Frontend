@@ -1,9 +1,11 @@
-import { observer } from 'mobx-react'
-import './Home2.scss'
 import { isZero } from '../config/constants/numbers'
 import { usePrices } from '../hooks/usePrices'
 import { useLqdr } from '../hooks/useLqdr'
 import { useTotalValue } from '../utils/fetchFarmUser'
+import { Link } from 'react-router-dom'
+
+import './Home2.scss'
+
 function Home2() {
     const tvl = useTotalValue()
     const prices = usePrices()
@@ -16,10 +18,10 @@ function Home2() {
                 Incentivizing deep liquidity for SushiSwap on Fantom Opera
             </div>
             <div className="tvl-title">Total Value Locked</div>
-            <div className="tvl-amount">{isZero(tvl) ? "" : `$${tvl.toFormat(0)}`}</div>
-            <div className="lq-button  blue-button btn-wrap ">
+            <div className="tvl-amount">{isZero(tvl) ? "N/A" : `$${tvl.toFormat(0)}`}</div>
+            <Link to="/farms" className="lq-button  blue-button btn-wrap ">
                 Launch Liquid Driver
-            </div>
+            </Link>
             <div className="markets">
                 <div className="market">
                     <p className="m-title">Market Cap</p>
@@ -48,4 +50,4 @@ function Home2() {
     </>)
 }
 
-export default observer(Home2)
+export default Home2

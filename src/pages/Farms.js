@@ -44,9 +44,11 @@ const Farms = () => {
             <div className=""></div>
 
             <div className="farms">
-                {farms && farms.map((farm, index) => (
+                {farms ? farms.map((farm, index) => (
                     <Farm2 key={index} index={index} active={active} stakeOnly={stakeOnly} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
-                ))}
+                )) :
+                    <img src="/img/svg/spinner2.svg" style={{ width: "80px", marginTop: "30px" }} />
+                }
             </div>
 
 
