@@ -4,13 +4,11 @@ import ConnectWallet from './ConnetWallet';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
-    // const isMobile = window.innerWidth < 768
-    const [show, setShow] = useState(null)
     const [openMenu, setOpenMenu] = useState(false)
     return (
         <div className={`navbar-wrap ${openMenu ? "opened-nav" : ""}`} >
 
-            <img className="close" src={`/img/svg/${openMenu ? "close" : "menu"}.svg`}
+            <img className="close" src={`/img/svg/${openMenu ? "close" : "menu"}.svg`} alt="close"
                 onClick={() => {
                     setOpenMenu(!openMenu)
                 }} />
