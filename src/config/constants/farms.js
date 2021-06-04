@@ -19,7 +19,6 @@ const farms = [
     quoteTokenSymbol: QuoteToken.LQDR,
     quoteTokenAdresses: contracts.LQDR,
     isTokenOnly: true,
-    icon: 'LQDR.png'
   },
   {
     pid: 18,
@@ -37,7 +36,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'LQDR-FTM.png'
   },
   {
     pid: 17,
@@ -55,7 +53,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FUSDT,
     quoteTokenAdresses: contracts.FUSDT,
-    icon: 'LQDR-USDT.png'
   },
   {
     pid: 0,
@@ -73,7 +70,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'YFI-FTM.png'
   },
   {
     pid: 1,
@@ -91,7 +87,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'DAI-FTM.png'
   },
   {
     pid: 2,
@@ -109,7 +104,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'LINK-FTM.png'
   },
   {
     pid: 3,
@@ -127,7 +121,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'wETH-FTM.png'
   },
   {
     pid: 4,
@@ -147,7 +140,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'fUSDT-FTM.png'
   },
   {
     pid: 5,
@@ -165,7 +157,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'WBTC-FTM.png'
   },
   {
     pid: 6,
@@ -184,7 +175,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'SUSHI-FTM.png'
   },
   {
     pid: 7,
@@ -202,7 +192,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'CREAM-FTM.png'
   },
   {
     pid: 8,
@@ -220,7 +209,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FXS,
     quoteTokenAdresses: contracts.FXS,
-    icon: 'FRAX-FXS.png'
   },
   {
     pid: 9,
@@ -238,7 +226,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.USDC,
     quoteTokenAdresses: contracts.USDC,
-    icon: 'AAVE-USDC.png'
   },
   {
     pid: 10,
@@ -256,7 +243,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'SNX-FTM.png'
   },
   {
     pid: 11,
@@ -274,7 +260,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'ICE-FTM.png'
   },
   {
     pid: 12,
@@ -292,7 +277,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'COVER-FTM.png'
   },
   {
     pid: 13,
@@ -310,7 +294,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'ZOO-FTM.png'
   },
   {
     pid: 15,
@@ -328,7 +311,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'CRV-FTM.png'
   },
   {
     pid: 16,
@@ -346,7 +328,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FRAX,
     quoteTokenAdresses: contracts.FRAX,
-    icon: 'fUSDT-FRAX.png'
   },
   {
     pid: 14,
@@ -364,7 +345,6 @@ const farms = [
     },
     quoteTokenSymbol: QuoteToken.FTM,
     quoteTokenAdresses: contracts.FTM,
-    icon: 'SFI-FTM.png',
     isDisable: true
   },
 ]
