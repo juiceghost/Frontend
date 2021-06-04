@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ConnectWallet from '../Commen/ConnetWallet';
+import ConnectWallet from '../Common/ConnetWallet';
 import { useWeb3React } from '@web3-react/core';
 
 const Round = ({ setIsOpen }) => {

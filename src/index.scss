@@ -55,6 +55,7 @@ $theme-colors: (
 
 
 html,body,#root,.main{
+  min-height:100%;
   height:100%;
   -webkit-transform: translate3d(0,0,0);
 }

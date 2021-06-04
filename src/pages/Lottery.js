@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react'
 import BuyTicketModal from '../components/Lottery/BuyTicketModal';
 import History from '../components/Lottery/History';
 import Round from '../components/Lottery/Round';
@@ -49,4 +48,4 @@ const Lottery = () => {
     </>);
 }
 
-export default observer(Lottery);
+export default Lottery;

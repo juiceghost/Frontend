@@ -1,8 +1,8 @@
 .navbar-wrap {
   width: 280px;
-  height: 100%;
   background: #030629;
   overflow-y: auto;
+  min-height: 100%;
   color: #e5e5e5;
   .logo-wrap {
     display: flex;
@@ -27,15 +27,28 @@
     padding-top: 32px;
     // line-height: 290%;
     letter-spacing: 0.07em;
+    .active {
+      background: #182d5a;
+    }
     li {
       cursor: pointer;
       margin-bottom: 20px;
-      padding: 10px;
+
       // padding-left:21px;
-      padding-right: 0;
       display: flex;
       //  justify-content: center;
       align-items: center;
+
+      a {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        padding-right: 0;
+        width: 100%;
+        height: 100%;
+        color: #e5e5e5;
+        text-decoration: none;
+      }
       .icon-wrap {
         width: 50px;
       }
@@ -46,7 +59,7 @@
         margin-top: 5px;
       }
       &:hover {
-        background: #222222;
+        background: #182d5a;
       }
     }
   }
