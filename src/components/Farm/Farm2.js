@@ -95,7 +95,6 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     const tokensName = farm.lpSymbol.split("/");
 
     if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && isZero(poolWeight))) {
-
         return (<></>)
     }
 
@@ -127,8 +126,8 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <div className="top">
                 <div className="icons">
 
-                    <img className="first" src={`/img/svg/token/${tokensName[0]}.svg`} alt="token" />
-                    {tokensName.length > 1 && <img className="last" src={`/img/svg/token/${tokensName[1]}.svg`} alt="token" />}
+                    <img className="first" src={`/img/svg/token2/${tokensName[0]}.svg`} alt="token" />
+                    {tokensName.length > 1 && <img className="last" src={`/img/svg/token2/${tokensName[1]}.svg`} alt="token" />}
                 </div>
                 <div className="info">
                     <p className="name">{farm.lpSymbol}</p>

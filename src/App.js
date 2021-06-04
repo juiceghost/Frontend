@@ -1,7 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import { NotificationContainer } from 'react-notifications'
-import Home from './pages/Home'
 import Farms from './pages/Farms'
 import Home2 from './pages/Home2'
 import Lottery from './pages/Lottery'
@@ -52,9 +51,6 @@ function App() {
 
               <Route path="/lottery">
                 <Lottery />
-              </Route>
-              <Route path="/home-old">
-                <Home />
               </Route>
               <Route path="/">
                 <Home2 />

@@ -84,12 +84,14 @@ input:checked + .slider:before {
     }
     .toggle-btns {
         text-align: center;
-        margin-top: 25px;
+        margin-top: 10px;
         .slider-wrap {
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            
             margin: auto 12.5px;
+            margin-top: 15px;
             padding: 10px 20px;
             height: 40px;
             background: rgba(3, 6, 41, 0.72);
@@ -129,6 +131,8 @@ input:checked + .slider:before {
                         display: block;
                         width: 42px;
                         height: 42px;
+                        border-radius:50%;
+                        border:2px solid #4dd9f6;
                         margin-bottom: -15px;
                         z-index: 2;
                     }
@@ -138,6 +142,8 @@ input:checked + .slider:before {
                         margin-left: 20px;
                         width: 42px;
                         height: 42px;
+                        border-radius:50%;
+                        border:2px solid #4dd9f6;
                     }
                 }
                 .info {
