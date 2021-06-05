@@ -1,4 +1,6 @@
 .home2-wrap {
+    position: relative;
+    z-index: 2;
     text-align: center;
     font-family: Nunito;
     font-style: normal;
@@ -9,7 +11,6 @@
         margin-top: 90px;
         width: 128px;
         height: 128px;
-        // display: block;
     }
     .main-title {
         max-width: 700px;

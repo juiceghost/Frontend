@@ -65,6 +65,46 @@ input:checked + .slider:before {
 .farm-wrap {
     font-family: Nunito;
     font-style: normal;
+    // position: relative;
+    z-index: 2;
+    .waterfall {
+        position: absolute;
+        width: 100%;
+        z-index: -2;
+        left: 0;
+    }
+    .waterfall1 {
+        top: 0;
+    }
+    .waterfall3 {
+        bottom: 0;
+    }
+
+    .bg-waterfall {
+        position: absolute;
+        width: calc(100% - 0px);
+        height: 100%;
+        top: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: -1;
+        bottom: auto;
+        // min-height: 100%;
+        .inner {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            img:nth-child(2) {
+                flex-grow: 1;
+            }
+        }
+        img {
+            margin: -5px 0;
+            width: 100%;
+        }
+    }
 
     .f-title {
         margin-top: 115px;
@@ -89,7 +129,7 @@ input:checked + .slider:before {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            
+
             margin: auto 12.5px;
             margin-top: 15px;
             padding: 10px 20px;
@@ -131,8 +171,8 @@ input:checked + .slider:before {
                         display: block;
                         width: 42px;
                         height: 42px;
-                        border-radius:50%;
-                        border:2px solid #4dd9f6;
+                        border-radius: 50%;
+                        border: 2px solid #4dd9f6;
                         margin-bottom: -15px;
                         z-index: 2;
                     }
@@ -142,8 +182,8 @@ input:checked + .slider:before {
                         margin-left: 20px;
                         width: 42px;
                         height: 42px;
-                        border-radius:50%;
-                        border:2px solid #4dd9f6;
+                        border-radius: 50%;
+                        border: 2px solid #4dd9f6;
                     }
                 }
                 .info {
