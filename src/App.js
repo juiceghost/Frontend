@@ -1,5 +1,6 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { observer } from 'mobx-react'
+// import { observer } from 'mobx-react'
 import { NotificationContainer } from 'react-notifications'
 import Farms from './pages/Farms'
 import Home2 from './pages/Home2'
@@ -11,14 +12,13 @@ import { UnsupportedChainIdError } from '@web3-react/core'
 import WithdrawModal from './components/Farm/WidthdrawModal'
 import { useWeb3React } from '@web3-react/core'
 import { addRPC } from './utils/addRPC'
-import { useEffect } from 'react'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css'
 import './App.scss'
 
 function App() {
   const { account, error } = useWeb3React()
+
 
   useEffect(() => {
     if (error instanceof UnsupportedChainIdError) {
@@ -38,25 +38,28 @@ function App() {
       <RefreshContextProvider>
         <BrowserRouter>
           <Navbar />
-          {/* <Wallets /> */}
           <WithdrawModal />
 
-          <div className="main-container">
+          <div className="main-container" >
+
+            <img className="f-water" src="/img/bg/Waterfall-Top.svg" alt="top" />
+
             <Switch>
               <Route path="/deposit">
                 <Farms />
               </Route>
-              <Route path="/farms">
+              <Route path="/farms" >
                 <Farms />
               </Route>
-
-              <Route path="/lottery">
+              <Route path="/lottery" >
                 <Lottery />
               </Route>
+
               <Route path="/">
                 <Home2 />
               </Route>
             </Switch>
+            <img style={{ width: "100%" }} src="/img/bg/Waterfall-Bottom.svg" alt="top" />
           </div >
         </BrowserRouter>
       </RefreshContextProvider>
@@ -66,4 +69,4 @@ function App() {
   )
 }
 
-export default observer(App)
+export default App

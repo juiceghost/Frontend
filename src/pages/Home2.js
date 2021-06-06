@@ -10,7 +10,6 @@ function Home2() {
     const tvl = useTotalValue()
     const prices = usePrices()
     const market = useLqdr()
-
     return (<>
         <div className="home2-wrap">
             <img className="liquid-home-logo" src="/img/liquid-home-logo.png" alt="logo" />

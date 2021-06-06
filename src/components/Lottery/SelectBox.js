@@ -15,7 +15,7 @@ const SelectBox = ({ currRow, setCurrRow }) => {
             </div>
             <ul className={`${open ? "ul-open" : ""}`}>
                 {rows.filter((row) => row !== currRow).map((row, id) => {
-                    return <li key={id} onClick={() => setCurrRow(row)}>
+                    return <li key={id} onClick={() => setCurrRow(row === 'Max' ? 10000 : row)}>
                         <div >{row}</div>
                     </li>
                 })}

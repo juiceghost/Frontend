@@ -7,7 +7,7 @@ import Round from '../components/Lottery/Round';
 import PrizeStatus from '../components/Lottery/PrizeStatus';
 import Tickets from '../components/Lottery/Tickets';
 import WinnerInfo from '../components/Lottery/WinnerInfo';
-import {ProgressBar} from 'react-bootstrap';
+// import {ProgressBar} from 'react-bootstrap';
 import './lottery.scss'
 
 const Lottery = () => {
@@ -61,7 +61,8 @@ const Lottery = () => {
 
             
             <div className="timer-wrap">
-                <ProgressBar now={progress}/>
+                {/* <ProgressBar now={progress}/> */}
+                <progress max="100" value={progress}></progress>
             </div>
 
             <div className="timer-text">

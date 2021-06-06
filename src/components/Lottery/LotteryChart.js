@@ -2,26 +2,28 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 
-const LotteryChart = () => {
+const LotteryChart = ({idList, poolData, burnedData}) => {
     const data = {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        labels: idList,
         datasets: [
             {
                 label: 'Pool Size',
-                data: [12, 19, 30, 50, 20, 30, 60, 70, 100, 80, 12, 19, 30, 50, 20, 30, 60, 70, 100, 80],
+                data: poolData,
                 fill: false,
                 backgroundColor: '#4DD9F6',
                 borderColor: '#4DD9F6',
                 yAxisID: 'y',
+                animation: false,
             },
 
             {
                 label: 'Burned',
-                data: [5, 19, 30, 40, 10, 30, 20, 50, 90, 30, 19, 30, 40, 10, 30, 20, 50, 90, 30],
+                data: burnedData,
                 fill: false,
                 backgroundColor: '#3F6A73',
                 borderColor: '#3F6A73',
                 yAxisID: 'y1',
+                animation: false,
             },
         ],
     };

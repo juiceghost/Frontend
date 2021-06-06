@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './Navbar.scss'
 import ConnectWallet from './ConnetWallet';
 import { NavLink } from 'react-router-dom';
+// import { NotificationManager } from 'react-notifications';
 
 const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false)
-    return (
+    return (<>
         <div className={`navbar-wrap ${openMenu ? "opened-nav" : ""}`} >
 
             <img className="close" src={`/img/svg/${openMenu ? "close" : "menu"}.svg`} alt="close"
@@ -27,16 +28,21 @@ const Navbar = () => {
                     </li>
                     <li onClick={() => setOpenMenu(false)}>
                         <NavLink to="/farms" exact={true}>
-                            <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Lottery.svg" /></div>
+                            <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Farms.svg" /></div>
                             <p>Farms</p>
                         </NavLink>
                     </li>
-                    <li onClick={() => setOpenMenu(false)}>
+                    <li onClick={() => {
+                        // NotificationManager.info(
+                        //     <>
+                        //         <p>Comming Soon! </p>
+                        //     </>, 'Lottery'
+                        // )
+                    }}>
                         <NavLink to="/lottery" exact={true}>
                             <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Lottery.svg" /></div>
                             <p>Lottery</p>
                         </NavLink>
-
                     </li>
                     <li onClick={() => setOpenMenu(false)}>
                         <a href="https://github.com/LiquidDriver-finance" target="_blank" rel="noreferrer" >
@@ -69,6 +75,7 @@ const Navbar = () => {
                 <ConnectWallet style={{ margin: "0 10px" }} />
             </div>
         </div>
+    </>
     );
 }
 

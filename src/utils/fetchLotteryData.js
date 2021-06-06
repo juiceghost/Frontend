@@ -146,3 +146,31 @@ export const fetchLotteryTicketData = async(web3, chainId, account, roundNo) => 
 
     return ticketData
 }
+
+export const fetchLotteryGraphData = async(web3, chainId, startLotteryNo, endLotteryNo) => {
+    const lotteryAdress = getLotteryAddress(chainId)
+
+    let calls = []
+    for (let i = startLotteryNo; i <= endLotteryNo; i++) {
+        calls.push({
+            address: lotteryAdress,
+            name: 'getBasicLottoInfo',
+            params: [i]
+        })
+    }
+
+    const lotteryInfo = await multicall(web3, lotteryABI, calls, chainId)
+    let idList = []
+    let poolData = []
+    let burnedData = []
+    lotteryInfo.map((lotteryData) => {
+        idList.push(Number(lotteryData[0].lotteryID))
+        poolData.push(new BigNumber(Number(lotteryData[0].prizePoolInLqdr)).div(10 ** 18).toFixed(2))
+        burnedData.push(new BigNumber(Number(lotteryData[0].prizePoolInLqdr)).div(10 ** 18).times(lotteryData[0].prizeDistribution[0]).div(100).toFixed(2))
+        return 0;
+    })
+
+    return {
+        idList, poolData, burnedData
+    };
+}

@@ -1,10 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import useWeb3 from "../../hooks/useWeb3";
+import {
+    useLotteryCurrentRoundNo
+} from '../../hooks/useLotteryData';
+import {fetchLotteryGraphData} from '../../utils/fetchLotteryData';
 import LotteryChart from './LotteryChart';
 import SelectBox from './SelectBox';
 
 const History = () => {
-    const [currRow, setCurrRow] = useState(100)
+    const { chainId } = useWeb3React()
+    const web3 = useWeb3()
 
+    const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
+
+    const [currRow, setCurrRow] = useState(100)
+    const [idList, setIdList] = useState(['1'])
+    const [poolData, setPoolData] = useState([0])
+    const [burnedData, setBurnedData] = useState([0])
+
+    useEffect(() => {
+        async function getGraphData (startLotteryNo, endLotteryNo) {
+            const graphData = await fetchLotteryGraphData(web3, chainId, startLotteryNo, endLotteryNo)
+            if(graphData) {
+                setIdList(graphData.idList)
+                setPoolData(graphData.poolData)
+                setBurnedData(graphData.burnedData)
+            }
+        }
+        console.log('')
+        getGraphData(lotteryCurrentRoundNo > currRow ? lotteryCurrentRoundNo - currRow + 1 : 1, lotteryCurrentRoundNo);        
+    }, [web3, chainId, currRow, lotteryCurrentRoundNo])
+    
     return (<div className="history">
         <p className="h-title">History</p>
         <div className="label-chart">
@@ -24,7 +51,7 @@ const History = () => {
             </div>
 
         </div>
-        <LotteryChart />
+        <LotteryChart idList={idList} poolData = {poolData} burnedData = {burnedData}/>
     </div>);
 }
 

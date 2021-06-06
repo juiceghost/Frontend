@@ -15,7 +15,6 @@ const Round = () => {
 
     const SearchHandler = async () => {
         const data = await fetchLotteryInfo(web3, chainId, inputNumber)
-        console.log(data)
         setLotteryInfo(data)
     }
 

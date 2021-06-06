@@ -59,8 +59,8 @@ const Tickets = () => {
                     </>
                 )}
             </div> :
-            <div>
-                You have no tickets.
+            <div className="ticket-numbers">
+                <p style={{paddingTop: '20px'}}>You have no tickets.</p>
             </div>
         }
          <div className="claim-reward">

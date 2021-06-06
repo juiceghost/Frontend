@@ -1,15 +1,22 @@
 .home2-wrap {
+    position: relative;
+    z-index: 2;
     text-align: center;
     font-family: Nunito;
     font-style: normal;
     margin: auto;
     text-align: center;
+    background-image: url("../assets/imgs/Waterfall-Middle.svg");
+
+    background-position: center;
+    background-size: contain;
+    min-height: 100%;
     padding-bottom: 50px;
+    margin-top: -20px;
     .liquid-home-logo {
-        margin-top: 90px;
+        // margin-top: 90px;
         width: 128px;
         height: 128px;
-        // display: block;
     }
     .main-title {
         max-width: 700px;
@@ -82,8 +89,9 @@
 
 @media screen and (max-width: 768px) {
     .home2-wrap {
-        width: 95%;
-        margin: auto;
+        // width: 95%;
+        // margin: auto;
+
         .liquid-home-logo {
             margin-top: 40px;
             width: 80px;
