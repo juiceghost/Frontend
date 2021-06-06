@@ -23,11 +23,11 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
 
     function onExchange(e) {
         const digitsOnly = e.target.value.replace('.', '')
-        setTicketsAmount(digitsOnly)        
+        setTicketsAmount(Math.min(digitsOnly, 50))
     }
 
     function handleMax() {
-        setTicketsAmount(ticketPrice > 0 ? Math.floor(lqdrBalance / ticketPrice) : 0)
+        setTicketsAmount(ticketPrice > 0 ? Math.min(Math.floor(lqdrBalance / ticketPrice), 50) : 0)
     }
 
     return (<Modal
