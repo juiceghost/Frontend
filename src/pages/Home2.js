@@ -6,11 +6,10 @@ import { Link } from 'react-router-dom'
 
 import './Home2.scss'
 
-function Home2({ setHeight }) {
+function Home2() {
     const tvl = useTotalValue()
     const prices = usePrices()
     const market = useLqdr()
-    setHeight(1)
     return (<>
         <div className="home2-wrap">
             <img className="liquid-home-logo" src="/img/liquid-home-logo.png" alt="logo" />

@@ -28,4 +28,4 @@ const ConnectWallet = ({ style, rest }) => {
     </>);
 }
 
-export default observer(ConnectWallet);
+export default ConnectWallet;

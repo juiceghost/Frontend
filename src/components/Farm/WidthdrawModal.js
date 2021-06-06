@@ -36,7 +36,7 @@ const WithdrawModal = ({ modalIsOpen, setIsOpen, title, onConfirm, amount, symbo
                 flexDirection: 'column',
                 maxHeight: '95%',
                 maxWidth: '480px',
-                width: '80%',
+                width: '95%',
                 background: 'rgba(3, 6, 41, 0.72)',
                 border: '1px solid #083258',
                 borderRadius: '24px',

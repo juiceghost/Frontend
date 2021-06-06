@@ -65,49 +65,15 @@ input:checked + .slider:before {
 .farm-wrap {
     font-family: Nunito;
     font-style: normal;
-    // position: relative;
+    background-image: url("../assets/imgs/Waterfall-Middle.svg");
+    background-position: center;
+    background-size: contain;
+    min-height: 100%;
+    position: relative;
+    margin-top: -20px;
     z-index: 2;
-    .waterfall {
-        position: absolute;
-        width: 100%;
-        z-index: -2;
-        left: 0;
-    }
-    .waterfall1 {
-        top: 0;
-    }
-    .waterfall3 {
-        bottom: 0;
-    }
-
-    .bg-waterfall {
-        position: absolute;
-        width: calc(100% - 0px);
-        height: 100%;
-        top: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        z-index: -1;
-        bottom: auto;
-        // min-height: 100%;
-        .inner {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            height: auto;
-            img:nth-child(2) {
-                flex-grow: 1;
-            }
-        }
-        img {
-            margin: -5px 0;
-            width: 100%;
-        }
-    }
-
     .f-title {
-        margin-top: 115px;
+        // margin-top: 115px;
         font-weight: bold;
         font-size: 52px;
     }
@@ -308,5 +274,16 @@ input:checked + .slider:before {
 @media screen and (max-width: 768px) {
     .farm-wrap {
         min-height: 100vh;
+        .f-title {
+            font-size: 35px;
+        }
+        .f-title-md {
+            font-size: 17px;
+        }
+        .f-title-sm {
+            padding: 0 20px;
+
+            font-size: 14px;
+        }
     }
 }

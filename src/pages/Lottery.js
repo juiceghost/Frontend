@@ -6,7 +6,6 @@ import './lottery.scss'
 
 const Lottery = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
-
     return (<>
         <div className="lottery-wrap">
             <p className="main-title">The LQDR Lottery</p>

@@ -75,3 +75,14 @@
         font-size: 11px;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .buy-ticket-modal {
+        .title-wrap {
+            font-size: 18px;
+        }
+        .amounts-wrap {
+            font-size: 14px;
+        }
+    }
+}
