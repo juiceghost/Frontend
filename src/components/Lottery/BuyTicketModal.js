@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BigNumber from 'bignumber.js'
 import Modal from 'react-modal';
 import {useBuyTickets} from '../../hooks/useBuyTickets';
@@ -28,6 +28,11 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
 
     function handleMax() {
         setTicketsAmount(ticketPrice > 0 ? Math.min(Math.floor(lqdrBalance / ticketPrice), 50) : 0)
+    }
+
+    const onBuy = async () => {
+        const res = await onBuyTickets(ticketsAmount ? ticketsAmount : 0)
+        if (res) closeModal()
     }
 
     return (<Modal
@@ -101,7 +106,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
                     Cancel
                 </div>
 
-                <div className="lq-button blue-button buy" onClick={() => onBuyTickets(ticketsAmount ? ticketsAmount : 0)}>
+                <div className="lq-button blue-button buy" onClick={onBuy}>
                     Buy
                 </div>
 
