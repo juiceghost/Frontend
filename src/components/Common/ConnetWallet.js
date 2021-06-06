@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react'
 import { useWeb3React } from '@web3-react/core'
 import WalletModal from './WalletModal';
 

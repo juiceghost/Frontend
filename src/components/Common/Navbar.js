@@ -35,7 +35,7 @@ const Navbar = () => {
                     <li onClick={() => {
                         NotificationManager.info(
                             <>
-                                <p>Comming Soon! </p>
+                                <p>Coming Soon! </p>
                             </>, 'Lottery'
                         )
                     }}>
