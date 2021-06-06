@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
+import BigNumber from 'bignumber.js'
 import Modal from 'react-modal';
+import {useBuyTickets} from '../../hooks/useBuyTickets';
+
 
 import './modal.scss'
 
 Modal.setAppElement('#root')
 
-const BuyTicketModal = ({ modalIsOpen, setIsOpen }) => {
-
+const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRange, ticketPrice, lqdrBalance }) => {
+    const {onBuyTickets} = useBuyTickets(lotteryId, lotterySize, maxRange)
+    const [ticketsAmount, setTicketsAmount] = useState(0)
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
@@ -15,6 +19,15 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen }) => {
 
     function closeModal() {
         setIsOpen(false);
+    }
+
+    function onExchange(e) {
+        const digitsOnly = e.target.value.replace('.', '')
+        setTicketsAmount(digitsOnly)        
+    }
+
+    function handleMax() {
+        setTicketsAmount(ticketPrice > 0 ? Math.floor(lqdrBalance / ticketPrice) : 0)
     }
 
     return (<Modal
@@ -63,20 +76,23 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen }) => {
             </div>
 
             <div className="amounts-wrap">
-                <p >1 Ticket = 0.1LQDR</p>
-                <p >150.04 LQDR Available</p>
+                <p >1 Ticket = {new BigNumber(ticketPrice).div(10 ** 18).toFormat(2)}LQDR</p>
+                <p >{new BigNumber(lqdrBalance).div(10 ** 18).toFormat(2)} LQDR Available</p>
             </div>
 
 
             <div className="input-wrap">
                 <input
                     type="number"
-                    placeholder="0.0" />
-                <div className="lq-button navy-button max-btn">Max</div>
+                    placeholder="0.0"
+                    value={ticketsAmount}
+                    onChange={(e) => onExchange(e)}
+                    />
+                <div className="lq-button navy-button max-btn" onClick={() => handleMax()}>Max</div>
             </div>
 
             <div className="spend">
-                You will spend <span className="lqdr-blue" > 0.10 LQDR</span>
+                You will spend <span className="lqdr-blue" > {new BigNumber(ticketPrice).times(ticketsAmount ? ticketsAmount : 0).div(10 ** 18).toFormat(2)} LQDR</span>
             </div>
 
             <div className="action-btns">
@@ -85,7 +101,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen }) => {
                     Cancel
                 </div>
 
-                <div className="lq-button blue-button buy">
+                <div className="lq-button blue-button buy" onClick={() => onBuyTickets(ticketsAmount ? ticketsAmount : 0)}>
                     Buy
                 </div>
 

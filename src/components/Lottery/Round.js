@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import ConnectWallet from '../Common/ConnetWallet';
-import { useWeb3React } from '@web3-react/core';
 
-const Round = ({ setIsOpen }) => {
-    const { account } = useWeb3React()
+const Round = () => {
     const [inputNumber, setInputNumber] = useState(1)
 
     return (<div className="winner">
@@ -44,16 +41,10 @@ const Round = ({ setIsOpen }) => {
                 <p>2</p><p>0</p><p>7.13</p>
             </div>
 
-
             <div className="burned">
                 <span className="b-title">Burned : </span>
                 <span> 11.09</span>
             </div>
-            <div className="clear-both"></div>
-            <div className="buy-ticket">
-                {account ? <div className="lq-button blue-button" onClick={() => setIsOpen(true)}>Buy Ticket</div> : <ConnectWallet />}
-            </div>
-
         </div>
 
     </div>);

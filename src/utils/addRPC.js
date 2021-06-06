@@ -29,5 +29,17 @@ const NetworksData = {
         blockExplorerUrls: ["https://ftmscan.com/"],
         iconUrls: []
     },
+    4002: {
+        chainId: "0xFA",
+        chainName: "Fantom Testnet",
+        nativeCurrency: {
+            name: "Fantom",
+            symbol: "FTM",
+            decimals: 18,
+        },
+        rpcUrls: ["https://rpc.testnet.fantom.network/"],
+        blockExplorerUrls: ["https://testnet.ftmscan.com/"],
+        iconUrls: []
+    },
 
 }

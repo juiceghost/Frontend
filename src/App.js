@@ -13,6 +13,7 @@ import { useWeb3React } from '@web3-react/core'
 import { addRPC } from './utils/addRPC'
 import { useEffect } from 'react'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-notifications/lib/notifications.css'
 import './App.scss'
 
