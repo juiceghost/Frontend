@@ -31,7 +31,7 @@ export const generateLottoNumbers = (
     let counterForNumbers = 0;
     for (let i = 0; i < numberOfTickets; i++) {
         for (let j = 0; j < lottoSize; j++) {
-            numberOfNumbers[counterForNumbers] = Math.floor(Math.random() * maxRange + 1); 
+            numberOfNumbers[counterForNumbers] = Math.floor(Math.random() * maxRange);
             counterForNumbers += 1;
         }
     }
