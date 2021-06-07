@@ -2,7 +2,8 @@ import web3NoAccount from './web3'
 import ERC20Abi from '../config/abi/erc20.json'
 import MasterChefAbi from '../config/abi/masterchef.json'
 import SushiAbi from '../config/abi/sushi.json'
-import { getMasterChefAddress } from './addressHelpers'
+import LotteryAbi from '../config/abi/lottery.json'
+import { getMasterChefAddress, getLotteryAddress } from './addressHelpers'
 import { getSushiAddress } from './addressHelpers'
 
 const getContract = (abi, address, web3) => {
@@ -20,4 +21,8 @@ export const getSushiRouter = (web3, chainId) => {
 
 export const getERC20Contract = (address, web3) => {
     return getContract(ERC20Abi, address, web3)
+}
+
+export const getLotteryContract = (web3, chainId) => {
+    return getContract(LotteryAbi, getLotteryAddress(chainId), web3)
 }

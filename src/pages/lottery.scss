@@ -1,4 +1,9 @@
 .lottery-wrap {
+    background-image: url("../assets/imgs/Waterfall-Middle.svg");
+    background-position: center;
+    background-size: contain;
+    margin-top: -130px;
+    z-index: 2;
     .main-title {
         margin-top: 115px;
         font-weight: bold;
@@ -15,18 +20,11 @@
     .timer-wrap {
         width: 245px;
         height: 12px;
-        border: 1px solid #4dd9f6;
         border-radius: 24px;
         overflow: hidden;
         // padding: 0.5px;
         margin: auto;
         margin-top: 20px;
-        .timer {
-            height: 100%;
-            width: 60%;
-            background: #4dd9f6;
-            border-radius: 26px 0px 0px 24px;
-        }
     }
     .timer-text {
         margin-top: 7px;
@@ -42,10 +40,10 @@
         display: flex;
         justify-content: center;
         .blue-button {
-            margin-left: 5px;
+            margin: 0px 10px;
         }
         .navy-button {
-            margin-right: 5px;
+            margin: 0px 10px;
         }
     }
 
@@ -172,6 +170,26 @@
                         text-align: left;
                     }
                 }
+
+                .matched-prizestatus {
+                    padding-top: 12px;
+                    padding-bottom: 8px;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    .m-title {
+                        color: #4dd9f6;
+                        margin-bottom: 10px;
+                        // text-align: left;
+                    }
+                    p {
+                        text-align: right;
+                        padding-bottom: 1rem;
+                    }
+                    p:nth-child(2n + 1) {
+                        text-align: left;
+                    }
+                }
+
                 .burned {
                     display: inline-flex;
                     float: right;
@@ -191,15 +209,178 @@
 
                 .buy-ticket {
                     border-top: 1px solid #0b5079;
-
                     padding-top: 20px;
+                }
+
+                .total-pot {
+                    display: flex;
+                    text-align: left;
+                    border-bottom: 1px solid #0b5079;
+                    padding-bottom: 10px;
+                    align-items: flex-end;
+
+                    .logo-image {
+                        width: 80px;
+                    }
+
+                    .title {
+                        color: #4dd9f6;
+                    }
+
+                    .amount {
+                        font-size: 20px;
+                        font-weight: 700;
+                    }
+
                 }
             }
         }
 
+        .ticket-card {
+            margin: 10px;
+            width: 488px;
+            min-height: 413px;
+            max-height: 100%;
+            background: rgba(3, 6, 41, 0.72);
+            box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+
+            .search-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 22px;
+                color: #4dd9f6;
+                .input-wrap {
+                    display: flex;
+                    font-weight: 600;
+                    font-size: 16px;
+                    letter-spacing: 0.02em;
+
+                    .input-box,
+                    .search-btn {
+                        width: 100px;
+                        height: 28px;
+                    }
+                    .input-box {
+                        border: 1px solid #0b5079;
+                        box-sizing: border-box;
+                        border-radius: 12px 0px 0px 12px;
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        input {
+                            background: transparent;
+                            border: 0;
+                            width: 100%;
+                            outline: none;
+                            text-align: center;
+                            color: #ffffff;
+                        }
+
+                        &:focus-within {
+                            box-shadow: 0px 0px 3px 1px #4dd9f6;
+                        }
+                    }
+                    .search-btn {
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        border: 1px solid #4dd9f6;
+                        box-sizing: border-box;
+                        border-radius: 0px 12px 12px 0px;
+                        color: #4dd9f6;
+                        cursor: pointer;
+                        &:hover {
+                            filter: brightness(1.2);
+                        }
+                    }
+                }
+            }
+
+            .h-title {
+                text-align: left;
+                font-weight: bold;
+                font-size: 24px;
+                padding-bottom: 7px;
+                border-bottom: 1px solid #0b5079;
+            }
+
+            .ticket-numbers {
+                height: 220px;
+                min-height: 220px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                .m-title {
+                    color: #4dd9f6;
+                    margin-bottom: 10px;
+                    // text-align: left;
+                }
+                p {
+                    text-align: right;
+                }
+                p:nth-child(3n + 1) {
+                    text-align: left;
+                }
+            }
+
+            .claim-reward {
+                border-top: 1px solid #0b5079;
+                padding-top: 20px;
+            }
+        }
+
+        .winnerinfo-card {
+            margin: 10px;
+            margin-bottom: 30px;
+
+            width: 100%;
+            max-width: 996px;
+            min-height: 270px;
+            max-height: 100%;
+            background: rgba(3, 6, 41, 0.72);
+            box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+            border-radius: 24px;
+            padding: 20px;
+
+            .h-title {
+                text-align: center;
+                font-weight: bold;
+                font-size: 24px;
+                padding-bottom: 7px;
+                border-bottom: 1px solid #0b5079;
+            }
+
+            .winning-pad {
+                justify-content: center;
+                margin-top: 20px;
+                display: flex;
+            }
+            .winning-number {
+                margin: 10px;
+                padding-top: 10px;
+                width: 70px;
+                height: 70px;
+                border: 3px dotted #5CFFFF;
+                border-radius: 10px;
+                font-size: 30px;
+                font-weight: 800;
+            }
+
+            .winning-pad-info {
+                margin: 10px;
+            }
+
+        }
+
         .history {
             margin: 10px;
-
             width: 488px;
             min-height: 413px;
             max-height: 100%;
@@ -236,6 +417,10 @@
                     cursor: pointer;
                     &:hover {
                         box-shadow: 0px 0px 3px 1px #4dd9f6;
+                    }
+
+                    p {
+                        margin-bottom: 0px;
                     }
                 }
                 .select-open {

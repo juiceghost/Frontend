@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { NotificationContainer } from 'react-notifications'
 import Farms from './pages/Farms'
 import Home2 from './pages/Home2'
-// import Lottery from './pages/Lottery'
+import Lottery from './pages/Lottery'
 import Navbar from './components/Common/Navbar'
 import { RefreshContextProvider } from './context/RefreshContext'
 import { NotificationManager } from 'react-notifications'
@@ -12,6 +12,7 @@ import { UnsupportedChainIdError } from '@web3-react/core'
 import WithdrawModal from './components/Farm/WidthdrawModal'
 import { useWeb3React } from '@web3-react/core'
 import { addRPC } from './utils/addRPC'
+
 import 'react-notifications/lib/notifications.css'
 import './App.scss'
 
@@ -49,6 +50,9 @@ function App() {
               </Route>
               <Route path="/farms" >
                 <Farms />
+              </Route>
+              <Route path="/lottery" >
+                <Lottery />
               </Route>
 
               <Route path="/">

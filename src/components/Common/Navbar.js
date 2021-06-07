@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Navbar.scss'
 import ConnectWallet from './ConnetWallet';
 import { NavLink } from 'react-router-dom';
-import { NotificationManager } from 'react-notifications';
+// import { NotificationManager } from 'react-notifications';
 
 const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false)
@@ -33,17 +33,16 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     <li onClick={() => {
-                        NotificationManager.info(
-                            <>
-                                <p>Coming Soon! </p>
-                            </>, 'Lottery'
-                        )
+                        // NotificationManager.info(
+                        //     <>
+                        //         <p>Comming Soon! </p>
+                        //     </>, 'Lottery'
+                        // )
                     }}>
-                        <div  >
+                        <NavLink to="/lottery" exact={true}>
                             <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Lottery.svg" /></div>
                             <p>Lottery</p>
-                        </div>
-
+                        </NavLink>
                     </li>
                     <li onClick={() => setOpenMenu(false)}>
                         <a href="https://github.com/LiquidDriver-finance" target="_blank" rel="noreferrer" >
