@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useCallback} from 'react';
 import ConnectWallet from '../Common/ConnetWallet';
 import { useWeb3React } from '@web3-react/core';
 import useWeb3 from "../../hooks/useWeb3";
+import useRefresh from '../../hooks/useRefresh'
 import {useClaimReward} from '../../hooks/useClaimReward';
 import {
     useLotteryCurrentRoundNo,
@@ -17,43 +18,16 @@ import BigNumber from 'bignumber.js';
 const Tickets = () => {
     const web3 = useWeb3()
     const { account, chainId } = useWeb3React()
+    const { fastRefresh } = useRefresh()
 
-    const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
-    const lotteryTicketData = useLotteryTicketData(lotteryCurrentRoundNo);
-    const [rewardSum, setRewardSum] = useState(new BigNumber(1))
+    const lotteryCurrentRoundNo = useLotteryCurrentRoundNo()
+    const [rewardSum, setRewardSum] = useState(new BigNumber(0))
     const [rewardTicketIds, setRewardTicketIds] = useState([])
 
     const [inputNumber, setInputNumber] = useState(lotteryCurrentRoundNo)
-    const [lotteryTicketDataBySearch, setLotteryTicketData] = useState(null)
+    const [lotteryTicketData, setLotteryTicketData] = useState(null)    
 
-    
-
-    const {onClaimReward} = useClaimReward(lotteryCurrentRoundNo)
-
-    useEffect(() => {
-        setInputNumber(lotteryCurrentRoundNo)
-    }, [lotteryCurrentRoundNo])
-
-    useEffect(() => {
-        const data = lotteryTicketDataBySearch === null ? lotteryTicketData : lotteryTicketDataBySearch
-        if(data) {
-            let tempRewardSum = new BigNumber(0)
-            let tempRewardTicketIds = []
-
-            for(let i=0; i<data.length; i++) {
-                tempRewardSum = tempRewardSum.plus(data[i].ticketReward)
-                if(data[i].ticketReward.gt(0) && !data[i].ticketClaim)
-                    tempRewardTicketIds.push(data[i].ticketNo)
-            }
-
-            if(!rewardSum.eq(tempRewardSum))
-                setRewardSum(tempRewardSum);
-            
-            if(rewardTicketIds.length !== tempRewardTicketIds.length)
-                setRewardTicketIds(tempRewardTicketIds);
-        }
-        
-    }, [lotteryTicketData, lotteryTicketDataBySearch, rewardSum, rewardTicketIds])
+    const {onClaimReward} = useClaimReward(inputNumber)
 
     const handleClaimReward = () => {
         if(rewardTicketIds.length === 0)
@@ -61,10 +35,41 @@ const Tickets = () => {
         onClaimReward(rewardTicketIds)
     }
 
-    const SearchHandler = async () => {
+    const SearchHandler = useCallback(async () => {
+        if (!inputNumber) {
+            return
+        }
         const data = await fetchLotteryTicketData(web3, chainId, account, inputNumber)
         setLotteryTicketData(data)
-    }
+    }, [inputNumber, setLotteryTicketData, web3, chainId, account, fastRefresh])
+
+    useEffect(() => {
+        setInputNumber(lotteryCurrentRoundNo)
+    }, [lotteryCurrentRoundNo])
+
+    useEffect(() => {
+        SearchHandler()
+    }, [inputNumber, SearchHandler])
+
+    useEffect(() => {
+        if(lotteryTicketData && lotteryTicketData.length > 0) {
+            let tempRewardSum = new BigNumber(0)
+            let tempRewardTicketIds = []
+
+            for(let i=0; i<lotteryTicketData.length; i++) {
+                tempRewardSum = tempRewardSum.plus(lotteryTicketData[i].ticketReward)
+                if(lotteryTicketData[i].ticketReward.gt(0) && !lotteryTicketData[i].ticketClaim)
+                    tempRewardTicketIds.push(lotteryTicketData[i].ticketNo)
+            }
+
+            setRewardSum(tempRewardSum);
+            setRewardTicketIds(tempRewardTicketIds);
+        } else {
+            setRewardSum(new BigNumber(0));
+            setRewardTicketIds([]);
+        }
+        
+    }, [lotteryTicketData])
     
     return (
     <div className="ticket-card">
