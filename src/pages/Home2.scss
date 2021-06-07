@@ -87,6 +87,66 @@
     }
 }
 
+@media screen and (max-width: 1280px) {
+    .home2-wrap {
+        padding-bottom: 0px;
+        margin-top: -80px;
+        .liquid-home-logo {
+            // margin-top: 90px;
+            width: 80px;
+            height: 80px;
+        }
+        .main-title {
+            max-width: 500px;
+            margin-top: 10px;
+            font-size: 30px;
+        }
+        .tvl-title {
+            margin-top: 10px;
+            font-size: 17px;
+        }
+        .tvl-amount {
+            font-size: 30px;
+        }
+        .btn-wrap {
+            margin-top: 10px;
+            max-width: 250px;
+            padding: 12px 30px;
+            font-size: 17px;
+        }
+        .markets {
+            margin-top: 20px;
+            max-width: 600px;
+            grid-template-columns: repeat(auto-fill, 250px);
+            grid-template-rows: auto auto;
+            gap: 15px 15px;
+
+            .market {
+                text-align: center;
+                padding: 20px 40px 16px 40px;
+                background: rgba(3, 6, 41, 0.72);
+                box-shadow: 0px 0px 15px rgba(8, 11, 44, 0.2);
+                border-radius: 20px;
+                max-width: 250px;
+                .m-title {
+                    font-size: 17px;
+                    margin-bottom: 6px;
+                }
+                .border {
+                    height: 2px;
+                    width: 12px;
+                    margin-bottom: 6px;
+                }
+                .amount {
+                    font-size: 27px;
+                    color: #ffffff;
+                    // margin-bottom: 24px;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 768px) {
     .home2-wrap {
         // width: 95%;

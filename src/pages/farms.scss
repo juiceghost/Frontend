@@ -271,9 +271,156 @@ input:checked + .slider:before {
         }
     }
 }
+
+@media screen and (max-width: 1280px) {
+    .farm-wrap {
+        margin-top: -80px;
+
+        .f-title {
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        .f-title-md {
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .f-title-sm {
+            font-weight: 400;
+            font-size: 15px;
+        }
+        .toggle-btns {
+            text-align: center;
+            margin-top: 8px;
+            .slider-wrap {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+
+                margin: auto 8px;
+                margin-top: 10px;
+                padding: 10px 20px;
+                height: 40px;
+                background: rgba(3, 6, 41, 0.72);
+                box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+                border-radius: 24px;
+                p {
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #ffffff;
+                    margin-left: 10px;
+                }
+            }
+        }
+        .farms {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 10px;
+            .farm {
+                margin: 10px;
+                padding: 20px 20px;
+                max-width: 280px;
+                .top {
+                    .icons {
+                        .first {
+                            width: 35px;
+                            height: 35px;
+                            border: 1px solid #4dd9f6;
+                            margin-bottom: -15px;
+                        }
+                        .last {
+                            width: 35px;
+                            height: 35px;
+                            border: 1px solid #4dd9f6;
+                        }
+                    }
+                    .info {
+                        .name {
+                            font-size: 20px;
+                            margin-bottom: 7px;
+                        }
+                        .multiplier {
+                            width: 64px;
+                            font-size: 15px;
+                        }
+                    }
+                }
+                .earn-wrap {
+                    .harvest {
+                        margin-top: 10px;
+                        margin-bottom: 13px;
+                        .amount {
+                            .h-title {
+                                font-size: 12px;
+                            }
+                            .h-number {
+                                font-size: 25px;
+                            }
+                            .h-usd {
+                                font-size: 10px;
+                            }
+                        }
+                        .h-button {
+                            font-weight: 600;
+                            font-size: 14px;
+                            color: #4dd9f6;
+                            height: 35px;
+                            width: 90px;
+                            display: flex;
+                        }
+                    }
+                }
+                .apr-wrap {
+                    margin-top: 15px;
+                    padding-bottom: 10px;
+                    .apr {
+                        span {
+                            font-size: 17px;
+                        }
+                        .a-title {
+                            font-size: 14px;
+                        }
+                    }
+                }
+
+                .details-btn {
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                    padding: 6px 9px;
+
+                    &:hover {
+                        filter: brightness(1.5);
+                    }
+                    .d-title {
+                        font-weight: 600;
+                        font-size: 13px;
+                        height: 20px;
+                    }
+                    .d-content {
+                        margin-top: 8px;
+                        font-size: 12px;
+                    }
+                }
+                .view-ftmscan {
+                    margin-top: 10px;
+                    font-weight: 600;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 768px) {
     .farm-wrap {
         min-height: 100vh;
+        margin-top: -10px;
         .f-title {
             font-size: 35px;
         }

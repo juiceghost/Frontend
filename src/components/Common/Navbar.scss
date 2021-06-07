@@ -100,6 +100,34 @@
   }
 }
 
+@media screen and (max-width: 1280px) {
+  .navbar-wrap {
+    width: 240px;
+    min-width: 240px;
+    .logo-wrap {
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    ul {
+      font-size: 15px;
+      padding-top: 15px;
+      li {
+        margin-bottom: 10px;
+        a,
+        div {
+          padding: 6px;
+        }
+        .icon-wrap {
+          width: 40px;
+        }
+        img {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .opened-nav {
     top: 0;
