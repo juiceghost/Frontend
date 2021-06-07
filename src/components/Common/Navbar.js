@@ -71,6 +71,13 @@ const Navbar = () => {
                         </a>
 
                     </li>
+                    <li>
+                        <a href="https://app.sushi.com/swap?inputCurrency=ftm&outputCurrency=0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9" target="_blank" rel="noreferrer" >
+                            <div className="icon-wrap">    <img alt={"icon"} src="/img/svg/cart.svg" /></div>
+                            <p>Buy LQDR</p>
+                        </a>
+
+                    </li>
                 </ul>
                 <ConnectWallet style={{ margin: "0 10px" }} />
             </div>

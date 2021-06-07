@@ -46,9 +46,9 @@ const Lottery = () => {
                 const hourLeft = Math.floor(timeLeft / 3600)
                 const minuteLeft = Math.ceil((timeLeft - hourLeft * 3600) / 60)
                 if(hourLeft === 0)
-                    setTimeAlarm(`${minuteLeft}m Until lottery draw`)
+                    setTimeAlarm(`${minuteLeft}m Until Winning Numbers Draw`)
                 else
-                    setTimeAlarm(`${hourLeft}h, ${minuteLeft}m Until lottery draw`)
+                    setTimeAlarm(`${hourLeft}h, ${minuteLeft}m Until Winning Numbers Draw`)
             }
         }
     }, [lotteryInfo])
