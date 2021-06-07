@@ -175,16 +175,43 @@ export const fetchLotteryGraphData = async(web3, chainId, startLotteryNo, endLot
     };
 }
 
-export const fetchCostWithDiscount = async(web3, chainId, roundNo, numberOfTickets) => {
+export const fetchDiscountData = async(web3, chainId) => {
     const lotteryAdress = getLotteryAddress(chainId)
 
-    const calls = [{
-        address: lotteryAdress,
-        name: 'costToBuyTicketsWithDiscount',
-        params: [roundNo, numberOfTickets]
-    }]
+    const calls = [
+        {
+            address: lotteryAdress,
+            name: 'bucketOneMax_',
+            params: []
+        },
+        {
+            address: lotteryAdress,
+            name: 'bucketTwoMax_',
+            params: []
+        },
+        {
+            address: lotteryAdress,
+            name: 'discountForBucketOne_',
+            params: []
+        },
+        {
+            address: lotteryAdress,
+            name: 'discountForBucketTwo_',
+            params: []
+        },
+        {
+            address: lotteryAdress,
+            name: 'discountForBucketThree_',
+            params: []
+        },
+    ]
 
-    const [res] = await multicall(web3, lotteryABI, calls, chainId)
-    const { 2: costWithDiscount } = res
-    return Number(costWithDiscount)
+    const [bucketOneMax, bucketTwoMax, discountForBucketOne, discountForBucketTwo, discountForBucketThree] = await multicall(web3, lotteryABI, calls, chainId)
+    return {
+        bucketOneMax: bucketOneMax[0],
+        bucketTwoMax: bucketTwoMax[0],
+        discountForBucketOne: discountForBucketOne[0],
+        discountForBucketTwo: discountForBucketTwo[0],
+        discountForBucketThree: discountForBucketThree[0]
+    }
 }

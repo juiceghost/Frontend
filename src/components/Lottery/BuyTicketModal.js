@@ -4,7 +4,7 @@ import useWeb3 from "../../hooks/useWeb3";
 import BigNumber from 'bignumber.js'
 import Modal from 'react-modal';
 import {useBuyTickets} from '../../hooks/useBuyTickets';
-import {fetchCostWithDiscount} from '../../utils/fetchLotteryData';
+import {fetchDiscountData} from '../../utils/fetchLotteryData';
 
 
 import './modal.scss'
@@ -14,7 +14,10 @@ Modal.setAppElement('#root')
 const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRange, ticketPrice, lqdrBalance }) => {
     const {onBuyTickets} = useBuyTickets(lotteryId, lotterySize, maxRange)
     const [ticketsAmount, setTicketsAmount] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState("0")
+    const [discountPercent, setDiscountPercent] = useState(0)
+    const [discountData, setDiscountData] = useState({})
+
     const { chainId } = useWeb3React()
     const web3 = useWeb3()
 
@@ -42,13 +45,27 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
     }
 
     const getCostWithDiscount = useCallback(async () => {
-        const val = await fetchCostWithDiscount(web3, chainId, lotteryId, ticketsAmount)
-        setTotalPrice(val)
-    }, [ticketsAmount, web3, chainId, lotteryId])
+        const res = await fetchDiscountData(web3, chainId)
+        setDiscountData(res)
+    }, [web3, chainId])
 
     useEffect(() => {
         getCostWithDiscount()
-    }, [ticketsAmount, getCostWithDiscount])
+    }, [])
+
+    useEffect(() => {
+        if (!discountData) return
+        let percent = 0
+        if (ticketsAmount < discountData.bucketOneMax) {
+            percent = discountData.discountForBucketOne
+        } else if (ticketsAmount > discountData.bucketTwoMax) {
+            percent = discountData.discountForBucketThree
+        } else {
+            percent = discountData.discountForBucketTwo
+        }
+        setTotalPrice(new BigNumber(ticketPrice).times(ticketsAmount ? ticketsAmount : 0).times(100 - percent).div(100).div(10 ** 18).toFormat(2))
+        setDiscountPercent(percent)
+    }, [ticketsAmount, ticketPrice])
 
     return (<Modal
         isOpen={modalIsOpen}
@@ -112,7 +129,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
             </div>
 
             <div className="spend">
-                You will spend <span className="lqdr-blue" > {new BigNumber(totalPrice).div(10 ** 18).toFormat(2)} LQDR</span>
+                You will spend <span className="lqdr-blue" > {totalPrice} LQDR({discountPercent}% discount applied)</span>
             </div>
 
             <div className="action-btns">
