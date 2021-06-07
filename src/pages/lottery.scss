@@ -246,6 +246,62 @@
             border-radius: 24px;
             padding: 20px;
 
+            .search-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 22px;
+                color: #4dd9f6;
+                .input-wrap {
+                    display: flex;
+                    font-weight: 600;
+                    font-size: 16px;
+                    letter-spacing: 0.02em;
+
+                    .input-box,
+                    .search-btn {
+                        width: 100px;
+                        height: 28px;
+                    }
+                    .input-box {
+                        border: 1px solid #0b5079;
+                        box-sizing: border-box;
+                        border-radius: 12px 0px 0px 12px;
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        input {
+                            background: transparent;
+                            border: 0;
+                            width: 100%;
+                            outline: none;
+                            text-align: center;
+                            color: #ffffff;
+                        }
+
+                        &:focus-within {
+                            box-shadow: 0px 0px 3px 1px #4dd9f6;
+                        }
+                    }
+                    .search-btn {
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        border: 1px solid #4dd9f6;
+                        box-sizing: border-box;
+                        border-radius: 0px 12px 12px 0px;
+                        color: #4dd9f6;
+                        cursor: pointer;
+                        &:hover {
+                            filter: brightness(1.2);
+                        }
+                    }
+                }
+            }
+
             .h-title {
                 text-align: left;
                 font-weight: bold;
@@ -255,8 +311,8 @@
             }
 
             .ticket-numbers {
-                height: 260px;
-                min-height: 230px;
+                height: 220px;
+                min-height: 220px;
                 overflow-x: hidden;
                 overflow-y: auto;
                 display: grid;

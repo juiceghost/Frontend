@@ -1,31 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import ConnectWallet from '../Common/ConnetWallet';
 import { useWeb3React } from '@web3-react/core';
+import useWeb3 from "../../hooks/useWeb3";
 import {useClaimReward} from '../../hooks/useClaimReward';
 import {
     useLotteryCurrentRoundNo,
     useLotteryTicketData
 } from '../../hooks/useLotteryData';
+
+import {
+    fetchLotteryTicketData
+} from '../../utils/fetchLotteryData';
+
 import BigNumber from 'bignumber.js';
 
 const Tickets = () => {
-    const { account } = useWeb3React()
+    const web3 = useWeb3()
+    const { account, chainId } = useWeb3React()
+
     const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
     const lotteryTicketData = useLotteryTicketData(lotteryCurrentRoundNo);
-    const [rewardSum, setRewardSum] = useState(new BigNumber(0))
+    const [rewardSum, setRewardSum] = useState(new BigNumber(1))
     const [rewardTicketIds, setRewardTicketIds] = useState([])
+
+    const [inputNumber, setInputNumber] = useState(lotteryCurrentRoundNo)
+    const [lotteryTicketDataBySearch, setLotteryTicketData] = useState(null)
+
+    
 
     const {onClaimReward} = useClaimReward(lotteryCurrentRoundNo)
 
     useEffect(() => {
-        if(lotteryTicketData) {
+        setInputNumber(lotteryCurrentRoundNo)
+    }, [lotteryCurrentRoundNo])
+
+    useEffect(() => {
+        const data = lotteryTicketDataBySearch === null ? lotteryTicketData : lotteryTicketDataBySearch
+        if(data) {
             let tempRewardSum = new BigNumber(0)
             let tempRewardTicketIds = []
 
-            for(let i=0; i<lotteryTicketData.length; i++) {
-                tempRewardSum = tempRewardSum.plus(lotteryTicketData[i].ticketReward)
-                if(lotteryTicketData[i].ticketReward.gt(0) && !lotteryTicketData[i].ticketClaim)
-                    tempRewardTicketIds.push(lotteryTicketData[i].ticketNo)
+            for(let i=0; i<data.length; i++) {
+                tempRewardSum = tempRewardSum.plus(data[i].ticketReward)
+                if(data[i].ticketReward.gt(0) && !data[i].ticketClaim)
+                    tempRewardTicketIds.push(data[i].ticketNo)
             }
 
             if(!rewardSum.eq(tempRewardSum))
@@ -35,16 +53,30 @@ const Tickets = () => {
                 setRewardTicketIds(tempRewardTicketIds);
         }
         
-    }, [lotteryTicketData, rewardSum, rewardTicketIds])
+    }, [lotteryTicketData, lotteryTicketDataBySearch, rewardSum, rewardTicketIds])
 
     const handleClaimReward = () => {
         if(rewardTicketIds.length === 0)
             return
         onClaimReward(rewardTicketIds)
     }
+
+    const SearchHandler = async () => {
+        const data = await fetchLotteryTicketData(web3, chainId, account, inputNumber)
+        setLotteryTicketData(data)
+    }
     
     return (
     <div className="ticket-card">
+        <div className="search-wrap">
+            <p>Select lottery number:</p>
+            <div className="input-wrap">
+                <div className="input-box">
+                    <input type="number" max="100" min="1" step="1" placeholder="5" value={inputNumber} onChange={(e) => setInputNumber(e.currentTarget.value)} />
+                </div>
+                <div className="search-btn" onClick={() => SearchHandler()}>Search</div>
+            </div>
+        </div>
         <p className="h-title">Tickets {lotteryTicketData && lotteryTicketData.length > 0 ? `(${lotteryTicketData.length})` : ''}</p>
         {lotteryTicketData && lotteryTicketData.length > 0 ?
             <div className="ticket-numbers">

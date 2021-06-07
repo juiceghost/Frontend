@@ -108,7 +108,7 @@ export const fetchLotteryTicketData = async(web3, chainId, account, roundNo) => 
     }]
     const [tickets] = await multicall(web3, lotteryNftABI, calls, chainId)
 
-    const callsForTicketNumbers =  tickets[0].map((ticketNo) => {
+    const callsForTicketNumbers = tickets[0].map((ticketNo) => {
         return {
             address: lotteryNftAdress,
             name: 'getTicketNumbers',
@@ -116,8 +116,8 @@ export const fetchLotteryTicketData = async(web3, chainId, account, roundNo) => 
         }
     })
     const ticketNumberDatas = await multicall(web3, lotteryNftABI, callsForTicketNumbers, chainId)
-    
-    const callsForReward =  tickets[0].map((ticketNo) => {
+
+    const callsForReward = tickets[0].map((ticketNo) => {
         return {
             address: lotteryAdress,
             name: 'getClaimableRewardForTicket',
@@ -125,8 +125,8 @@ export const fetchLotteryTicketData = async(web3, chainId, account, roundNo) => 
         }
     })
     const ticketRewardData = await multicall(web3, lotteryABI, callsForReward, chainId)
-    
-    const callsForTicketClaimStatus =  tickets[0].map((ticketNo) => {
+
+    const callsForTicketClaimStatus = tickets[0].map((ticketNo) => {
         return {
             address: lotteryNftAdress,
             name: 'getTicketClaimStatus',
@@ -136,7 +136,7 @@ export const fetchLotteryTicketData = async(web3, chainId, account, roundNo) => 
     const ticketClaimStatusData = await multicall(web3, lotteryNftABI, callsForTicketClaimStatus, chainId)
 
     const ticketData = tickets[0].map((ticketNo, i) => {
-        return {            
+        return {
             ticketNo: Number(ticketNo),
             ticketNumbers: ticketNumberDatas[i],
             ticketReward: new BigNumber(ticketRewardData[i]),
@@ -171,15 +171,16 @@ export const fetchLotteryGraphData = async(web3, chainId, startLotteryNo, endLot
     })
 
     return {
-        idList, poolData, burnedData
+        idList,
+        poolData,
+        burnedData
     };
 }
 
 export const fetchDiscountData = async(web3, chainId) => {
     const lotteryAdress = getLotteryAddress(chainId)
 
-    const calls = [
-        {
+    const calls = [{
             address: lotteryAdress,
             name: 'bucketOneMax_',
             params: []
@@ -206,12 +207,22 @@ export const fetchDiscountData = async(web3, chainId) => {
         },
     ]
 
-    const [bucketOneMax, bucketTwoMax, discountForBucketOne, discountForBucketTwo, discountForBucketThree] = await multicall(web3, lotteryABI, calls, chainId)
+    if (lotteryAdress) {
+        const [bucketOneMax, bucketTwoMax, discountForBucketOne, discountForBucketTwo, discountForBucketThree] = await multicall(web3, lotteryABI, calls, chainId)
+        return {
+            bucketOneMax: bucketOneMax[0],
+            bucketTwoMax: bucketTwoMax[0],
+            discountForBucketOne: discountForBucketOne[0],
+            discountForBucketTwo: discountForBucketTwo[0],
+            discountForBucketThree: discountForBucketThree[0]
+        }
+    }
+
     return {
-        bucketOneMax: bucketOneMax[0],
-        bucketTwoMax: bucketTwoMax[0],
-        discountForBucketOne: discountForBucketOne[0],
-        discountForBucketTwo: discountForBucketTwo[0],
-        discountForBucketThree: discountForBucketThree[0]
+        bucketOneMax: 0,
+        bucketTwoMax: 0,
+        discountForBucketOne: 0,
+        discountForBucketTwo: 0,
+        discountForBucketThree: 0
     }
 }

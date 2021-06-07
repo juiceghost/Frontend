@@ -51,7 +51,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
 
     useEffect(() => {
         getCostWithDiscount()
-    }, [])
+    }, [getCostWithDiscount])
 
     useEffect(() => {
         if (!discountData) return
@@ -65,7 +65,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
         }
         setTotalPrice(new BigNumber(ticketPrice).times(ticketsAmount ? ticketsAmount : 0).times(100 - percent).div(100).div(10 ** 18).toFormat(2))
         setDiscountPercent(percent)
-    }, [ticketsAmount, ticketPrice])
+    }, [ticketsAmount, ticketPrice, discountData])
 
     return (<Modal
         isOpen={modalIsOpen}
