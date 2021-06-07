@@ -1,15 +1,26 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import {useLotteryInfo, useLotteryCurrentRoundNo} from '../../hooks/useLotteryData';
 
 const WinnerInfo = () => {
-
+    const [disabled, setDisabled] = useState(true);
     const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
     const lotteryInfo = useLotteryInfo(lotteryCurrentRoundNo);
 
+    useEffect(() => {
+        if(!lotteryInfo) return
+        const currentTimestamp = moment().unix()
+
+        if(currentTimestamp < lotteryInfo.closingTimestamp && currentTimestamp > lotteryInfo.startingTimestamp) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [lotteryInfo])
+
     return (
     <div className="winnerinfo-card">
-        <p className="h-title">Winning Numbers In This Round</p>
+        <p className="h-title">{disabled ? "Winning Numbers In This Round" : "Latest Winning Numbers"}</p>
         <div className="winning-pad">
             <div className="winning-number">{lotteryInfo ? lotteryInfo.winningNumbers[0] : 0}</div>
             <div className="winning-number">{lotteryInfo ? lotteryInfo.winningNumbers[1] : 0}</div>

@@ -1,7 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
+import { useWeb3React } from '@web3-react/core';
+import useWeb3 from "../../hooks/useWeb3";
 import BigNumber from 'bignumber.js'
 import Modal from 'react-modal';
 import {useBuyTickets} from '../../hooks/useBuyTickets';
+import {fetchCostWithDiscount} from '../../utils/fetchLotteryData';
 
 
 import './modal.scss'
@@ -11,6 +14,9 @@ Modal.setAppElement('#root')
 const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRange, ticketPrice, lqdrBalance }) => {
     const {onBuyTickets} = useBuyTickets(lotteryId, lotterySize, maxRange)
     const [ticketsAmount, setTicketsAmount] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0)
+    const { chainId } = useWeb3React()
+    const web3 = useWeb3()
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
@@ -34,6 +40,15 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
         const res = await onBuyTickets(ticketsAmount ? ticketsAmount : 0)
         if (res) closeModal()
     }
+
+    const getCostWithDiscount = useCallback(async () => {
+        const val = await fetchCostWithDiscount(web3, chainId, lotteryId, ticketsAmount)
+        setTotalPrice(val)
+    }, [ticketsAmount, web3, chainId, lotteryId])
+
+    useEffect(() => {
+        getCostWithDiscount()
+    }, [ticketsAmount, getCostWithDiscount])
 
     return (<Modal
         isOpen={modalIsOpen}
@@ -97,7 +112,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
             </div>
 
             <div className="spend">
-                You will spend <span className="lqdr-blue" > {new BigNumber(ticketPrice).times(ticketsAmount ? ticketsAmount : 0).div(10 ** 18).toFormat(2)} LQDR</span>
+                You will spend <span className="lqdr-blue" > {new BigNumber(totalPrice).div(10 ** 18).toFormat(2)} LQDR</span>
             </div>
 
             <div className="action-btns">

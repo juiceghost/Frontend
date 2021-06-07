@@ -174,3 +174,17 @@ export const fetchLotteryGraphData = async(web3, chainId, startLotteryNo, endLot
         idList, poolData, burnedData
     };
 }
+
+export const fetchCostWithDiscount = async(web3, chainId, roundNo, numberOfTickets) => {
+    const lotteryAdress = getLotteryAddress(chainId)
+
+    const calls = [{
+        address: lotteryAdress,
+        name: 'costToBuyTicketsWithDiscount',
+        params: [roundNo, numberOfTickets]
+    }]
+
+    const [res] = await multicall(web3, lotteryABI, calls, chainId)
+    const { 2: costWithDiscount } = res
+    return Number(costWithDiscount)
+}

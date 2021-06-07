@@ -5,14 +5,14 @@ import { isAddress } from "@ethersproject/address"
 import BigNumber from "bignumber.js";
 import { useERC20 } from './useContract'
 
-// import useRefresh from './useRefresh';
+import useRefresh from './useRefresh';
 
 const useTokenBalance = (tokenAddress, fastUpdate = null) => {
     const [balance, setBalance] = useState(new BigNumber(0))
     const { account } = useWeb3React()
     const web3 = useWeb3()
     const contract = useERC20(tokenAddress)
-    // const { fastRefresh } = useRefresh()
+    const { fastRefresh } = useRefresh()
     useEffect(() => {
         const fetchBalance = async () => {
             let walletBalance = null
@@ -29,7 +29,7 @@ const useTokenBalance = (tokenAddress, fastUpdate = null) => {
         } else {
             setBalance("")
         }
-    }, [account, tokenAddress, web3, contract, fastUpdate])
+    }, [account, tokenAddress, web3, contract, fastRefresh])
 
     return balance
 }
