@@ -45,11 +45,11 @@ const contracts = {
   },
   lottery: {
     4002: '0x7b8B6b395399A24C3D0C6A63ff7c34D34a3179df',
-    250: '0xD47e7BDB4C8C038d3e1569134c8CAA0fB12033a2',
+    250: '0x6d4c9e77BbBbc1726b0c28B93742Cf88AbD2d8D9',
   },
   lotteryNFT: {
     4002: '0x7a67c376D6E443466d1bb75b36fE4986d02e00B4',
-    250: '0x99853d0f0238F3Dbaf546507C12F1c94D357c4e7',
+    250: '0xD49C47335423217d5be600752CC2f1Ec536Fe4Ba',
   },
 }
 export default contracts

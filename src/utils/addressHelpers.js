@@ -21,5 +21,5 @@ export const getLotteryNftAddress = (chainId = 3) => {
 }
 
 export const getLqdrAddress = (chainId = 3) => {
-  return addresses.testLQDR[chainId]
+  return addresses.LQDR[chainId]
 }
