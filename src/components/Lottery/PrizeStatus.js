@@ -17,7 +17,7 @@ import moment from 'moment';
 
 const PrizeStatus = () => {
     const { account, chainId } = useWeb3React()
-    const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(true);
     const [modalIsOpen, setIsOpen] = useState(false);
     const allowance = useAllowance();
     const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
@@ -65,15 +65,13 @@ const PrizeStatus = () => {
                 <p>To burn</p><p>{lotteryInfo && lotteryMetaData && lotteryInfo.prizeDistribution[3] > 0 ? lotteryMetaData.lotteryCurrentPrize.div(10 ** 18).times(lotteryInfo.prizeDistribution[0]).div(100).toFormat(2) : 0}</p>
             </div>
 
-            {!disabled && (
                 <div className="buy-ticket">
                     {account ? allowance.gt(0) ?
-                        <div className="lq-button blue-button" onClick={handleBuy}>Buy Ticket</div> : 
+                        <div className={`lq-button ${disabled ? "grey-button" : "blue-button" }`} onClick={handleBuy}>Buy Ticket</div> : 
                         <div className="lq-button blue-button" onClick={() => onApprove()}>Approve</div> : 
                         <ConnectWallet />
                     }
                 </div>
-            )}
 
         </div>
 
