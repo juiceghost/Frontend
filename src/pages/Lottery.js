@@ -51,6 +51,8 @@ const Lottery = () => {
                     setTimeAlarm(`${hourLeft}h, ${minuteLeft}m Until Winning Numbers Draw`)
             }
         }
+        else 
+            setTimeAlarm(`New lottery will start soon.`)
     }, [lotteryInfo])
 
     return (<>
