@@ -61,10 +61,16 @@ export const fetchLotteryInfo = async(web3, chainId, roundNo) => {
 export const fetchLotteryCurrentPrize = async(web3, chainId, roundNo) => {
     const lotteryAdress = getLotteryAddress(chainId)
 
+    const lotteryInfo = await fetchLotteryInfo(web3, chainId, roundNo)
+    const lotteryStatus = lotteryInfo.lotteryStatus
+
+    if(lotteryStatus === 3)
+        return new BigNumber(lotteryInfo.prizePoolInLqdr)
+
     const calls = [{
         address: lotteryAdress,
         name: 'getPrizeForCurrentLottery',
-        params: [roundNo]
+        params: []
     }]
 
     const [lotteryCurrentPrize] = await multicall(web3, lotteryABI, calls, chainId)

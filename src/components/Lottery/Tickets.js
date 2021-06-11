@@ -5,8 +5,7 @@ import useWeb3 from "../../hooks/useWeb3";
 import useRefresh from '../../hooks/useRefresh'
 import {useClaimReward} from '../../hooks/useClaimReward';
 import {
-    useLotteryCurrentRoundNo,
-    useLotteryTicketData
+    useLotteryCurrentRoundNo
 } from '../../hooks/useLotteryData';
 
 import {
