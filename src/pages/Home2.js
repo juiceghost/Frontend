@@ -40,7 +40,7 @@ function Home2() {
                 <div className="market">
                     <p className="m-title">Total Burned</p>
                     <div className="border"></div>
-                    <p className="amount">{(market && market["burnerAmounts"].toFormat(0)) || "N/A"}</p>
+                    <p className="amount">{(market && market["burnerAmounts"].plus(market["lotteryLocked"]).toFormat(0)) || "N/A"}</p>
                 </div>
 
             </div>

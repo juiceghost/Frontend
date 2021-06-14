@@ -27,6 +27,10 @@ const contracts = {
     3: '',
     250: '0x05b7109b2dae299d882c410c1a281fc194658e89',
   },
+  LotteryLocked: {
+    3: '',
+    250: '0x6d4c9e77BbBbc1726b0c28B93742Cf88AbD2d8D9',
+  },
   MasterChef: {
     3: '0x42fd1A2dbc2069B6E700ae3774533B87dB4e137B',
     250: '0x742474dae70fa2ab063ab786b1fbe5704e861a0c',

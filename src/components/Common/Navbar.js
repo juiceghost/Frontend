@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './Navbar.scss'
 import ConnectWallet from './ConnetWallet';
 import { NavLink } from 'react-router-dom';
-// import { NotificationManager } from 'react-notifications';
+import './Navbar.scss'
 
 const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false)
@@ -32,13 +31,7 @@ const Navbar = () => {
                             <p>Farms</p>
                         </NavLink>
                     </li>
-                    <li onClick={() => {
-                        // NotificationManager.info(
-                        //     <>
-                        //         <p>Comming Soon! </p>
-                        //     </>, 'Lottery'
-                        // )
-                    }}>
+                    <li onClick={() => setOpenMenu(false)}>
                         <NavLink to="/lottery" exact={true}>
                             <div className="icon-wrap"><img alt={"icon"} className="lottery" src="/img/svg/Lottery.svg" /></div>
                             <p>Lottery</p>

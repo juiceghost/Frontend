@@ -163,6 +163,7 @@ export const fetchQuoteTokenPrices = async (web3, chainId = 250) => {
 
 export const fechLqdr = async (web3, chainId = 250) => {
   const BurnerContract = contracts.Burner[chainId]
+  const LotteryLockedContract = contracts.LotteryLocked[chainId]
   const LqdrContract = contracts.LQDR[chainId]
   const calls = [
     {
@@ -173,12 +174,18 @@ export const fechLqdr = async (web3, chainId = 250) => {
     {
       address: LqdrContract,
       name: 'totalSupply',
-    }
+    },
+    {
+      address: LqdrContract,
+      name: 'balanceOf',
+      params: [LotteryLockedContract],
+    },
   ]
-  const [burnerAmounts, totalSupply] = await multicall(web3, erc20, calls, chainId)
+  const [burnerAmounts, totalSupply, lotteryLocked] = await multicall(web3, erc20, calls, chainId)
 
   return {
     burnerAmounts: fromWei(burnerAmounts, 18),
+    lotteryLocked: fromWei(lotteryLocked, 18),
     totalSupply: fromWei(totalSupply, 18),
     circulating: fromWei(totalSupply, 18).minus(fromWei(burnerAmounts, 18))
   }
