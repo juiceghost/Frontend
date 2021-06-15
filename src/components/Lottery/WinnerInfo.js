@@ -5,18 +5,22 @@ import {useLotteryInfo, useLotteryCurrentRoundNo} from '../../hooks/useLotteryDa
 const WinnerInfo = () => {
     const [disabled, setDisabled] = useState(true);
     const lotteryCurrentRoundNo = useLotteryCurrentRoundNo();
-    const lotteryInfo = useLotteryInfo(lotteryCurrentRoundNo);
+    const curLotteryInfo = useLotteryInfo(lotteryCurrentRoundNo);
+    const prevLotteryInfo = useLotteryInfo(lotteryCurrentRoundNo - 1);
+    const [lotteryInfo, setLotteryInfo] = useState(null);
 
     useEffect(() => {
-        if(!lotteryInfo) return
+        if(!curLotteryInfo || !prevLotteryInfo) return
         const currentTimestamp = moment().unix()
 
-        if(currentTimestamp < lotteryInfo.closingTimestamp && currentTimestamp > lotteryInfo.startingTimestamp) {
+        if(currentTimestamp < curLotteryInfo.closingTimestamp && currentTimestamp > curLotteryInfo.startingTimestamp) {
+            setLotteryInfo(prevLotteryInfo)
             setDisabled(false)
         } else {
+            setLotteryInfo(curLotteryInfo)
             setDisabled(true)
         }
-    }, [lotteryInfo])
+    }, [curLotteryInfo, prevLotteryInfo, setLotteryInfo, setDisabled])
 
     return (
     <div className="winnerinfo-card">
