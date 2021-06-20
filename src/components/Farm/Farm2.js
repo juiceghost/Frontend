@@ -90,11 +90,11 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     }, [onHarvest, forceUpdate])
 
     const priceQuoteToken = farm.quoteTokenSymbol === QuoteToken.FUSDT ? 1 : prices[farm.quoteTokenSymbol]
-    const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight, isTokenOnly } = farm
+    const { lqdrPerBlock, lpTotalInQuoteToken, totalStaked, poolWeight, isTokenOnly, multiplier } = farm
     const lqdrPrice = new BigNumber(prices["LQDR"])
     const tokensName = farm.lpSymbol.split("/");
 
-    if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && isZero(poolWeight))) {
+    if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && !isZero(multiplier) && isZero(poolWeight))) {
         return (<></>)
     }
 
@@ -139,7 +139,7 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                     <div className="amount">
                         <p className="h-title">
                             LQDR Earned
-                                </p>
+                        </p>
                         <p className="h-number">
                             {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
                         </p>
@@ -166,19 +166,19 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                                     setStakePopup(true)
                                 }}>
                             Stake
-                                    </div>
+                        </div>
                     }
                     <div className="lq-button  blue-button" style={{ width: "45%" }} onClick={
                         () => {
                             setUnStakePopup(true)
                         }}>
                         Withdraw
-                </div>
+                    </div>
                 </div>
                     :
                     <div className="lq-button  blue-button" onClick={handleApprove}>
                         Approve Pool
-                </div>
+                    </div>
                 }
             </div>}
 
@@ -232,7 +232,7 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
 
             {!account && <ConnetWallet />}
             <a className="view-ftmscan" href={getExplorerAddress(farm.lpAddresses, chainId)} target="_blank" rel="noreferrer" >View on FTMScan
-                    <img src="/img/svg/link.svg" style={{ marginLeft: "5px" }} alt="link" />
+                <img src="/img/svg/link.svg" style={{ marginLeft: "5px" }} alt="link" />
             </a>
 
 

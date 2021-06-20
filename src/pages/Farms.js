@@ -48,7 +48,6 @@ const Farms = () => {
                     <Farm2 key={index} index={index} active={active} stakeOnly={stakeOnly} userInfo={users ? users[index] : null} farm={farm} forceUpdate={() => forceUpdate()} prices={prices} />
                 )) :
                     <img src="/img/svg/spinner2.svg" alt="spinner" style={{ width: "80px", marginTop: "30px", zIndex: 1000 }} />
-
                 }
             </div>
 
