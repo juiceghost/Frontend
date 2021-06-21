@@ -94,7 +94,7 @@ const Farm2 = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     const lqdrPrice = new BigNumber(prices["LQDR"])
     const tokensName = farm.lpSymbol.split("/");
 
-    if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && !isZero(multiplier) && isZero(poolWeight))) {
+    if ((stakeOnly && userInfo && isZero(userInfo.stakedBalance)) || (active && isZero(multiplier))) {
         return (<></>)
     }
 
