@@ -39,7 +39,7 @@ const Farms = () => {
                         <input type="checkbox" />
                         <span className="slider round"></span>
                     </label>
-                    <p>Active</p>
+                    <p>inActive</p>
                 </div>
             </div>
 
