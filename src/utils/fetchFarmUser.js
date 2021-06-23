@@ -80,10 +80,12 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
 
 
 export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
-    const userFarmAllowances = await fetchFarmUserAllowances(web3, account, chainId)
-    const userFarmTokenBalances = await fetchFarmUserTokenBalances(web3, account, chainId)
-    const userStakedBalances = await fetchFarmUserStakedBalances(web3, account, chainId)
-    const userFarmEarnings = await fetchFarmUserEarnings(web3, account, chainId)
+    const [userFarmAllowances, userFarmTokenBalances, userStakedBalances, userFarmEarnings] = await Promise.all([
+        fetchFarmUserAllowances(web3, account, chainId),
+        fetchFarmUserTokenBalances(web3, account, chainId),
+        fetchFarmUserStakedBalances(web3, account, chainId),
+        fetchFarmUserEarnings(web3, account, chainId)
+    ])
 
     const arrayOfUserDataObjects = userFarmAllowances.map((farmAllowance, index) => {
         return {

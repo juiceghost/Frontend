@@ -76,3 +76,12 @@ export const claimReward = async(lotteryContract, lotteryId, ticketIds, account)
             return tx.transactionHash
         })
 }
+
+export const lockLQDR = async(xlqdrContract, amount, unlockTime, account) => {
+    return xlqdrContract.methods
+        .create_lock(amount, unlockTime)
+        .send({ from: account })
+        .on('transactionHash', (tx) => {
+            return tx.transactionHash
+        })
+}

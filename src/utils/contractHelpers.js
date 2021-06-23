@@ -3,7 +3,10 @@ import ERC20Abi from '../config/abi/erc20.json'
 import MasterChefAbi from '../config/abi/masterchef.json'
 import SushiAbi from '../config/abi/sushi.json'
 import LotteryAbi from '../config/abi/lottery.json'
-import { getMasterChefAddress, getLotteryAddress } from './addressHelpers'
+import XLQDRAbi from '../config/abi/xlqdr.json'
+import feeDistributorAbi from '../config/abi/feeDistributor.json'
+import ftmDistributorAbi from '../config/abi/ftmDistributor.json'
+import { getMasterChefAddress, getLotteryAddress, getXLqdrAddress, getFeeDistributorAddress, getFTMDistributorAddress } from './addressHelpers'
 import { getSushiAddress } from './addressHelpers'
 
 const getContract = (abi, address, web3) => {
@@ -25,4 +28,16 @@ export const getERC20Contract = (address, web3) => {
 
 export const getLotteryContract = (web3, chainId) => {
     return getContract(LotteryAbi, getLotteryAddress(chainId), web3)
+}
+
+export const getXLQDRContract = (web3, chainId) => {
+    return getContract(XLQDRAbi, getXLqdrAddress(chainId), web3)
+}
+
+export const getFeeDistributorContract = (web3, chainId) => {
+    return getContract(feeDistributorAbi, getFeeDistributorAddress(chainId), web3)
+}
+
+export const getFTMDistributorContract = (web3, chainId) => {
+    return getContract(ftmDistributorAbi, getFTMDistributorAddress(chainId), web3)
 }

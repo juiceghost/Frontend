@@ -56,5 +56,17 @@ const contracts = {
     250: '0xf33BdA2c4A70c58a31eC795181c3715Bc11762cd',
     4002: '0x036ceDD59E1605F27eF5c18A78d31CA87c32B56a',
   },
+  xlqdr: {
+    250: '0x3Ae658656d1C526144db371FaEf2Fff7170654eE',
+    4002: '',
+  },
+  feeDistributor: {
+    250: '0xa0f2b1Ea6257767BBc6A3a7dD36A95c6DDfeB558',
+    4002: '',
+  },
+  ftmDistributor: {
+    250: '0x4fE500d6687ee03EB511c13C48c7F9c3eb51b4Ca',
+    4002: '',
+  },
 }
 export default contracts

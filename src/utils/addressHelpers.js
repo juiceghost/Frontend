@@ -23,3 +23,15 @@ export const getLotteryNftAddress = (chainId = 3) => {
 export const getLqdrAddress = (chainId = 3) => {
   return addresses.LQDR[chainId]
 }
+
+export const getXLqdrAddress = (chainId = 3) => {
+  return addresses.xlqdr[chainId]
+}
+
+export const getFeeDistributorAddress = (chainId = 3) => {
+  return addresses.feeDistributor[chainId]
+}
+
+export const getFTMDistributorAddress = (chainId = 3) => {
+  return addresses.ftmDistributor[chainId]
+}

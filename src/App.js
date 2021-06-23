@@ -5,6 +5,7 @@ import { NotificationContainer } from 'react-notifications'
 import Farms from './pages/Farms'
 import Home2 from './pages/Home2'
 import Lottery from './pages/Lottery'
+import Xlqdr from './pages/Xlqdr'
 import Navbar from './components/Common/Navbar'
 import { RefreshContextProvider } from './context/RefreshContext'
 import { NotificationManager } from 'react-notifications'
@@ -53,6 +54,9 @@ function App() {
               </Route>
               <Route path="/lottery" >
                 <Lottery />
+              </Route>
+              <Route path="/xlqdr" >
+                <Xlqdr />
               </Route>
 
               <Route path="/">
