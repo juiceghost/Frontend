@@ -1,0 +1,305 @@
+.xlqdr-wrap {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-family: Nunito;
+  font-style: normal;
+  margin: auto;
+  background-image: url("../assets/imgs/Waterfall-Middle.svg");
+  background-position: center;
+  background-size: contain;
+  min-height: 100%;
+  padding-bottom: 50px;
+  margin-top: -20px;
+
+  @media screen and (max-width: 1280px) {
+    padding-bottom: 0px;
+    margin-top: -80px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: -10px;
+  }
+
+  .xlqdr-title {
+    font-weight: bold;
+    font-size: 52px;
+
+    @media screen and (max-width: 1280px) {
+      font-size: 40px;
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 35px;
+    }
+  }
+
+  .balance-section {
+    margin: 50px 40px 0;
+    padding: 30px 53px 24px 53px;
+    background: rgba(3, 6, 41, 0.72);
+    box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+    border-radius: 24px;
+    display: flex;
+
+    @media screen and (max-width: 1280px) {
+      flex-direction: column;
+    }
+
+    .balance-item {
+      flex: 1;
+      border-right: 1px solid #0b5079;
+      border-bottom: 0;
+
+      @media screen and (max-width: 1280px) {
+        padding: 20px 0;
+        border-right: 0;
+        border-bottom: 1px solid #0b5079;
+      }
+
+      &:last-child {
+        border: 0;
+      }
+
+      .balance-label {
+        font-weight: 600;
+        font-size: 21px;
+        margin-bottom: 7px;
+        color: #4dd9f6;
+      }
+
+      .balance-value {
+        font-weight: bold;
+        font-size: 38px;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .balance-bottom {
+    display: flex;
+    margin: 50px 40px 0;
+
+    @media screen and (max-width: 1280px) {
+      flex-direction: column;
+    }
+
+    .generate-section {
+      flex: 1;
+      background: rgba(3, 6, 41, 0.72);
+      box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+      border-radius: 24px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+
+      .generate-header {
+        font-weight: bold;
+        font-size: 24px;
+        color: #ffffff;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #0b5079;
+      }
+
+      .locked-time {
+        margin-top: 10px;
+        color: #4dd9f6;
+        font-size: 14px;
+      }
+
+      .input-label {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px 0 5px;
+      }
+
+      .input-wrap {
+        display: flex;
+        border: 1px solid #0b5079;
+        border-radius: 12px;
+        height: 40px;
+        .react-datepicker__input-container {
+          height: 100%;
+        }
+        // padding: 10px 0;
+        input {
+          box-sizing: border-box;
+          padding-left: 20px;
+          color: #ffffff;
+          border: 0;
+          border-radius: 12px;
+          font-size: 14px;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          outline: none;
+        }
+        .max-btn {
+          border-radius: 6px;
+          margin: 5px;
+          margin-right: 10px;
+          padding: 10px 8px;
+          border: 1px solid #4dd9f6;
+        }
+      }
+
+      .period-section {
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+
+        .radio-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+
+          span {
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .lock-btn {
+        margin-top: 20px;
+      }
+
+      .bottom-btn {
+        margin-top: auto;
+        margin-bottom: 20px;
+      }
+    }
+
+    .reward-section {
+      flex: 2;
+      background: rgba(3, 6, 41, 0.72);
+      box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+      border-radius: 24px;
+      padding: 30px;
+      display: flex;
+      margin-left: 40px;
+
+      @media screen and (max-width: 1280px) {
+        margin-top: 30px;
+        flex-direction: column;
+        margin-left: 0;
+      }
+
+      .reward-left {
+        flex: 1;
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media screen and (max-width: 1280px) {
+          margin-right: 0;
+        }
+
+        .reward-logo {
+          width: 128px;
+          height: 128px;
+          margin-bottom: 20px;
+        }
+
+        .reward-desc {
+          margin-top: 40px;
+          max-width: 320px;
+          .reward-desc-title {
+            color: #4dd9f6;
+          }
+          .reward-desc-value {
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 5px;
+          }
+        }
+      }
+
+      .reward-right {
+        flex: 1;
+        margin-left: 20px;
+        border: 1px solid #0b5079;
+        padding: 20px;
+        border-radius: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @media screen and (max-width: 1280px) {
+          margin-left: 0;
+          margin-top: 30px;
+        }
+
+        .header-desc {
+          display: flex;
+          margin-bottom: 30px;
+
+          .icons {
+            .first {
+              position: relative;
+              display: block;
+              width: 42px;
+              height: 42px;
+              border-radius: 50%;
+              border: 2px solid #4dd9f6;
+              margin-bottom: -15px;
+              z-index: 2;
+            }
+            .last {
+              z-index: 1;
+              display: block;
+              margin-left: 20px;
+              width: 42px;
+              height: 42px;
+              border-radius: 50%;
+              border: 2px solid #4dd9f6;
+            }
+          }
+
+          .revenue-label {
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: 20px;
+          }
+        }
+
+        .reward-claim {
+          margin-bottom: 30px;
+          .claim-label {
+            text-align: left;
+            color: #4dd9f6;
+          }
+
+          .claim-section {
+            display: flex;
+            margin-top: 10px;
+            justify-content: space-between;
+
+            .claim-value {
+              text-align: left;
+
+              .claim-value-item {
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+
+                &.apr {
+                  margin: 5px 0;
+                }
+
+                .apr-title {
+                  color: #4dd9f6;
+                }
+
+                .apr-question {
+                  width: 14px;
+                  margin: 0 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -38,6 +38,12 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     <li onClick={() => setOpenMenu(false)}>
+                        <NavLink to="/xlqdr" exact={true}>
+                            <div className="icon-wrap"><img alt={"icon"} className="xlqdr" src="/img/svg/lock.svg" /></div>
+                            <p>xLQDR</p>
+                        </NavLink>
+                    </li>
+                    <li onClick={() => setOpenMenu(false)}>
                         <a href="https://github.com/LiquidDriver-finance" target="_blank" rel="noreferrer" >
                             <div className="icon-wrap">   <img alt={"icon"} src="/img/svg/Github.svg" /></div>
                             <p>Github</p>

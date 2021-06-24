@@ -114,7 +114,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
 
             <div className="amounts-wrap">
                 <p >1 Ticket = {new BigNumber(ticketPrice).div(10 ** 18).toFormat(2)}LQDR</p>
-                <p >{new BigNumber(lqdrBalance).div(10 ** 18).toFormat(2)} LQDR Available</p>
+                <p >{new BigNumber(lqdrBalance).toFormat(2)} LQDR Available</p>
             </div>
 
 
