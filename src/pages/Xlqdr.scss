@@ -283,30 +283,17 @@
                 font-weight: 600;
 
                 &.apr {
-                  margin: 5px 0
+                  margin: 5px 0;
                 }
 
                 .apr-title {
                   color: #4dd9f6;
-                  font-size: 16px;
-
-                  &.ftm {
-                    font-size: 23px;
-                  }
                 }
 
                 .apr-question {
                   width: 14px;
                   margin: 0 5px;
                   cursor: pointer;
-                }
-
-                .apr-value {
-                  font-size: 21px;
-
-                  &.ftm {
-                    font-size: 25px;
-                  }
                 }
               }
             }
