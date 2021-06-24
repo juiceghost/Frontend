@@ -77,8 +77,8 @@ export const useRewardInfo = () => {
   const [rewardInfo, setRewardInfo] = useState({
     lqdrReward: new BigNumber(0),
     ftmReward: new BigNumber(0),
-    lqdrPerWeek: new BigNumber(0),
-    ftmPerWeek: new BigNumber(0),
+    lqdrPerXlqdr: new BigNumber(0),
+    ftmPerXlqdr: new BigNumber(0),
   });
 
   const web3 = useWeb3();
@@ -86,6 +86,7 @@ export const useRewardInfo = () => {
   const { fastRefresh } = useRefresh();
   const feeContract = useFeeDistributor();
   const ftmContract = useFtmDistributor();
+  const { xlqdrTotalSupply } = useXlqdrInfo();
 
   useEffect(() => {
     const getRewardInfo = async () => {
@@ -107,8 +108,12 @@ export const useRewardInfo = () => {
         setRewardInfo({
           lqdrReward: new BigNumber(Number(rewards[0])).div(1e18),
           ftmReward: new BigNumber(Number(rewards[1])).div(1e18),
-          lqdrPerWeek: new BigNumber(lqdrPerWeek).div(1e18),
-          ftmPerWeek: new BigNumber(ftmPerWeek).div(1e18),
+          lqdrPerXlqdr: xlqdrTotalSupply.isZero()
+            ? new BigNumber(0)
+            : new BigNumber(lqdrPerWeek).div(1e18).div(xlqdrTotalSupply),
+          ftmPerXlqdr: xlqdrTotalSupply.isZero()
+            ? new BigNumber(0)
+            : new BigNumber(ftmPerWeek).div(1e18).div(xlqdrTotalSupply),
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
@@ -117,7 +122,15 @@ export const useRewardInfo = () => {
     if (web3 && account) {
       getRewardInfo();
     }
-  }, [web3, chainId, fastRefresh, account, feeContract, ftmContract]);
+  }, [
+    web3,
+    chainId,
+    fastRefresh,
+    account,
+    feeContract,
+    ftmContract,
+    xlqdrTotalSupply,
+  ]);
 
   return rewardInfo;
 };

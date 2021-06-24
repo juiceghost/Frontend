@@ -16,15 +16,16 @@ import DatePicker from "react-datepicker";
 import { RadioGroup, Radio } from "react-radio-group";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Xlqdr.scss";
+import { usePrices } from "../hooks/usePrices";
 
-const minTimeStamp = 86400 * (7 * 2 + 1);
+const minTimeStamp = 86400 * (7 * 2);
 
 const Xlqdr = () => {
   const { account, chainId } = useWeb3React();
   const [lqdrAmount, setLqdrAmount] = useState(new BigNumber(0));
   const [periodLevel, setPeriodLevel] = useState(0);
   const { xlqdrBalance, lockedEnd, xlqdrTotalSupply } = useXlqdrInfo();
-  const { lqdrPerWeek, ftmPerWeek, lqdrReward, ftmReward } = useRewardInfo();
+  const { lqdrPerXlqdr, ftmPerXlqdr, lqdrReward, ftmReward } = useRewardInfo();
   const { days, hours, mins } = useEpochInfo();
   const minDate = useMemo(() => {
     if (lockedEnd === 0) {
@@ -33,9 +34,7 @@ const Xlqdr = () => {
       return new Date(lockedEnd * 1000 + 86400 * 7 * 1000);
     }
   }, [lockedEnd]);
-  const maxDate = new Date(
-    new Date().getTime() + 3600 * 24 * (365 * 2 + 1) * 1000
-  );
+  const maxDate = new Date(new Date().getTime() + 3600 * 24 * (365 * 2) * 1000);
   const [selectedDate, setSelectedDate] = useState(minDate);
   const unlockTime = useMemo(() => {
     return Math.ceil((selectedDate.getTime() - new Date().getTime()) / 1000);
@@ -44,6 +43,8 @@ const Xlqdr = () => {
   const { onApprove } = useXlqdrApprove();
   const allowance = useAllowance();
   const lqdrBalance = useTokenBalance(getLqdrAddress(chainId));
+  const prices = usePrices(0);
+  console.log("prices :>> ", prices);
 
   const {
     onCreateLock,
@@ -76,13 +77,13 @@ const Xlqdr = () => {
         timestamp = minTimeStamp;
         break;
       case 1:
-        timestamp = 3600 * 24 * (30 * 2 + 1);
+        timestamp = 3600 * 24 * (30 * 2);
         break;
       case 2:
-        timestamp = 3600 * 24 * (365 + 1);
+        timestamp = 3600 * 24 * 365;
         break;
       case 3:
-        timestamp = 3600 * 24 * (365 * 2 + 1);
+        timestamp = 3600 * 24 * (365 * 2);
         break;
 
       default:
@@ -106,15 +107,21 @@ const Xlqdr = () => {
         <div className="balance-section">
           <div className="balance-item">
             <div className="balance-label">Your LQDR</div>
-            <div className="balance-value">{lqdrBalance.toFormat(2)}</div>
+            <div className="balance-value">
+              {lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
+            </div>
           </div>
           <div className="balance-item">
             <div className="balance-label">Your xLQDR</div>
-            <div className="balance-value">{xlqdrBalance.toFormat(8)}</div>
+            <div className="balance-value">
+              {xlqdrBalance.toFormat(xlqdrBalance.lt(0.001) ? 5 : 3)}
+            </div>
           </div>
           <div className="balance-item">
             <div className="balance-label">Total xLQDR</div>
-            <div className="balance-value">{xlqdrTotalSupply.toFormat(2)}</div>
+            <div className="balance-value">
+              {xlqdrTotalSupply.toFormat(xlqdrTotalSupply.lt(0.001) ? 5 : 3)}
+            </div>
           </div>
         </div>
         <div className="balance-bottom">
@@ -129,7 +136,7 @@ const Xlqdr = () => {
             <div className="input-label">
               <div className="input-label-left">Your Balance</div>
               <div className="input-label-right">
-                Balance: {lqdrBalance.toFormat(2)}
+                Balance: {lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
               </div>
             </div>
             <div className="input-wrap">
@@ -174,7 +181,17 @@ const Xlqdr = () => {
                   if (periodLevel >= 0) {
                     setPeriodLevel(-1);
                   }
-                  setSelectedDate(date);
+                  if (date.getTime() === selectedDate.getTime()) {
+                    return;
+                  }
+                  setSelectedDate(
+                    new Date(
+                      Math.floor(date.getTime() / 1000 / 7 / 86400) *
+                        7 *
+                        86400 *
+                        1000
+                    )
+                  );
                 }}
                 minDate={minDate}
                 maxDate={maxDate}
@@ -281,7 +298,7 @@ const Xlqdr = () => {
                 to claim rewards from the revenue-sharing vault every week!
               </div>
               <div className="reward-desc">
-                60% of the deposit fees will be redistributed to the vault over
+                80% of the deposit fees will be redistributed to the vault over
                 time.
               </div>
               <div className="reward-desc">
@@ -312,10 +329,10 @@ const Xlqdr = () => {
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item">
-                      {ftmReward.toFormat(8)} FTM
+                      {ftmReward.toFormat(ftmReward.lt(0.001) ? 5 : 3)} wFTM
                     </div>
                     <div className="claim-value-item">
-                      {lqdrReward.toFormat(8)} LQDR
+                      {lqdrReward.toFormat(lqdrReward.lt(0.001) ? 5 : 3)} LQDR
                     </div>
                   </div>
                   <div className="claim-btn">
@@ -349,15 +366,11 @@ const Xlqdr = () => {
                   <div className="claim-value">
                     <div className="claim-value-item">
                       FTM / xLQDR :{" "}
-                      {xlqdrTotalSupply.isZero()
-                        ? "0.00"
-                        : ftmPerWeek.div(xlqdrTotalSupply).toFormat(8)}
+                      {ftmPerXlqdr.toFormat(ftmPerXlqdr.lt(0.001) ? 5 : 3)}
                     </div>
                     <div className="claim-value-item">
                       LQDR / xLQDR :{" "}
-                      {xlqdrTotalSupply.isZero()
-                        ? "0.00"
-                        : lqdrPerWeek.div(xlqdrTotalSupply).toFormat(8)}
+                      {lqdrPerXlqdr.toFormat(lqdrPerXlqdr.lt(0.001) ? 5 : 3)}
                     </div>
                   </div>
                 </div>
@@ -366,10 +379,20 @@ const Xlqdr = () => {
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item">
-                      Your xLQDR : {xlqdrBalance.toFormat(2)}
+                      {`APR in FTM : ${
+                        !!prices
+                          ? ftmPerXlqdr
+                              .times(prices["FTM"])
+                              .div(prices["LQDR"])
+                              .times(5400)
+                              .toFormat(2)
+                          : "0.00"
+                      }%`}
                     </div>
                     <div className="claim-value-item">
-                      Total xLQDR : {xlqdrTotalSupply.toFormat(2)}
+                      {`APR in LQDR : ${
+                        !!prices ? lqdrPerXlqdr.times(5400).toFormat(2) : "0.00"
+                      }%`}
                     </div>
                   </div>
                 </div>
