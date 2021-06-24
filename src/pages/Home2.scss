@@ -1,188 +1,190 @@
 .home2-wrap {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    font-family: Nunito;
-    font-style: normal;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-family: Nunito;
+  font-style: normal;
+  margin: auto;
+  text-align: center;
+  background-image: url("../assets/imgs/Waterfall-Middle.svg");
+
+  background-position: center;
+  background-size: contain;
+  min-height: 100%;
+  padding-bottom: 50px;
+  margin-top: -20px;
+  .liquid-home-logo {
+    // margin-top: 90px;
+    width: 128px;
+    height: 128px;
+  }
+  .main-title {
+    max-width: 700px;
     margin: auto;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 42px;
     text-align: center;
-    background-image: url("../assets/imgs/Waterfall-Middle.svg");
+    color: #ffffff;
+  }
+  .tvl-title {
+    margin-top: 20px;
+    font-size: 21px;
+  }
+  .tvl-amount {
+    font-weight: bold;
+    font-size: 39px;
+  }
+  .btn-wrap {
+    margin: auto;
+    margin-top: 18px;
+    max-width: 320px;
+    padding: 15px 53px;
+    font-size: 21px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .markets {
+    text-align: center;
+    margin: auto;
+    margin-top: 40px;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    // // grid-template-columns: 300px 300px;
+    // grid-template-columns: repeat(auto-fill, 300px);
+    // grid-template-rows: auto auto;
+    // gap: 20px 20px;
 
-    background-position: center;
-    background-size: contain;
-    min-height: 100%;
-    padding-bottom: 50px;
-    margin-top: -20px;
-    .liquid-home-logo {
-        // margin-top: 90px;
-        width: 128px;
-        height: 128px;
-    }
-    .main-title {
-        max-width: 700px;
+    .market {
+      text-align: center;
+      padding: 30px 53px 24px 53px;
+      background: rgba(3, 6, 41, 0.72);
+      box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
+      border-radius: 24px;
+      width: 320px;
+      margin: 10px;
+      .m-title {
+        font-weight: 600;
+        font-size: 21px;
+        margin-bottom: 7px;
+        color: #4dd9f6;
+      }
+      .border {
+        height: 2px;
+        width: 18px;
         margin: auto;
-        margin-top: 20px;
+        margin-bottom: 6px;
+        background: #0b5079;
+        border-radius: 5px;
+      }
+      .amount {
         font-weight: bold;
-        font-size: 42px;
-        text-align: center;
+        font-size: 38px;
         color: #ffffff;
+        // margin-bottom: 24px;
+      }
     }
-    .tvl-title {
-        margin-top: 20px;
-        font-size: 21px;
-    }
-    .tvl-amount {
-        font-weight: bold;
-        font-size: 39px;
-    }
-    .btn-wrap {
-        margin: auto;
-        margin-top: 18px;
-        max-width: 320px;
-        padding: 15px 53px;
-        font-size: 21px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    .markets {
-        text-align: center;
-        margin: auto;
-        margin-top: 40px;
-        max-width: 800px;
-        display: grid;
-        justify-content: center;
-        // grid-template-columns: 300px 300px;
-        grid-template-columns: repeat(auto-fill, 300px);
-        grid-template-rows: auto auto;
-        gap: 20px 20px;
-
-        .market {
-            text-align: center;
-            padding: 30px 53px 24px 53px;
-            background: rgba(3, 6, 41, 0.72);
-            box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
-            border-radius: 24px;
-            max-width: 320px;
-            .m-title {
-                font-weight: 600;
-                font-size: 21px;
-                margin-bottom: 7px;
-                color: #4dd9f6;
-            }
-            .border {
-                height: 2px;
-                width: 18px;
-                margin: auto;
-                margin-bottom: 6px;
-                background: #0b5079;
-                border-radius: 5px;
-            }
-            .amount {
-                font-weight: bold;
-                font-size: 38px;
-                color: #ffffff;
-                // margin-bottom: 24px;
-            }
-        }
-    }
+  }
 }
 
 @media screen and (max-width: 1280px) {
-    .home2-wrap {
-        padding-bottom: 0px;
-        margin-top: -80px;
-        .liquid-home-logo {
-            // margin-top: 90px;
-            width: 80px;
-            height: 80px;
-        }
-        .main-title {
-            max-width: 500px;
-            margin-top: 10px;
-            font-size: 30px;
-        }
-        .tvl-title {
-            margin-top: 10px;
-            font-size: 17px;
-        }
-        .tvl-amount {
-            font-size: 30px;
-        }
-        .btn-wrap {
-            margin-top: 10px;
-            max-width: 250px;
-            padding: 12px 30px;
-            font-size: 17px;
-        }
-        .markets {
-            margin-top: 20px;
-            max-width: 600px;
-            grid-template-columns: repeat(auto-fill, 250px);
-            grid-template-rows: auto auto;
-            gap: 15px 15px;
-
-            .market {
-                text-align: center;
-                padding: 20px 40px 16px 40px;
-                background: rgba(3, 6, 41, 0.72);
-                box-shadow: 0px 0px 15px rgba(8, 11, 44, 0.2);
-                border-radius: 20px;
-                max-width: 250px;
-                .m-title {
-                    font-size: 17px;
-                    margin-bottom: 6px;
-                }
-                .border {
-                    height: 2px;
-                    width: 12px;
-                    margin-bottom: 6px;
-                }
-                .amount {
-                    font-size: 27px;
-                    color: #ffffff;
-                    // margin-bottom: 24px;
-                }
-            }
-        }
+  .home2-wrap {
+    padding-bottom: 0px;
+    margin-top: -80px;
+    .liquid-home-logo {
+      // margin-top: 90px;
+      width: 80px;
+      height: 80px;
     }
+    .main-title {
+      max-width: 500px;
+      margin-top: 10px;
+      font-size: 30px;
+    }
+    .tvl-title {
+      margin-top: 10px;
+      font-size: 17px;
+    }
+    .tvl-amount {
+      font-size: 30px;
+    }
+    .btn-wrap {
+      margin-top: 10px;
+      max-width: 250px;
+      padding: 12px 30px;
+      font-size: 17px;
+    }
+    .markets {
+      margin-top: 20px;
+      max-width: 600px;
+      grid-template-columns: repeat(auto-fill, 250px);
+      grid-template-rows: auto auto;
+      gap: 15px 15px;
+
+      .market {
+        text-align: center;
+        padding: 20px 40px 16px 40px;
+        background: rgba(3, 6, 41, 0.72);
+        box-shadow: 0px 0px 15px rgba(8, 11, 44, 0.2);
+        border-radius: 20px;
+        width: 250px;
+        margin: 7, 5px;
+        .m-title {
+          font-size: 17px;
+          margin-bottom: 6px;
+        }
+        .border {
+          height: 2px;
+          width: 12px;
+          margin-bottom: 6px;
+        }
+        .amount {
+          font-size: 27px;
+          color: #ffffff;
+          // margin-bottom: 24px;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .home2-wrap {
-        // width: 95%;
-        // margin: auto;
-        margin-top: -10px;
+  .home2-wrap {
+    // width: 95%;
+    // margin: auto;
+    margin-top: -10px;
 
-        .liquid-home-logo {
-            margin-top: 40px;
-            width: 80px;
-            height: 80px;
-        }
-        .main-title {
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
-            margin-top: 15px;
-            font-size: 23px;
-        }
-        .tvl-title {
-            margin-top: 25px;
-            font-size: 19px;
-        }
-        .btn-wrap {
-            font-size: 18px;
-        }
-        .tvl-amount {
-            font-weight: bold;
-            font-size: 32px;
-        }
-        .markets {
-            gap: 17px 17px;
-
-            .market {
-                padding: 24px 30px 20px 30px;
-                max-width: 340px;
-            }
-        }
+    .liquid-home-logo {
+      margin-top: 40px;
+      width: 80px;
+      height: 80px;
     }
+    .main-title {
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+      margin-top: 15px;
+      font-size: 23px;
+    }
+    .tvl-title {
+      margin-top: 25px;
+      font-size: 19px;
+    }
+    .btn-wrap {
+      font-size: 18px;
+    }
+    .tvl-amount {
+      font-weight: bold;
+      font-size: 32px;
+    }
+    .markets {
+      .market {
+        padding: 24px 30px 20px 30px;
+        width: 340px;
+        margin: 8.5px;
+      }
+    }
+  }
 }

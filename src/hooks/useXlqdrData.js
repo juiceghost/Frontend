@@ -41,6 +41,7 @@ export const useXlqdrInfo = () => {
     xlqdrBalance: new BigNumber(0),
     lockedEnd: 0,
     xlqdrTotalSupply: new BigNumber(0),
+    totalLqdr: new BigNumber(0),
   });
 
   const web3 = useWeb3();
@@ -51,15 +52,17 @@ export const useXlqdrInfo = () => {
   useEffect(() => {
     const getXlqdrInfo = async () => {
       try {
-        const [xlqdrBalance, lockedEnd, xlqdrTotalSupply] = await Promise.all([
+        const [xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr] = await Promise.all([
           xlqdrContract.methods.balanceOf(account).call(),
           xlqdrContract.methods.locked__end(account).call(),
           xlqdrContract.methods.totalSupply().call(),
+          xlqdrContract.methods.supply().call(),
         ]);
         setXlqdrInfo({
           xlqdrBalance: new BigNumber(xlqdrBalance).div(1e18),
           lockedEnd: Number(lockedEnd),
           xlqdrTotalSupply: new BigNumber(xlqdrTotalSupply).div(1e18),
+          totalLqdr: new BigNumber(totalLqdr).div(1e18)
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
