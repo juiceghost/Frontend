@@ -164,7 +164,22 @@
 
       .bottom-btn {
         margin-top: auto;
-        margin-bottom: 20px;
+
+        .xlqdr-total-info {
+          margin-top: 20px;
+          font-weight: 600;
+          text-align: left;
+
+          .xlqdr-info-item {
+            display: flex;
+            justify-content: space-between;
+
+            .xlqdr-item-title {
+              color: #4dd9f6;
+              margin-right: 5px;
+            }
+          }
+        }
       }
     }
 

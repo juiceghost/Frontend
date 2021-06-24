@@ -15,9 +15,9 @@ import { getLqdrAddress } from "../utils/addressHelpers";
 import DatePicker from "react-datepicker";
 import { RadioGroup, Radio } from "react-radio-group";
 import "react-datepicker/dist/react-datepicker.css";
-import "./Xlqdr.scss";
 import { usePrices } from "../hooks/usePrices";
 import ReactTooltip from "react-tooltip";
+import "./Xlqdr.scss";
 
 const minTimeStamp = 86400 * (7 * 2);
 
@@ -25,7 +25,8 @@ const Xlqdr = () => {
   const { account, chainId } = useWeb3React();
   const [lqdrAmount, setLqdrAmount] = useState(new BigNumber(0));
   const [periodLevel, setPeriodLevel] = useState(0);
-  const { xlqdrBalance, lockedEnd, xlqdrTotalSupply } = useXlqdrInfo();
+  const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr } =
+    useXlqdrInfo();
   const { lqdrPerXlqdr, ftmPerXlqdr, lqdrReward, ftmReward } = useRewardInfo();
   const { days, hours, mins } = useEpochInfo();
   const minDate = useMemo(() => {
@@ -45,7 +46,6 @@ const Xlqdr = () => {
   const allowance = useAllowance();
   const lqdrBalance = useTokenBalance(getLqdrAddress(chainId));
   const prices = usePrices(0);
-  console.log("prices :>> ", prices);
 
   const {
     onCreateLock,
@@ -226,9 +226,9 @@ const Xlqdr = () => {
                 <span>2 years</span>
               </div>
             </RadioGroup>
-            {lockStatus === "increase" &&
-              (account ? (
-                <div className="lock-btn">
+            <div className="bottom-btn">
+              {lockStatus === "increase" &&
+                (account ? (
                   <div
                     className={`lq-button ${
                       isLoading ? "grey-button" : "blue-button"
@@ -237,16 +237,12 @@ const Xlqdr = () => {
                   >
                     Extend Period
                   </div>
-                </div>
-              ) : (
-                <div className="lock-btn">
+                ) : (
                   <ConnectWallet />
-                </div>
-              ))}
-            {lockStatus === "create" &&
-              (account ? (
-                <div className="bottom-btn">
-                  {allowance.gt(0) ? (
+                ))}
+              {lockStatus === "create" &&
+                (account ? (
+                  allowance.gt(0) ? (
                     <div
                       className={`lq-button ${
                         isLoading ? "grey-button" : "blue-button"
@@ -262,16 +258,12 @@ const Xlqdr = () => {
                     >
                       Approve
                     </div>
-                  )}
-                </div>
-              ) : (
-                <div className="bottom-btn">
+                  )
+                ) : (
                   <ConnectWallet />
-                </div>
-              ))}
-            {lockStatus === "withdraw" &&
-              (account ? (
-                <div className="bottom-btn">
+                ))}
+              {lockStatus === "withdraw" &&
+                (account ? (
                   <div
                     className={`lq-button ${
                       isLoading ? "grey-button" : "blue-button"
@@ -280,12 +272,32 @@ const Xlqdr = () => {
                   >
                     Withdraw
                   </div>
-                </div>
-              ) : (
-                <div className="bottom-btn">
+                ) : (
                   <ConnectWallet />
+                ))}
+
+              <div className="xlqdr-total-info">
+                <div className="xlqdr-info-item">
+                  <span className="xlqdr-item-title">Total Locked LQDR</span>
+                  <span className="xlqdr-item-value">
+                    {totalLqdr.toFormat(2)}
+                  </span>
                 </div>
-              ))}
+                <div className="xlqdr-info-item">
+                  <span className="xlqdr-item-title">
+                    Avg. Lock Time (days)
+                  </span>
+                  <span className="xlqdr-item-value">
+                    {totalLqdr.isZero()
+                      ? "0.00"
+                      : new BigNumber(730)
+                          .div(totalLqdr)
+                          .times(xlqdrTotalSupply)
+                          .toFormat(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="reward-section">
             <div className="reward-left">
