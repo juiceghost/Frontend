@@ -17,6 +17,7 @@ import { RadioGroup, Radio } from "react-radio-group";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Xlqdr.scss";
 import { usePrices } from "../hooks/usePrices";
+import ReactTooltip from "react-tooltip";
 
 const minTimeStamp = 86400 * (7 * 2);
 
@@ -378,21 +379,41 @@ const Xlqdr = () => {
               <div className="reward-claim">
                 <div className="claim-section">
                   <div className="claim-value">
-                    <div className="claim-value-item">
-                      {`APR in FTM : ${
-                        !!prices
-                          ? ftmPerXlqdr
-                              .times(prices["FTM"])
-                              .div(prices["LQDR"])
-                              .times(5400)
-                              .toFormat(2)
-                          : "0.00"
-                      }%`}
+                    <div className="claim-value-item apr">
+                      <span className="apr-title ftm">APR in FTM</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value ftm">
+                        {`: ${
+                          !!prices
+                            ? ftmPerXlqdr
+                                .times(prices["FTM"])
+                                .div(prices["LQDR"])
+                                .times(5400)
+                                .toFormat(2)
+                            : "0.00"
+                        }%`}
+                      </span>
                     </div>
-                    <div className="claim-value-item">
-                      {`APR in LQDR : ${
-                        !!prices ? lqdrPerXlqdr.times(5400).toFormat(2) : "0.00"
-                      }%`}
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in LQDR</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${
+                          !!prices
+                            ? lqdrPerXlqdr.times(5400).toFormat(2)
+                            : "0.00"
+                        }%`}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -401,6 +422,7 @@ const Xlqdr = () => {
           </div>
         </div>
       </div>
+      <ReactTooltip effect="solid" type="info" />
     </>
   );
 };
