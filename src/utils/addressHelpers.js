@@ -35,3 +35,7 @@ export const getFeeDistributorAddress = (chainId = 3) => {
 export const getFTMDistributorAddress = (chainId = 3) => {
   return addresses.ftmDistributor[chainId]
 }
+
+export const getWftmAddress = (chainId = 3) => {
+  return addresses.wftm[chainId]
+}

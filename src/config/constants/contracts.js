@@ -68,5 +68,9 @@ const contracts = {
     250: '0x4fE500d6687ee03EB511c13C48c7F9c3eb51b4Ca',
     4002: '',
   },
+  wftm: {
+    250: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+    4002: '',
+  },
 }
 export default contracts
