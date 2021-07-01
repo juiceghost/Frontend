@@ -4,11 +4,15 @@ import BigNumber from "bignumber.js";
 import useRefresh from "./useRefresh";
 import {
   useERC20,
-  useFeeDistributor,
-  useFtmDistributor,
+  // // useFeeDistributor,
+  // useFtmDistributor,
   useXLQDR,
 } from "./useContract";
-import { getLqdrAddress, getXLqdrAddress } from "../utils/addressHelpers";
+import {
+  getLqdrAddress,
+  getXLqdrAddress,
+  getWftmAddress,
+} from "../utils/addressHelpers";
 import useWeb3 from "./useWeb3";
 import { ethers } from "ethers";
 import feeABI from "../config/abi/feeDistributor.json";
@@ -95,15 +99,17 @@ export const useRewardInfo = () => {
   const web3 = useWeb3();
   const { account, chainId } = useWeb3React();
   const { fastRefresh } = useRefresh();
-  const feeContract = useFeeDistributor();
-  const ftmContract = useFtmDistributor();
+  // const feeContract = useFeeDistributor();
+  // const ftmContract = useFtmDistributor();
   const { xlqdrTotalSupply } = useXlqdrInfo();
+  const lqdrContract = useERC20(getLqdrAddress(chainId));
+  const wftmContract = useERC20(getWftmAddress(chainId));
 
   useEffect(() => {
     const getRewardInfo = async () => {
       try {
-        const timestamp =
-          (Math.floor(new Date().getTime() / 1000 / 7 / 86400) + 0) * 7 * 86400;
+        // const timestamp =
+        //   (Math.floor(new Date().getTime() / 1000 / 7 / 86400) + 0) * 7 * 86400;
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
@@ -113,8 +119,14 @@ export const useRewardInfo = () => {
         );
         const [rewards, lqdrPerWeek, ftmPerWeek] = await Promise.all([
           contract.callStatic["claim(address)"](account),
-          feeContract.methods.tokens_per_week(timestamp).call(),
-          ftmContract.methods.tokens_per_week(timestamp).call(),
+          // feeContract.methods.tokens_per_week(timestamp).call(),
+          // ftmContract.methods.tokens_per_week(timestamp).call(),
+          lqdrContract.methods.balanceOf(
+            "0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422"
+          ).call(),
+          wftmContract.methods.balanceOf(
+            "0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422"
+          ).call(),
         ]);
         setRewardInfo({
           lqdrReward: new BigNumber(Number(rewards[0])).div(1e18),
@@ -130,7 +142,7 @@ export const useRewardInfo = () => {
         console.error("fetch xlqdr data had error", e);
       }
     };
-    if (web3 && account) {
+    if (web3 && account && lqdrContract && wftmContract) {
       getRewardInfo();
     }
   }, [
@@ -138,8 +150,8 @@ export const useRewardInfo = () => {
     chainId,
     fastRefresh,
     account,
-    feeContract,
-    ftmContract,
+    lqdrContract,
+    wftmContract,
     xlqdrTotalSupply,
   ]);
 
