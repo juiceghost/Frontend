@@ -1,6 +1,6 @@
 .lottery-wrap {
     background-image: url("../assets/imgs/Waterfall-Middle.svg");
-    background-position: center;
+    background-position: center top;
     background-size: contain;
     margin-top: -130px;
     z-index: 2;
@@ -231,7 +231,6 @@
                         font-size: 20px;
                         font-weight: 700;
                     }
-
                 }
             }
         }
@@ -367,7 +366,7 @@
                 padding-top: 10px;
                 width: 70px;
                 height: 70px;
-                border: 3px dotted #5CFFFF;
+                border: 3px dotted #5cffff;
                 border-radius: 10px;
                 font-size: 30px;
                 font-weight: 800;
@@ -376,7 +375,6 @@
             .winning-pad-info {
                 margin: 10px;
             }
-
         }
 
         .history {
