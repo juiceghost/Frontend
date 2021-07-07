@@ -81,7 +81,7 @@ const PrizeStatus = () => {
                 lotteryId = {lotteryCurrentRoundNo}
                 lotterySize = {lotteryMetaData ? lotteryMetaData.lotterySize : 4}
                 maxRange = {lotteryMetaData ? lotteryMetaData.lotteryMaxRange : 14}
-                ticketPrice = {lotteryInfo ? Number(lotteryInfo.costPerTicket) / 1e18 : 0}
+                ticketPrice = {lotteryInfo ? Number(lotteryInfo.costPerTicket) : 0}
                 lqdrBalance = {lqdrBalance} />
 
     </div>);

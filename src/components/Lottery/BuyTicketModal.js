@@ -36,7 +36,7 @@ const BuyTicketModal = ({ modalIsOpen, setIsOpen, lotteryId, lotterySize, maxRan
     }
 
     function handleMax() {
-        setTicketsAmount(ticketPrice > 0 ? Math.min(Math.floor(lqdrBalance / ticketPrice), 50) : 0)
+        setTicketsAmount(ticketPrice > 0 ? Math.min(Math.floor(lqdrBalance * 1e18 / ticketPrice), 50) : 0)
     }
 
     const onBuy = async () => {
