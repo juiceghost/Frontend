@@ -10,6 +10,7 @@ import {
   useEpochInfo,
 } from "../hooks/useXlqdrData";
 import ConnectWallet from "../components/Common/ConnetWallet";
+import CalcModal from "../components/Xlqdr/CalcModal";
 import useTokenBalance from "../hooks/useTokenBalance";
 import { getLqdrAddress } from "../utils/addressHelpers";
 import DatePicker from "react-datepicker";
@@ -25,6 +26,9 @@ const Xlqdr = () => {
   const { account, chainId } = useWeb3React();
   const [lqdrAmount, setLqdrAmount] = useState(new BigNumber(0));
   const [periodLevel, setPeriodLevel] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLQDR, setIsLQDR] = useState(false);
+
   const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr } =
     useXlqdrInfo();
   const { lqdrPerXlqdr, ftmPerXlqdr, lqdrReward, ftmReward } = useRewardInfo();
@@ -65,6 +69,16 @@ const Xlqdr = () => {
       return "withdraw";
     }
   }, [lockedEnd]);
+
+  const ftmApr = useMemo(() => {
+    return !!prices
+      ? ftmPerXlqdr.times(prices["FTM"]).div(prices["LQDR"]).times(5400)
+      : new BigNumber(0);
+  }, [ftmPerXlqdr, prices]);
+
+  const lqdrApr = useMemo(() => {
+    return lqdrPerXlqdr.times(5400);
+  }, [lqdrPerXlqdr]);
 
   const onExchange = (e) => {
     setLqdrAmount(BigNumber.min(new BigNumber(e.target.value), lqdrBalance));
@@ -400,16 +414,17 @@ const Xlqdr = () => {
                         data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
                       />
                       <span className="apr-value ftm">
-                        {`: ${
-                          !!prices
-                            ? ftmPerXlqdr
-                                .times(prices["FTM"])
-                                .div(prices["LQDR"])
-                                .times(5400)
-                                .toFormat(2)
-                            : "0.00"
-                        }%`}
+                        {`: ${ftmApr.toFormat(2)}%`}
                       </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setIsLQDR(false);
+                          setIsOpen(true);
+                        }}
+                      />
                     </div>
                     <div className="claim-value-item apr">
                       <span className="apr-title">APR in LQDR</span>
@@ -420,12 +435,17 @@ const Xlqdr = () => {
                         data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
                       />
                       <span className="apr-value">
-                        {`: ${
-                          !!prices
-                            ? lqdrPerXlqdr.times(5400).toFormat(2)
-                            : "0.00"
-                        }%`}
+                        {`: ${lqdrApr.toFormat(2)}%`}
                       </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setIsLQDR(true);
+                          setIsOpen(true);
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -435,6 +455,7 @@ const Xlqdr = () => {
         </div>
       </div>
       <ReactTooltip effect="solid" type="info" />
+      <CalcModal isOpen={isOpen} setIsOpen={setIsOpen} lqdrApr={lqdrApr} ftmApr={ftmApr} isLQDR={isLQDR} />
     </>
   );
 };
