@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { BrowserRouter } from "react-router-dom";
 import { Web3ReactProvider } from '@web3-react/core'
 import Web3ReactManager from './utils/Web3ReactManager';
 import { getLibrary } from './utils'
@@ -13,7 +14,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ReactManager>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Web3ReactManager>
     </Web3ReactProvider>
   </React.StrictMode>,

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import ConnectWallet from './ConnetWallet';
 import { NavLink } from 'react-router-dom';
+import useGoogleAnalytics from '../../hooks/useGoogleAnalytics';
 import './Navbar.scss'
 
 const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false)
+    useGoogleAnalytics()
+
     return (<>
         <div className={`navbar-wrap ${openMenu ? "opened-nav" : ""}`} >
 
