@@ -19,7 +19,7 @@ function sendEvent(payload) {
 }
 
 function sendPageview(path) {
-    ReactGA.set({ page: path })
+    ReactGA.set({ page: path, anonymizeIp: true })
     ReactGA.pageview(path)
 }
 
