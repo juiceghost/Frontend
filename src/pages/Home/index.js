@@ -1,11 +1,11 @@
-import { isZero } from "../config/constants/numbers";
-import { usePrices } from "../hooks/usePrices";
-import { useLqdr } from "../hooks/useLqdr";
-import { useTotalValue } from "../utils/fetchFarmUser";
+import { isZero } from "../../config/constants/numbers";
+import { usePrices } from "../../hooks/usePrices";
+import { useLqdr } from "../../hooks/useLqdr";
+import { useTotalValue } from "../../utils/fetchFarmUser";
 import { Link } from "react-router-dom";
-import { useXlqdrInfo } from "../hooks/useXlqdrData";
+import { useXlqdrInfo } from "../../hooks/useXlqdrData";
 
-import "./Home2.scss";
+import "./Home.scss";
 
 function Home2() {
   const tvl = useTotalValue();

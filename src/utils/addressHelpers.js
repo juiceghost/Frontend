@@ -1,7 +1,12 @@
 import addresses from '../config/constants/contracts'
+import { Tokens } from '../config/constants/tokens'
 
 export const getMasterChefAddress = (chainId = 250) => {
   return addresses.MasterChef[chainId]
+}
+
+export const getMiniChefAddress = (chainId = 250) => {
+  return addresses.minichef[chainId]
 }
 
 export const getSushiAddress = (chainId = 250) => {
@@ -21,7 +26,7 @@ export const getLotteryNftAddress = (chainId = 250) => {
 }
 
 export const getLqdrAddress = (chainId = 250) => {
-  return addresses.LQDR[chainId]
+  return Tokens.LQDR.address[chainId]
 }
 
 export const getXLqdrAddress = (chainId = 250) => {
@@ -37,5 +42,5 @@ export const getFTMDistributorAddress = (chainId = 250) => {
 }
 
 export const getWftmAddress = (chainId = 250) => {
-  return addresses.wftm[chainId]
+  return Tokens.FTM.address[chainId]
 }

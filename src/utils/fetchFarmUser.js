@@ -2,18 +2,23 @@ import { useEffect, useState } from "react";
 import BigNumber from "bignumber.js";
 import erc20ABI from "../config/abi/erc20.json";
 import masterchefABI from "../config/abi/masterchef.json";
+import minichefABI from "../config/abi/minichef.json";
 import multicall from "./multicall";
-import { getMasterChefAddress } from "./addressHelpers";
+import { getMasterChefAddress, getMiniChefAddress } from "./addressHelpers";
 import farmsConfig from "../config/constants/farms";
 import { ZERO } from "../config/constants/numbers";
 import { useFarms } from "../hooks/useFarms";
 import { usePrices } from "../hooks/usePrices";
 import { useXlqdrInfo } from "../hooks/useXlqdrData";
 
+const miniFarms = farmsConfig.filter((farm) => farm.type > 0);
+const masterFarms = farmsConfig.filter((farm) => farm.type === 0);
+
 export const fetchFarmUserAllowances = async (web3, account, chainId) => {
+  // Masterchef Farms
   const masterChefAdress = getMasterChefAddress(chainId);
 
-  const calls = farmsConfig.map((farm) => {
+  const calls = masterFarms.map((farm) => {
     const lpContractAddress = farm.isTokenOnly
       ? farm.tokenAddresses[chainId]
       : farm.lpAddresses[chainId];
@@ -28,12 +33,37 @@ export const fetchFarmUserAllowances = async (web3, account, chainId) => {
   const parsedLpAllowances = rawLpAllowances.map((lpBalance) => {
     return new BigNumber(lpBalance).toFixed(0, BigNumber.ROUND_DOWN);
   });
-  return parsedLpAllowances;
+
+  // Minichef Farms
+  const minichefAddres = getMiniChefAddress(chainId);
+
+  const miniCalls = miniFarms.map((farm) => {
+    const lpContractAddress = farm.isTokenOnly
+      ? farm.tokenAddresses[chainId]
+      : farm.lpAddresses[chainId];
+    return {
+      address: lpContractAddress,
+      name: "allowance",
+      params: [account, minichefAddres],
+    };
+  });
+
+  const miniRawLpAllowances = await multicall(
+    web3,
+    erc20ABI,
+    miniCalls,
+    chainId
+  );
+  const miniParsedLpAllowances = miniRawLpAllowances.map((lpBalance) => {
+    return new BigNumber(lpBalance).toFixed(0, BigNumber.ROUND_DOWN);
+  });
+  return [...parsedLpAllowances, ...miniParsedLpAllowances];
 };
 
 //Todo
 export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
-  const calls = farmsConfig.map((farm) => {
+  // MasterChef
+  const calls = masterFarms.map((farm) => {
     const lpContractAddress = farm.isTokenOnly
       ? farm.tokenAddresses[chainId]
       : farm.lpAddresses[chainId];
@@ -48,13 +78,36 @@ export const fetchFarmUserTokenBalances = async (web3, account, chainId) => {
   const parsedTokenBalances = rawTokenBalances.map((tokenBalance) => {
     return new BigNumber(tokenBalance).toFixed(0, BigNumber.ROUND_DOWN);
   });
-  return parsedTokenBalances;
+
+  // MiniChef
+  const miniCalls = miniFarms.map((farm) => {
+    const lpContractAddress = farm.isTokenOnly
+      ? farm.tokenAddresses[chainId]
+      : farm.lpAddresses[chainId];
+    return {
+      address: lpContractAddress,
+      name: "balanceOf",
+      params: [account],
+    };
+  });
+
+  const miniRawTokenBalances = await multicall(
+    web3,
+    erc20ABI,
+    miniCalls,
+    chainId
+  );
+  const miniRarsedTokenBalances = miniRawTokenBalances.map((tokenBalance) => {
+    return new BigNumber(tokenBalance).toFixed(0, BigNumber.ROUND_DOWN);
+  });
+  return [...parsedTokenBalances, ...miniRarsedTokenBalances];
 };
 
 export const fetchFarmUserStakedBalances = async (web3, account, chainId) => {
+  // Masterchef Farms
   const masterChefAdress = getMasterChefAddress(chainId);
 
-  const calls = farmsConfig.map((farm) => {
+  const calls = masterFarms.map((farm) => {
     return {
       address: masterChefAdress,
       name: "userInfo",
@@ -74,13 +127,39 @@ export const fetchFarmUserStakedBalances = async (web3, account, chainId) => {
       BigNumber.ROUND_DOWN
     );
   });
-  return parsedStakedBalances;
+  // Minichef Farms
+  const minichefAdress = getMiniChefAddress(chainId);
+
+  const miniCalls = miniFarms.map((farm) => {
+    return {
+      address: minichefAdress,
+      name: "userInfo",
+      params: [farm.pid, account],
+    };
+  });
+
+  const miniRawStakedBalances = await multicall(
+    web3,
+    minichefABI,
+    miniCalls,
+    chainId
+  );
+  const miniParsedStakedBalances = miniRawStakedBalances.map(
+    (stakedBalance) => {
+      return new BigNumber(stakedBalance[0]._hex).toFixed(
+        0,
+        BigNumber.ROUND_DOWN
+      );
+    }
+  );
+  return [...parsedStakedBalances, ...miniParsedStakedBalances];
 };
 
 export const fetchFarmUserEarnings = async (web3, account, chainId) => {
+  // Masterchef
   const masterChefAdress = getMasterChefAddress(chainId);
 
-  const calls = farmsConfig.map((farm) => {
+  const calls = masterFarms.map((farm) => {
     return {
       address: masterChefAdress,
       name: "pendingLqdr",
@@ -92,7 +171,28 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
   const parsedEarnings = rawEarnings.map((earnings) => {
     return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
   });
-  return parsedEarnings;
+
+  // Minichef
+  const minichefAdress = getMiniChefAddress(chainId);
+
+  const minicalls = miniFarms.map((farm) => {
+    return {
+      address: minichefAdress,
+      name: "pendingLqdr",
+      params: [farm.pid, account],
+    };
+  });
+
+  const minirawEarnings = await multicall(
+    web3,
+    minichefABI,
+    minicalls,
+    chainId
+  );
+  const miniparsedEarnings = minirawEarnings.map((earnings) => {
+    return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
+  });
+  return [...parsedEarnings, ...miniparsedEarnings];
 };
 
 export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
@@ -108,17 +208,16 @@ export const fetchFarmUserDataAsync = async (web3, account, chainId) => {
     fetchFarmUserEarnings(web3, account, chainId),
   ]);
 
-  const arrayOfUserDataObjects = userFarmAllowances.map(
-    (farmAllowance, index) => {
-      return {
-        index,
-        allowance: userFarmAllowances[index],
-        tokenBalance: userFarmTokenBalances[index],
-        stakedBalance: userStakedBalances[index],
-        earnings: userFarmEarnings[index],
-      };
-    }
-  );
+  const arrayOfUserDataObjects = farmsConfig.map((farm, index) => {
+    return {
+      pid: farm.pid,
+      type: farm.type,
+      allowance: userFarmAllowances[index],
+      tokenBalance: userFarmTokenBalances[index],
+      stakedBalance: userStakedBalances[index],
+      earnings: userFarmEarnings[index],
+    };
+  });
   return arrayOfUserDataObjects;
 };
 

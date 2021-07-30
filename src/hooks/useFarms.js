@@ -15,6 +15,7 @@ export const useFarms = (forceUpdate) => {
         const getPools = async () => {
             try {
                 const farms = await fetchFarms(web3, chainId)
+                console.log('farms :>> ', farms);
                 setFarms(farms)
                 // console.info('Farms fetched:', farms)
             } catch (e) {

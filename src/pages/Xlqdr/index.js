@@ -1,22 +1,22 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
-import { useXlqdrApprove } from "../hooks/useApprove";
-import { useLock, useClaim } from "../hooks/useLock";
+import { useXlqdrApprove } from "../../hooks/useApprove";
+import { useLock, useClaim } from "../../hooks/useLock";
 import {
   useAllowance,
   useXlqdrInfo,
   useRewardInfo,
   useEpochInfo,
-} from "../hooks/useXlqdrData";
-import ConnectWallet from "../components/Common/ConnetWallet";
-import CalcModal from "../components/Xlqdr/CalcModal";
-import useTokenBalance from "../hooks/useTokenBalance";
-import { getLqdrAddress } from "../utils/addressHelpers";
+} from "../../hooks/useXlqdrData";
+import ConnectWallet from "../../components/Common/ConnetWallet";
+import CalcModal from "../../components/Xlqdr/CalcModal";
+import useTokenBalance from "../../hooks/useTokenBalance";
+import { getLqdrAddress } from "../../utils/addressHelpers";
 import DatePicker from "react-datepicker";
 import { RadioGroup, Radio } from "react-radio-group";
 import "react-datepicker/dist/react-datepicker.css";
-import { usePrices } from "../hooks/usePrices";
+import { usePrices } from "../../hooks/usePrices";
 import ReactTooltip from "react-tooltip";
 import "./Xlqdr.scss";
 
@@ -31,7 +31,7 @@ const Xlqdr = () => {
 
   const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr } =
     useXlqdrInfo();
-  const { lqdrPerXlqdr, ftmPerXlqdr, lqdrReward, ftmReward } = useRewardInfo();
+  const { lqdrPerXlqdr, ftmPerXlqdr } = useRewardInfo();
   const { days, hours, mins } = useEpochInfo();
   const minDate = useMemo(() => {
     if (lockedEnd === 0) {
@@ -58,7 +58,7 @@ const Xlqdr = () => {
     onWithdraw,
     isLoading,
   } = useLock(lqdrAmount, unlockTime, lockedEnd);
-  const { pendingClaim, onClaim } = useClaim();
+  // const { pendingClaim, onClaim } = useClaim();
 
   const lockStatus = useMemo(() => {
     if (lockedEnd === 0) {
@@ -352,18 +352,18 @@ const Xlqdr = () => {
                 <div className="revenue-label">Revenue-sharing vault</div>
               </div>
               <div className="reward-claim">
-                <div className="claim-label">Current claimable earnings :</div>
+                <div className="claim-label">Next receivable earnings :</div>
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item">
-                      {ftmReward.toFormat(ftmReward.lt(0.001) ? 5 : 3)} wFTM
+                      {ftmPerXlqdr.times(xlqdrBalance).toFormat(ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3)} wFTM
                     </div>
                     <div className="claim-value-item">
-                      {lqdrReward.toFormat(lqdrReward.lt(0.001) ? 5 : 3)} LQDR
+                      {lqdrPerXlqdr.times(xlqdrBalance).toFormat(lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3)} LQDR
                     </div>
                   </div>
                   <div className="claim-btn">
-                    {account && (
+                    {/* {account && (
                       <div
                         className={`lq-button ${
                           pendingClaim ||
@@ -382,7 +382,7 @@ const Xlqdr = () => {
                           ? "Claimed"
                           : "Claim"}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

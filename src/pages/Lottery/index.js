@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
-import {useLotteryInfo, useLotteryCurrentRoundNo} from '../hooks/useLotteryData';
-import History from '../components/Lottery/History';
-import Round from '../components/Lottery/Round';
-import PrizeStatus from '../components/Lottery/PrizeStatus';
-import Tickets from '../components/Lottery/Tickets';
-import WinnerInfo from '../components/Lottery/WinnerInfo';
+import {useLotteryInfo, useLotteryCurrentRoundNo} from '../../hooks/useLotteryData';
+import History from '../../components/Lottery/History';
+import Round from '../../components/Lottery/Round';
+import PrizeStatus from '../../components/Lottery/PrizeStatus';
+import Tickets from '../../components/Lottery/Tickets';
+import WinnerInfo from '../../components/Lottery/WinnerInfo';
 // import {ProgressBar} from 'react-bootstrap';
 import './lottery.scss'
 

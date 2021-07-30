@@ -1,5 +1,6 @@
-export const DefultTokens = {
+export const Tokens = {
     "LQDR": {
+        symbol: "LQDR",
         decimals: 18,
         address: {
             3: '',
@@ -7,6 +8,7 @@ export const DefultTokens = {
         }
     },
     "FUSDT": {
+        symbol: "FUSDT",
         decimals: 6,
         address: {
             3: '',
@@ -14,6 +16,7 @@ export const DefultTokens = {
         }
     },
     "FTM": {
+        symbol: "FTM",
         decimals: 18,
         address: {
             3: '',
@@ -21,6 +24,7 @@ export const DefultTokens = {
         }
     },
     "ETH": {
+        symbol: "ETH",
         decimals: 18,
         address: {
             3: '',
@@ -28,6 +32,7 @@ export const DefultTokens = {
         }
     },
     "FXS": {
+        symbol: "FXS",
         decimals: 18,
         address: {
             3: '',
@@ -35,6 +40,7 @@ export const DefultTokens = {
         }
     },
     "FRAX": {
+        symbol: "FRAX",
         decimals: 18,
         address: {
             3: '',
@@ -42,6 +48,7 @@ export const DefultTokens = {
         }
     },
     "USDC": {
+        symbol: "USDC",
         decimals: 6,
         address: {
             3: '',
@@ -49,10 +56,19 @@ export const DefultTokens = {
         }
     },
     "WBTC": {
+        symbol: "WBTC",
         decimals: 8,
         address: {
             3: '',
             250: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
+        }
+    },
+    "Test": {
+        symbol: "TLQ",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0xD8C61EDe8CD9EE7B93855c3f110191e95eDF2979',
         }
     },
 }
@@ -67,7 +83,7 @@ const SushiRouteName = {
 }
 
 export const getSushiRoute = (token, chainId) => {
-    return SushiRouteName[token].map(name => DefultTokens[name].address[chainId])
+    return SushiRouteName[token].map(name => Tokens[name].address[chainId])
 }
 
 export const getLastRouteName = (token) => {
