@@ -1,10 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useWeb3React } from "@web3-react/core";
-import useWeb3 from "../../hooks/useWeb3";
-import BigNumber from "bignumber.js";
+import React, { useState } from "react";
 import Modal from "react-modal";
-import { useBuyTickets } from "../../hooks/useBuyTickets";
-import { fetchDiscountData } from "../../utils/fetchLotteryData";
 
 import "./CalcModal.scss";
 
