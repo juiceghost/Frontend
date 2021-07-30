@@ -249,7 +249,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   )
                     .div(lpTotalInQuoteToken.times(priceQuoteToken))
                     .times(100)
-                    .toFormat(0)
+                    .toFormat(6)
                 : "0"}{" "}
               %
             </span>

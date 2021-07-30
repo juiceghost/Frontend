@@ -278,19 +278,19 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
   },
-  // {
-  //   pid: 1,
-  //   lpSymbol: 'LQDR/SPIRIT',
-  //   lpAddresses: {
-  //     250: "0xFeBbfeA7674720cEdD35e9384d07F235365c1B3e",
-  //     3: '',
-  //   },
-  //   tokenSymbol: Tokens.Test.symbol,
-  //   tokenAddresses: Tokens.Test.address,
-  //   quoteTokenSymbol: Tokens.LQDR.symbol,
-  //   quoteTokenAdresses: Tokens.LQDR.address,
-  //   type: 1,
-  // },
+  {
+    pid: 1,
+    lpSymbol: 'LQDR/SPIRIT',
+    lpAddresses: {
+      250: "0xFeBbfeA7674720cEdD35e9384d07F235365c1B3e",
+      3: '',
+    },
+    tokenSymbol: Tokens.Test.symbol,
+    tokenAddresses: Tokens.Test.address,
+    quoteTokenSymbol: Tokens.LQDR.symbol,
+    quoteTokenAdresses: Tokens.LQDR.address,
+    type: 1,
+  },
   // {
   //   pid: 2,
   //   lpSymbol: 'FTM/fUSDT',
