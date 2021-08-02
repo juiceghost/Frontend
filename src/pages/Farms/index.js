@@ -3,9 +3,9 @@ import Farm from "../../components/Farm";
 import { useFarms } from "../../hooks/useFarms";
 import { usePrices } from "../../hooks/usePrices";
 import { useFarmsUser } from "../../hooks/useFarmsUser";
-import spiritImg from "../../assets/imgs/spirit-div.png";
-import spookyImg from "../../assets/imgs/spooky-div.png";
-import wakaImg from "../../assets/imgs/waka-div.png";
+import spiritImg from "../../assets/imgs/logos/spirit.png";
+import spookyImg from "../../assets/imgs/logos/spooky.png";
+import wakaImg from "../../assets/imgs/logos/waka.png";
 
 import "./farms.scss";
 const Farms = () => {
@@ -66,8 +66,7 @@ const Farms = () => {
                     users
                       ? users.find(
                           (user) =>
-                            user.pid === farm.pid &&
-                            farm.type === user.type
+                            user.pid === farm.pid && farm.type === user.type
                         )
                       : null
                   }
@@ -76,7 +75,10 @@ const Farms = () => {
                   prices={prices}
                 />
               ))}
-            <img className="div-image" src={spiritImg} alt="spirit img" />
+            <div className="div-image spirit">
+              <img src={spiritImg} alt="spirit logo" />
+              <span>Spirit Land</span>
+            </div>
             {farms
               .filter((farm) => farm.type === 1)
               .map((farm, index) => (
@@ -89,8 +91,7 @@ const Farms = () => {
                     users
                       ? users.find(
                           (user) =>
-                            user.pid === farm.pid &&
-                            farm.type === user.type
+                            user.pid === farm.pid && farm.type === user.type
                         )
                       : null
                   }
@@ -99,7 +100,10 @@ const Farms = () => {
                   prices={prices}
                 />
               ))}
-            <img className="div-image" src={spookyImg} alt="spooky img" />
+            <div className="div-image spooky">
+              <img src={spookyImg} alt="spooky logo" />
+              <span>Spooky Island</span>
+            </div>
             {farms
               .filter((farm) => farm.type === 2)
               .map((farm, index) => (
@@ -112,8 +116,7 @@ const Farms = () => {
                     users
                       ? users.find(
                           (user) =>
-                            user.pid === farm.pid &&
-                            farm.type === user.type
+                            user.pid === farm.pid && farm.type === user.type
                         )
                       : null
                   }
@@ -122,6 +125,10 @@ const Farms = () => {
                   prices={prices}
                 />
               ))}
+              <div className="div-image waka">
+                <img src={wakaImg} alt="waka logo" />
+                <span>Waka Territory</span>
+              </div>
           </>
         ) : (
           <img
