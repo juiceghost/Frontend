@@ -130,17 +130,32 @@ input:checked + .slider:before {
 
             &.spirit {
                 background: url("../../assets/imgs/spirit-div.png") no-repeat;
-                background-size: 100%;
+                background-size: 100% 100%;
+
+                @media screen and (max-width: 768px) {
+                    border-radius: 40px;
+                    background: rgba(3, 6, 41, 0.72);
+                }
             }
 
             &.spooky {
                 background: url("../../assets/imgs/spooky-div.png") no-repeat;
-                background-size: 100%;
+                background-size: 100% 100%;
+
+                @media screen and (max-width: 768px) {
+                    border-radius: 40px;
+                    background: rgba(3, 6, 41, 0.72);
+                }
             }
 
             &.waka {
                 background: url("../../assets/imgs/waka-div.png") no-repeat;
-                background-size: 100%;
+                background-size: 100% 100%;
+
+                @media screen and (max-width: 768px) {
+                    border-radius: 40px;
+                    background: rgba(3, 6, 41, 0.72);
+                }
             }
 
             img {
@@ -151,6 +166,9 @@ input:checked + .slider:before {
                 margin-left: 20px;
                 font-weight: bold;
                 font-size: 28px;
+                @media screen and (max-width: 1280px) {
+                    font-size: 24px;
+                }
             }
         }
         .farm {
