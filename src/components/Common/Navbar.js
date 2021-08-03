@@ -54,7 +54,7 @@ const Navbar = () => {
 
                     </li>
                     <li onClick={() => setOpenMenu(false)}>
-                        <a href="https://multichain.xyz/" target="_blank" rel="noreferrer" >
+                        <a href="https://spookyswap.finance/bridge" target="_blank" rel="noreferrer" >
                             <div className="icon-wrap"> <img alt={"icon"} src="/img/svg/Bridge.svg" /></div>
                             <p>Bridge</p>
                         </a>

@@ -21,7 +21,7 @@ function Home2() {
           alt="logo"
         />
         <div className="main-title">
-          Incentivizing deep liquidity for SushiSwap on Fantom Opera
+          On-Demand Liquidity as a service on Fantom Opera
         </div>
         <div className="tvl-title">Total Value Locked</div>
         <div className="tvl-amount">

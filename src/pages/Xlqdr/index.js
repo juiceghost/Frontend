@@ -40,10 +40,13 @@ const Xlqdr = () => {
       return new Date(lockedEnd * 1000 + 86400 * 7 * 1000);
     }
   }, [lockedEnd]);
-  const maxDate = new Date(new Date().getTime() + 3600 * 24 * (365 * 2) * 1000);
+  const maxDate = new Date(
+    Math.floor(new Date().getTime() / 86400 / 1000) * 86400 * 1000 +
+      3600 * 24 * (365 * 2) * 1000
+  );
   const [selectedDate, setSelectedDate] = useState(minDate);
   const unlockTime = useMemo(() => {
-    return Math.ceil((selectedDate.getTime() - new Date().getTime()) / 1000);
+    return Math.floor(selectedDate.getTime() / 1000);
   }, [selectedDate]);
 
   const { onApprove } = useXlqdrApprove();
@@ -104,15 +107,18 @@ const Xlqdr = () => {
       default:
         break;
     }
+    let period;
     if (lockedEnd === 0) {
-      setSelectedDate(new Date(new Date().getTime() + timestamp * 1000));
+      period = new Date().getTime() + timestamp * 1000;
     } else {
       if (periodLevel === 3) {
-        setSelectedDate(new Date(new Date().getTime() + timestamp * 1000));
+        period = new Date().getTime() + timestamp * 1000;
       } else {
-        setSelectedDate(new Date(lockedEnd * 1000 + timestamp * 1000));
+        period = lockedEnd * 1000 + timestamp * 1000;
       }
     }
+    period = new Date(Math.floor(period / 86400 / 1000) * 86400 * 1000);
+    setSelectedDate(period.getTime() > maxDate.getTime() ? maxDate : period);
   }, [periodLevel, lockedEnd]);
 
   return (
@@ -243,14 +249,21 @@ const Xlqdr = () => {
             <div className="bottom-btn">
               {lockStatus === "increase" &&
                 (account ? (
-                  <div
-                    className={`lq-button ${
-                      isLoading ? "grey-button" : "blue-button"
-                    }`}
-                    onClick={() => onIncreaseUnlockTime()}
-                  >
-                    Extend Period
-                  </div>
+                  <>
+                    <div
+                      className={`lq-button ${
+                        isLoading || lockedEnd >= unlockTime
+                          ? "grey-button"
+                          : "blue-button"
+                      }`}
+                      onClick={() => onIncreaseUnlockTime()}
+                    >
+                      Extend Period
+                    </div>
+                    <div className="max-period">
+                      LQDR lock can be 2 years max.
+                    </div>
+                  </>
                 ) : (
                   <ConnectWallet />
                 ))}
@@ -356,10 +369,20 @@ const Xlqdr = () => {
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item">
-                      {ftmPerXlqdr.times(xlqdrBalance).toFormat(ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3)} wFTM
+                      {ftmPerXlqdr
+                        .times(xlqdrBalance)
+                        .toFormat(
+                          ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                        )}{" "}
+                      wFTM
                     </div>
                     <div className="claim-value-item">
-                      {lqdrPerXlqdr.times(xlqdrBalance).toFormat(lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3)} LQDR
+                      {lqdrPerXlqdr
+                        .times(xlqdrBalance)
+                        .toFormat(
+                          lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                        )}{" "}
+                      LQDR
                     </div>
                   </div>
                   <div className="claim-btn">
@@ -455,7 +478,13 @@ const Xlqdr = () => {
         </div>
       </div>
       <ReactTooltip effect="solid" type="info" />
-      <CalcModal isOpen={isOpen} setIsOpen={setIsOpen} lqdrApr={lqdrApr} ftmApr={ftmApr} isLQDR={isLQDR} />
+      <CalcModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        lqdrApr={lqdrApr}
+        ftmApr={ftmApr}
+        isLQDR={isLQDR}
+      />
     </>
   );
 };

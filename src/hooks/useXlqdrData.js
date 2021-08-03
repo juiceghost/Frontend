@@ -128,8 +128,6 @@ export const useRewardInfo = () => {
             "0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422"
           ).call(),
         ]);
-        console.log('lqdrPerWeek :>> ', lqdrPerWeek);
-        console.log('ftmPerWeek :>> ', ftmPerWeek);
         setRewardInfo({
           lqdrReward: new BigNumber(Number(rewards[0])).div(1e18),
           ftmReward: new BigNumber(Number(rewards[1])).div(1e18),
