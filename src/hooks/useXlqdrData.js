@@ -46,6 +46,7 @@ export const useXlqdrInfo = () => {
     lockedEnd: 0,
     xlqdrTotalSupply: new BigNumber(0),
     totalLqdr: new BigNumber(0),
+    lockedLqdr: new BigNumber(0),
   });
 
   const web3 = useWeb3();
@@ -62,19 +63,24 @@ export const useXlqdrInfo = () => {
         ]);
         let xlqdrBalance = new BigNumber(0),
           lockedEnd = 0;
+        let lockedLqdr = new BigNumber(0);
         if (account) {
-          const [xlqdrBalanceRes, lockedEndRes] = await Promise.all([
-            xlqdrContract.methods.balanceOf(account).call(),
-            xlqdrContract.methods.locked__end(account).call(),
-          ]);
+          const [xlqdrBalanceRes, { 0: lockedAmount, 1: lockedEndRes }] =
+            await Promise.all([
+              xlqdrContract.methods.balanceOf(account).call(),
+              xlqdrContract.methods.locked(account).call(),
+            ]);
+          console.log("lockedAmount :>> ", lockedAmount);
           xlqdrBalance = new BigNumber(xlqdrBalanceRes).div(1e18);
           lockedEnd = Number(lockedEndRes);
+          lockedLqdr = new BigNumber(lockedAmount).div(1e18);
         }
         setXlqdrInfo({
           xlqdrBalance,
           lockedEnd,
           xlqdrTotalSupply: new BigNumber(xlqdrTotalSupply).div(1e18),
           totalLqdr: new BigNumber(totalLqdr).div(1e18),
+          lockedLqdr,
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
@@ -106,10 +112,8 @@ export const useRewardInfo = () => {
   const wftmContract = useERC20(getWftmAddress(chainId));
 
   useEffect(() => {
-    const getRewardInfo = async () => {
+    const getUserRewards = async () => {
       try {
-        // const timestamp =
-        //   (Math.floor(new Date().getTime() / 1000 / 7 / 86400) + 0) * 7 * 86400;
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
@@ -117,20 +121,29 @@ export const useRewardInfo = () => {
           feeABI,
           signer
         );
-        const [rewards, lqdrPerWeek, ftmPerWeek] = await Promise.all([
-          contract.callStatic["claim(address)"](account),
-          // feeContract.methods.tokens_per_week(timestamp).call(),
-          // ftmContract.methods.tokens_per_week(timestamp).call(),
-          lqdrContract.methods.balanceOf(
-            "0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422"
-          ).call(),
-          wftmContract.methods.balanceOf(
-            "0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422"
-          ).call(),
-        ]);
+        const rewards = await contract.callStatic["claim(address)"](account);
         setRewardInfo({
+          ...rewardInfo,
           lqdrReward: new BigNumber(Number(rewards[0])).div(1e18),
           ftmReward: new BigNumber(Number(rewards[1])).div(1e18),
+        });
+      } catch (e) {
+        console.error("fetch xlqdr data had error", e);
+      }
+    };
+
+    const getRewardInfo = async () => {
+      try {
+        const [lqdrPerWeek, ftmPerWeek] = await Promise.all([
+          lqdrContract.methods
+            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
+            .call(),
+          wftmContract.methods
+            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
+            .call(),
+        ]);
+        setRewardInfo({
+          ...rewardInfo,
           lqdrPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
             : new BigNumber(lqdrPerWeek).div(1e18).div(xlqdrTotalSupply),
@@ -142,8 +155,24 @@ export const useRewardInfo = () => {
         console.error("fetch xlqdr data had error", e);
       }
     };
-    if (web3 && account && lqdrContract && wftmContract) {
+    if (web3 && lqdrContract && wftmContract) {
       getRewardInfo();
+      if (account) {
+        getUserRewards();
+      } else {
+        setRewardInfo({
+          ...rewardInfo,
+          lqdrReward: new BigNumber(0),
+          ftmReward: new BigNumber(0),
+        });
+      }
+    } else {
+      setRewardInfo({
+        lqdrReward: new BigNumber(0),
+        ftmReward: new BigNumber(0),
+        lqdrPerXlqdr: new BigNumber(0),
+        ftmPerXlqdr: new BigNumber(0),
+      });
     }
   }, [
     web3,

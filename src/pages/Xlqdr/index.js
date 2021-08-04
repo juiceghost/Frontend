@@ -29,7 +29,7 @@ const Xlqdr = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLQDR, setIsLQDR] = useState(false);
 
-  const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr } =
+  const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr, lockedLqdr } =
     useXlqdrInfo();
   const { lqdrPerXlqdr, ftmPerXlqdr } = useRewardInfo();
   const { days, hours, mins } = useEpochInfo();
@@ -129,13 +129,17 @@ const Xlqdr = () => {
           <div className="balance-item">
             <div className="balance-label">Your LQDR</div>
             <div className="balance-value">
-              {lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
+              {!account
+                ? "-"
+                : lockedLqdr.toFormat(lockedLqdr.lt(0.001) ? 5 : 3)}
             </div>
           </div>
           <div className="balance-item">
             <div className="balance-label">Your xLQDR</div>
             <div className="balance-value">
-              {xlqdrBalance.toFormat(xlqdrBalance.lt(0.001) ? 5 : 3)}
+              {!account
+                ? "-"
+                : xlqdrBalance.toFormat(xlqdrBalance.lt(0.001) ? 5 : 3)}
             </div>
           </div>
           <div className="balance-item">
@@ -157,7 +161,10 @@ const Xlqdr = () => {
             <div className="input-label">
               <div className="input-label-left">Your Balance</div>
               <div className="input-label-right">
-                Balance: {lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
+                Balance:{" "}
+                {!account
+                  ? "-"
+                  : lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
               </div>
             </div>
             <div className="input-wrap">
@@ -369,20 +376,24 @@ const Xlqdr = () => {
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item">
-                      {ftmPerXlqdr
-                        .times(xlqdrBalance)
-                        .toFormat(
-                          ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                        )}{" "}
-                      wFTM
+                      wFTM:{" "}
+                      {!account
+                        ? "-"
+                        : ftmPerXlqdr
+                            .times(xlqdrBalance)
+                            .toFormat(
+                              ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                            )}
                     </div>
                     <div className="claim-value-item">
-                      {lqdrPerXlqdr
-                        .times(xlqdrBalance)
-                        .toFormat(
-                          lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                        )}{" "}
-                      LQDR
+                      LQDR:{" "}
+                      {!account
+                        ? "-"
+                        : lqdrPerXlqdr
+                            .times(xlqdrBalance)
+                            .toFormat(
+                              lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                            )}
                     </div>
                   </div>
                   <div className="claim-btn">
