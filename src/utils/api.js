@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import erc20 from "../config/abi/erc20.json";
 import masterchefABI from "../config/abi/masterchef.json";
 import minichefABI from "../config/abi/minichef.json";
+import rewarderABI from "../config/abi/rewarder.json";
 import SushiAbi from "../config/abi/sushi.json";
 import multicall from "./multicall";
 import {
@@ -79,7 +80,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
         let tokenAmount;
         let lpTotalInQuoteToken;
-        // let tokenPriceVsQuote
+        let tokenPriceVsQuote = new BigNumber(1);
 
         if (farmConfig.isTokenOnly) {
           //TODO Decimals
@@ -101,15 +102,15 @@ export const fetchFarms = async (web3, chainId = 250) => {
           tokenAmount = new BigNumber(tokenBalanceLP)
             .div(new BigNumber(10).pow(tokenDecimals))
             .times(lpTokenRatio);
-          // const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
-          //   .div(new BigNumber(10).pow(quoteTokenDecimals))
-          //   .times(lpTokenRatio)
+          const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
+            .div(new BigNumber(10).pow(quoteTokenDecimals))
+            .times(lpTokenRatio)
 
-          // if (tokenAmount.comparedTo(0) > 0) {
-          //   tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
-          // } else {
-          //   tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
-          // }
+          if (!tokenAmount.isZero()) {
+            tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
+          } else {
+            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
+          }
         }
 
         const [info, totalAllocPoint, lqdrPerBlock] = await multicall(
@@ -142,6 +143,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           totalSupply: lpTotalSupply,
           tokenAmount: tokenAmount.toJSON(),
           lpTotalInQuoteToken: lpTotalInQuoteToken,
+          tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
           multiplierShow: `${allocPoint.toString()}X`,
           multiplier: allocPoint.div(100),
@@ -206,7 +208,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
 
         let tokenAmount;
         let lpTotalInQuoteToken;
-        // let tokenPriceVsQuote
+        let tokenPriceVsQuote = new BigNumber(1);
 
         if (farmConfig.isTokenOnly) {
           //TODO Decimals
@@ -228,18 +230,18 @@ export const fetchFarms = async (web3, chainId = 250) => {
           tokenAmount = new BigNumber(tokenBalanceLP)
             .div(new BigNumber(10).pow(tokenDecimals))
             .times(lpTokenRatio);
-          // const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
-          //   .div(new BigNumber(10).pow(quoteTokenDecimals))
-          //   .times(lpTokenRatio)
+          const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
+            .div(new BigNumber(10).pow(quoteTokenDecimals))
+            .times(lpTokenRatio)
 
-          // if (tokenAmount.comparedTo(0) > 0) {
-          //   tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
-          // } else {
-          //   tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
-          // }
+          if (tokenAmount.comparedTo(0) > 0) {
+            tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
+          } else {
+            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
+          }
         }
 
-        const [info, totalAllocPoint, lqdrPerBlock] = await multicall(
+        const [info, totalAllocPoint, lqdrPerBlock, rewarderAddress] = await multicall(
           web3,
           minichefABI,
           [
@@ -256,6 +258,23 @@ export const fetchFarms = async (web3, chainId = 250) => {
               address: MiniChefAddress,
               name: "lqdrPerSecond",
             },
+            {
+              address: MiniChefAddress,
+              name: "rewarder",
+              params: [farmConfig.pid],
+            },
+          ],
+          chainId
+        );
+
+        const [rewardPerSecond] = await multicall(
+          web3,
+          rewarderABI,
+          [
+            {
+              address: rewarderAddress[0],
+              name: "rewardPerSecond",
+            },
           ],
           chainId
         );
@@ -269,11 +288,13 @@ export const fetchFarms = async (web3, chainId = 250) => {
           totalSupply: lpTotalSupply,
           tokenAmount: tokenAmount.toJSON(),
           lpTotalInQuoteToken: lpTotalInQuoteToken,
+          tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
           multiplierShow: `${allocPoint.toString()}X`,
           multiplier: allocPoint.div(100),
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),
+          rewardPerSecond: fromWei(rewardPerSecond),
         };
       })
   );

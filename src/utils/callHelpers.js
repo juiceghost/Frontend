@@ -54,6 +54,7 @@ export const miniUnstake = async (miniChefContract, pid, amount, account) => {
 };
 
 export const miniHarvest = async (miniChefContract, pid, account) => {
+  console.log('pid :>> ', pid);
   return miniChefContract.methods
     .harvest(pid, account)
     .send({ from: account })

@@ -70,7 +70,6 @@ export const useXlqdrInfo = () => {
               xlqdrContract.methods.balanceOf(account).call(),
               xlqdrContract.methods.locked(account).call(),
             ]);
-          console.log("lockedAmount :>> ", lockedAmount);
           xlqdrBalance = new BigNumber(xlqdrBalanceRes).div(1e18);
           lockedEnd = Number(lockedEndRes);
           lockedLqdr = new BigNumber(lockedAmount).div(1e18);

@@ -47,7 +47,7 @@ function Home2() {
             <p className="m-title">LQDR</p>
             <div className="border"></div>
             <p className="amount">
-              {(prices && "$" + prices["LQDR"]) || "N/A"}
+              {(prices && "$" + prices["LQDR"].toFixed(3)) || "N/A"}
             </p>
           </div>
           <div className="market">

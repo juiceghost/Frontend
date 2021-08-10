@@ -179,6 +179,22 @@ input:checked + .slider:before {
             background: rgba(3, 6, 41, 0.72);
             box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
             border-radius: 24px;
+
+            &.spirit {
+                border: 3px solid #50cf8260;
+                box-shadow: 0px 0px 15px #50cf8260;
+            }
+
+            &.spooky {
+                border: 3px solid #7a2b7260;
+                box-shadow: 0px 0px 15px #7a2b7260;
+            }
+
+            &.waka {
+                border: 3px solid #e8e50260;
+                box-shadow: 0px 0px 15px #e8e50260;
+            }
+
             .top {
                 display: flex;
                 justify-content: space-between;

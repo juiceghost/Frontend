@@ -4,7 +4,10 @@ import { useApprove } from "../../hooks/useApprove";
 import { useStake } from "../../hooks/useStake";
 import { useUnStake } from "../../hooks/useUnStake";
 import { getExplorerAddress } from "../../utils";
-import { getMasterChefAddress, getMiniChefAddress } from "../../utils/addressHelpers";
+import {
+  getMasterChefAddress,
+  getMiniChefAddress,
+} from "../../utils/addressHelpers";
 import BigNumber from "bignumber.js";
 import { isZero, ZERO } from "../../config/constants/numbers";
 import { getFullDisplayBalance } from "../../utils/formatNumber";
@@ -36,10 +39,6 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     : 0;
   const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0;
   const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO;
-
-  if (farm.type > 0) {
-    console.log('lqdrPerBlock :>> ', farm.lqdrPerBlock.toNumber());
-  }
 
   const handleApprove = useCallback(async () => {
     try {
@@ -110,6 +109,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
       : prices[farm.quoteTokenSymbol];
   const {
     lqdrPerBlock,
+    rewardPerSecond,
     lpTotalInQuoteToken,
     totalStaked,
     poolWeight,
@@ -152,7 +152,11 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
         onMax={() => setUnStakeInput(stakedBalance)}
       />
 
-      <div className="farm">
+      <div
+        className={`farm ${
+          farm.type === 1 ? "spirit" : farm.type === 2 ? "spooky" : ""
+        }`}
+      >
         <div className="top">
           <div className="icons">
             <img
@@ -254,16 +258,23 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               %
             </span>
           </p>
-          {account && (
+          {rewardPerSecond && (
             <p className="apr">
-              <span className="a-title"> Your Stake</span>
+              <span className="a-title">APR2</span>
               <span>
-                {isZero(stakedBalance)
-                  ? 0
-                  : new BigNumber(stakedBalance).isLessThan(0.00001)
-                  ? "<0.00001"
-                  : new BigNumber(stakedBalance).toFormat(5)}{" "}
-                {farm.lpSymbol}
+                {" "}
+                {prices &&
+                priceQuoteToken !== 0 &&
+                !isZero(lpTotalInQuoteToken) &&
+                rewardPerSecond
+                  ? new BigNumber(
+                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                    )
+                      .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                      .times(100)
+                      .toFormat(0)
+                  : "0"}{" "}
+                %
               </span>
             </p>
           )}
@@ -285,6 +296,19 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             className="d-content"
             style={{ display: showDetails ? "block" : "none" }}
           >
+            {account && (
+              <div className="item">
+                <p> Your Stake</p>
+                <p>
+                  {isZero(stakedBalance)
+                    ? 0
+                    : new BigNumber(stakedBalance).isLessThan(0.00001)
+                    ? "<0.00001"
+                    : new BigNumber(stakedBalance).toFormat(5)}{" "}
+                  {farm.lpSymbol}
+                </p>
+              </div>
+            )}
             <div className="item">
               <p>Total Staked</p>
               <p>{new BigNumber(totalStaked).toFormat(4)}</p>
