@@ -254,6 +254,7 @@
           margin-bottom: 30px;
 
           .icons {
+            display: flex;
             .first {
               position: relative;
               display: block;
@@ -261,13 +262,12 @@
               height: 42px;
               border-radius: 50%;
               border: 2px solid #4dd9f6;
-              margin-bottom: -15px;
               z-index: 2;
             }
             .last {
               z-index: 1;
               display: block;
-              margin-left: 20px;
+              margin-left: -10px;
               width: 42px;
               height: 42px;
               border-radius: 50%;

@@ -368,6 +368,21 @@ const Xlqdr = () => {
                     src={`/img/svg/token2/FTM.svg`}
                     alt="token"
                   />
+                  <img
+                    className="last"
+                    src={`/img/svg/token2/SPIRIT.svg`}
+                    alt="token"
+                  />
+                  <img
+                    className="last"
+                    src={`/img/svg/token2/BOO.svg`}
+                    alt="token"
+                  />
+                  <img
+                    className="last"
+                    src={`/img/svg/token2/WAKA.svg`}
+                    alt="token"
+                  />
                 </div>
                 <div className="revenue-label">Revenue-sharing vault</div>
               </div>
