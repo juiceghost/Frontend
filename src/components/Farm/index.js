@@ -74,7 +74,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   }, [onStake, forceUpdate]);
 
   const handleUnStake = useCallback(
-    async (amount) => {
+    async () => {
       try {
         const tx = await onUnStake();
         if (tx.status) {
