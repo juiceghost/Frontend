@@ -3,9 +3,9 @@ import Farm from "../../components/Farm";
 import { useFarms } from "../../hooks/useFarms";
 import { usePrices } from "../../hooks/usePrices";
 import { useFarmsUser } from "../../hooks/useFarmsUser";
-import spiritImg from "../../assets/imgs/logos/spirit.png";
-import spookyImg from "../../assets/imgs/logos/spooky.png";
-import wakaImg from "../../assets/imgs/logos/waka.png";
+import spiritImg from "../../assets/imgs/svg/spirit.svg";
+import spookyImg from "../../assets/imgs/svg/spooky.svg";
+import wakaImg from "../../assets/imgs/svg/waka.svg";
 
 import "./farms.scss";
 const Farms = () => {
@@ -125,10 +125,10 @@ const Farms = () => {
                   prices={prices}
                 />
               ))}
-              <div className="div-image waka">
-                <img src={wakaImg} alt="waka logo" />
-                <span>Waka Territory</span>
-              </div>
+            <div className="div-image waka">
+              <img src={wakaImg} alt="waka logo" />
+              <span>Waka Territory</span>
+            </div>
           </>
         ) : (
           <img

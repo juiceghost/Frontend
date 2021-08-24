@@ -154,7 +154,14 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
 
       <div
         className={`farm ${
-          farm.type === 1 ? "spirit" : farm.type === 2 ? "spooky" : ""
+          // farm.type === 1 ? "spirit" : farm.type === 2 ? "spooky" : farm.type === 3 ? "waka" : ""
+          farm.type === 1
+            ? "spirit"
+            : farm.type === 2
+            ? "spooky"
+            : farm.type === 3
+            ? "waka"
+            : "lqdr"
         }`}
       >
         <div className="top">
@@ -202,14 +209,30 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {farm.isDisable ? (
                   <div
-                    className="lq-button  blue-button"
+                    className={`lq-button ${
+                      farm.type === 1
+                        ? "spirit-button"
+                        : farm.type === 2
+                        ? "spooky-button"
+                        : farm.type === 3
+                        ? "waka-button"
+                        : "blue-button"
+                    }`}
                     style={{ width: "45%" }}
                   >
                     Stake
                   </div>
                 ) : (
                   <div
-                    className="lq-button  blue-button"
+                    className={`lq-button ${
+                      farm.type === 1
+                        ? "spirit-button"
+                        : farm.type === 2
+                        ? "spooky-button"
+                        : farm.type === 3
+                        ? "waka-button"
+                        : "blue-button"
+                    }`}
                     style={{ width: "45%" }}
                     onClick={() => {
                       setStakePopup(true);
@@ -219,7 +242,15 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   </div>
                 )}
                 <div
-                  className="lq-button  blue-button"
+                  className={`lq-button ${
+                    farm.type === 1
+                      ? "spirit-button"
+                      : farm.type === 2
+                      ? "spooky-button"
+                      : farm.type === 3
+                      ? "waka-button"
+                      : "blue-button"
+                  }`}
                   style={{ width: "45%" }}
                   onClick={() => {
                     setUnStakePopup(true);
@@ -229,7 +260,18 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 </div>
               </div>
             ) : (
-              <div className="lq-button  blue-button" onClick={handleApprove}>
+              <div
+                className={`lq-button ${
+                  farm.type === 1
+                    ? "spirit-button"
+                    : farm.type === 2
+                    ? "spooky-button"
+                    : farm.type === 3
+                    ? "waka-button"
+                    : "blue-button"
+                }`}
+                onClick={handleApprove}
+              >
                 Approve Pool
               </div>
             )}

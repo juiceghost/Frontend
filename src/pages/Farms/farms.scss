@@ -127,35 +127,22 @@ input:checked + .slider:before {
             padding: 15px 30px;
             display: flex;
             align-items: center;
+            box-sizing: border-box;
+            border-radius: 51px;
 
             &.spirit {
-                background: url("../../assets/imgs/spirit-div.png") no-repeat;
-                background-size: 100% 100%;
-
-                @media screen and (max-width: 768px) {
-                    border-radius: 40px;
-                    background: rgba(3, 6, 41, 0.72);
-                }
+                background: rgba(25, 75, 36, 0.6);
+                border: 1px solid #509763;
             }
 
             &.spooky {
-                background: url("../../assets/imgs/spooky-div.png") no-repeat;
-                background-size: 100% 100%;
-
-                @media screen and (max-width: 768px) {
-                    border-radius: 40px;
-                    background: rgba(3, 6, 41, 0.72);
-                }
+                background: rgba(57, 56, 139, 0.58);
+                border: 1px solid #7373E8;
             }
 
             &.waka {
-                background: url("../../assets/imgs/waka-div.png") no-repeat;
-                background-size: 100% 100%;
-
-                @media screen and (max-width: 768px) {
-                    border-radius: 40px;
-                    background: rgba(3, 6, 41, 0.72);
-                }
+                background: rgba(8, 11, 58, 0.72);
+                border: 1px solid #E8D435;
             }
 
             img {
@@ -180,19 +167,147 @@ input:checked + .slider:before {
             box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
             border-radius: 24px;
 
+            &.lqdr {
+                .multiplier {
+                    border: 1px solid #0b5079;
+                }
+                .apr-wrap {
+                    border-bottom: 1px solid #0b5079;
+
+                    .a-title {
+                        color: #4dd9f6;
+                    }
+                }
+
+                .details-btn {
+                    border: 1px solid #4dd9f6;
+                    .d-title {
+                        color: #4dd9f6;
+                    }
+                }
+                .harvest {
+                    .amount {
+                        .h-title {
+                            color: #4dd9f6;
+                        }
+                        .h-usd {
+                            color: #4dd9f6;
+                        }
+                    }
+                    .h-button {
+                        border: 1px solid #4dd9f6;
+                        color: #4dd9f6;
+                    }
+                }
+            }
+
             &.spirit {
-                border: 3px solid #50cf8260;
-                box-shadow: 0px 0px 15px #50cf8260;
+                background: rgba(25, 75, 36, 0.6);
+                border: 1px solid #509763;
+
+                .multiplier {
+                    border: 1px solid #509763;
+                }
+                .apr-wrap {
+                    border-bottom: 1px solid #509763;
+
+                    .a-title {
+                        color: #79EC97;
+                    }
+                }
+
+                .details-btn {
+                    border: 1px solid #79EC97;
+                    .d-title {
+                        color: #79EC97;
+                    }
+                }
+                .harvest {
+                    .amount {
+                        .h-title {
+                            color: #79EC97;
+                        }
+                        .h-usd {
+                            color: #79EC97;
+                        }
+                    }
+                    .h-button {
+                        border: 1px solid #79EC97;
+                        color: #79EC97;
+                    }
+                }
             }
 
             &.spooky {
-                border: 3px solid #7a2b7260;
-                box-shadow: 0px 0px 15px #7a2b7260;
+                background: rgba(57, 56, 139, 0.58);
+                border: 1px solid #7373E8;
+
+                .multiplier {
+                    border: 1px solid #696AD9;
+                }
+                .apr-wrap {
+                    border-bottom: 1px solid #696AD9;;
+                    .a-title {
+                        color: #8F8FFF;
+                    }
+                }
+
+                .details-btn {
+                    border: 1px solid #8F8FFF;
+                    .d-title {
+                        color: #8F8FFF;
+                    }
+                }
+                .harvest {
+                    .amount {
+                        .h-title {
+                            color: #8F8FFF;
+                        }
+                        .h-usd {
+                            color: #8F8FFF;
+                        }
+                    }
+                    .h-button {
+                        border: 1px solid #8F8FFF;
+                        color: #8F8FFF;
+                    }
+                }
             }
 
             &.waka {
-                border: 3px solid #e8e50260;
-                box-shadow: 0px 0px 15px #e8e50260;
+                background: rgba(8, 11, 58, 0.72);
+                border: 1px solid #E8D435;
+
+                .multiplier {
+                    border: 1px solid #E8D435;
+                }
+                .apr-wrap {
+                    border-bottom: 1px solid #E8D435;
+                    .a-title {
+                        color: #E8D435;
+                    }
+                }
+
+                .details-btn {
+                    border: 1px solid #E8D435;
+                    .d-title {
+                        color: #E8D435;
+                    }
+                }
+                .harvest {
+                    .amount {
+                        .h-title {
+                            color: #E8D435;
+                        }
+                        .h-usd {
+                            color: #E8D435;
+                        }
+                    }
+                    .h-button {
+                        border: 1px solid #E8D435;
+                        color: #E8D435;
+                    }
+                }
             }
 
             .top {
@@ -233,7 +348,6 @@ input:checked + .slider:before {
                         width: 64px;
                         font-weight: 600;
                         font-size: 19px;
-                        border: 1px solid #0b5079;
                         border-radius: 13.5px;
                     }
                 }
@@ -250,7 +364,6 @@ input:checked + .slider:before {
                         text-align: left;
                         .h-title {
                             font-size: 14px;
-                            color: #4dd9f6;
                         }
                         .h-number {
                             font-size: 30px;
@@ -258,15 +371,12 @@ input:checked + .slider:before {
                         }
                         .h-usd {
                             font-size: 12px;
-                            color: #4dd9f6;
                         }
                     }
                     .h-button {
-                        border: 1px solid #4dd9f6;
                         border-radius: 12px;
                         font-weight: 600;
                         font-size: 16px;
-                        color: #4dd9f6;
                         height: 40px;
                         width: 120px;
                         display: flex;
@@ -282,7 +392,6 @@ input:checked + .slider:before {
             .apr-wrap {
                 margin-top: 26px;
                 padding-bottom: 13px;
-                border-bottom: 1px solid #0b5079;
 
                 text-align: right;
                 .apr {
@@ -291,7 +400,6 @@ input:checked + .slider:before {
                         font-size: 21px;
                     }
                     .a-title {
-                        color: #4dd9f6;
                         font-size: 16px;
                         margin-right: 5px;
                     }
@@ -301,7 +409,6 @@ input:checked + .slider:before {
             .details-btn {
                 margin-top: 20px;
                 margin-bottom: 10px;
-                border: 1px solid #4dd9f6;
                 padding: 10px 18px;
                 border-radius: 12px;
                 cursor: pointer;
@@ -312,7 +419,6 @@ input:checked + .slider:before {
                 .d-title {
                     font-weight: 600;
                     font-size: 16px;
-                    color: #4dd9f6;
                     height: 20px;
                     display: flex;
                     justify-content: space-between;
@@ -437,7 +543,6 @@ input:checked + .slider:before {
                         .h-button {
                             font-weight: 600;
                             font-size: 14px;
-                            color: #4dd9f6;
                             height: 35px;
                             width: 90px;
                             display: flex;
