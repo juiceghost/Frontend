@@ -11,7 +11,7 @@ const ConnectWallet = ({ style, rest }) => {
             <div className="lq-button blue-button " style={style}  {...rest} >
                 {account.substring(0, 5) +
                     '...' +
-                    account.substring(account.length - 4, account.length - 1)
+                    account.substring(account.length - 4, account.length)
                 }
             </div>
             :

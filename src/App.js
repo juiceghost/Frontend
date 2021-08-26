@@ -52,12 +52,6 @@ function App() {
           <WithdrawModal />
 
           <div className="main-container">
-            <img
-              className="f-water"
-              src="/img/bg/Waterfall-Top.svg"
-              alt="top"
-            />
-
             <Switch>
               <Route path="/deposit">
                 <Farms />
@@ -76,11 +70,6 @@ function App() {
                 <Home />
               </Route>
             </Switch>
-            <img
-              style={{ width: "100%" }}
-              src="/img/bg/Waterfall-Bottom.svg"
-              alt="top"
-            />
           </div>
         </BrowserRouter>
       </RefreshContextProvider>

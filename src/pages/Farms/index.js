@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Select from "react-dropdown-select";
 import Farm from "../../components/Farm";
 import { useFarms } from "../../hooks/useFarms";
 import { usePrices } from "../../hooks/usePrices";
@@ -6,8 +7,27 @@ import { useFarmsUser } from "../../hooks/useFarmsUser";
 import spiritImg from "../../assets/imgs/svg/spirit.svg";
 import spookyImg from "../../assets/imgs/svg/spooky.svg";
 import wakaImg from "../../assets/imgs/svg/waka.svg";
-
 import "./farms.scss";
+
+export const options = [
+  {
+    value: 0,
+    label: "All",
+  },
+  {
+    value: 1,
+    label: "Spirit",
+  },
+  {
+    value: 2,
+    label: "Spooky",
+  },
+  {
+    value: 3,
+    label: "Waka",
+  },
+];
+
 const Farms = () => {
   const [update, setUpdate] = useState(0);
   const farms = useFarms(update);
@@ -15,6 +35,8 @@ const Farms = () => {
   const users = useFarmsUser(update);
   const [active, setActive] = useState(false);
   const [stakeOnly, setStakeOnly] = useState(false);
+  const [farmType, setFarmType] = useState(0);
+  const [show, setShow] = useState(false);
 
   const forceUpdate = () => {
     setUpdate((update) => update + 1);
@@ -29,6 +51,18 @@ const Farms = () => {
       </p>
 
       <div className="toggle-btns">
+        <div className="select-wrap">
+          <Select
+            values={[options.find((opt) => opt.label === "All")]}
+            onChange={(values) => {
+              console.log("values :>> ", values);
+              setFarmType(values[0].value);
+            }}
+            options={options}
+            labelField="label"
+            valueField="value"
+          ></Select>
+        </div>
         <div className="slider-wrap">
           <label
             className="switch"
@@ -75,60 +109,71 @@ const Farms = () => {
                   prices={prices}
                 />
               ))}
-            <div className="div-image spirit">
-              <img src={spiritImg} alt="spirit logo" />
-              <span>Spirit Land</span>
-            </div>
-            {farms
-              .filter((farm) => farm.type === 1)
-              .map((farm, index) => (
-                <Farm
-                  key={index}
-                  index={index}
-                  active={active}
-                  stakeOnly={stakeOnly}
-                  userInfo={
-                    users
-                      ? users.find(
-                          (user) =>
-                            user.pid === farm.pid && farm.type === user.type
-                        )
-                      : null
-                  }
-                  farm={farm}
-                  forceUpdate={() => forceUpdate()}
-                  prices={prices}
-                />
-              ))}
-            <div className="div-image spooky">
-              <img src={spookyImg} alt="spooky logo" />
-              <span>Spooky Island</span>
-            </div>
-            {farms
-              .filter((farm) => farm.type === 2)
-              .map((farm, index) => (
-                <Farm
-                  key={index}
-                  index={index}
-                  active={active}
-                  stakeOnly={stakeOnly}
-                  userInfo={
-                    users
-                      ? users.find(
-                          (user) =>
-                            user.pid === farm.pid && farm.type === user.type
-                        )
-                      : null
-                  }
-                  farm={farm}
-                  forceUpdate={() => forceUpdate()}
-                  prices={prices}
-                />
-              ))}
-            <div className="div-image waka">
-              <img src={wakaImg} alt="waka logo" />
-              <span>Waka Territory</span>
-            </div>
+            {[0, 1].includes(farmType) && (
+              <>
+                <div className="div-image spirit">
+                  <img src={spiritImg} alt="spirit logo" />
+                  <span>Spirit Land</span>
+                </div>
+                {farms
+                  .filter((farm) => farm.type === 1)
+                  .map((farm, index) => (
+                    <Farm
+                      key={index}
+                      index={index}
+                      active={active}
+                      stakeOnly={stakeOnly}
+                      userInfo={
+                        users
+                          ? users.find(
+                              (user) =>
+                                user.pid === farm.pid && farm.type === user.type
+                            )
+                          : null
+                      }
+                      farm={farm}
+                      forceUpdate={() => forceUpdate()}
+                      prices={prices}
+                    />
+                  ))}
+              </>
+            )}
+            {[0, 2].includes(farmType) && (
+              <>
+                <div className="div-image spooky">
+                  <img src={spookyImg} alt="spooky logo" />
+                  <span>Spooky Island</span>
+                </div>
+                {farms
+                  .filter((farm) => farm.type === 2)
+                  .map((farm, index) => (
+                    <Farm
+                      key={index}
+                      index={index}
+                      active={active}
+                      stakeOnly={stakeOnly}
+                      userInfo={
+                        users
+                          ? users.find(
+                              (user) =>
+                                user.pid === farm.pid && farm.type === user.type
+                            )
+                          : null
+                      }
+                      farm={farm}
+                      forceUpdate={() => forceUpdate()}
+                      prices={prices}
+                    />
+                  ))}
+              </>
+            )}
+
+            {[0, 3].includes(farmType) && (
+              <div className="div-image waka">
+                <img src={wakaImg} alt="waka logo" />
+                <span>Waka Territory</span>
+              </div>
+            )}
           </>
         ) : (
           <img
