@@ -383,7 +383,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
           </div>
         </div>
 
-        {!account && <ConnetWallet />}
+        {!account && <ConnetWallet type={farm.type} />}
         <a
           className="view-ftmscan"
           href={getExplorerAddress(farm.lpAddresses, chainId)}

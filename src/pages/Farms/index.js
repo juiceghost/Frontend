@@ -45,9 +45,13 @@ const Farms = () => {
   return (
     <div className="farm-wrap">
       <p className="f-title">Liquid Containers</p>
-      <p className="f-title-md">Stake SUSHI LP Tokens, Earn LQDR</p>
+      <p className="f-title-md">
+        Stake LP tokens from Spiritswap, Spookyswap or Wakafinance and earn
+        LQDR.
+      </p>
       <p className="f-title-sm">
-        Deposit fee will be used to buy back LQDR and burn it.
+        Funds in our pools are used to farm in our partners pool and yields are
+        redistributed to xLQDR holders
       </p>
 
       <div className="toggle-btns">
