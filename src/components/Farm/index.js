@@ -300,7 +300,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               %
             </span>
           </p>
-          {rewardPerSecond && (
+          {/* {rewardPerSecond && (
             <p className="apr">
               <span className="a-title">APR2</span>
               <span>
@@ -319,7 +319,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 %
               </span>
             </p>
-          )}
+          )} */}
         </div>
         <div
           className="details-btn"

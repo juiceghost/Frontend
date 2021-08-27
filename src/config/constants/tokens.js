@@ -167,6 +167,30 @@ export const Tokens = {
             250: '0x5Cc61A78F164885776AA610fb0FE1257df78E59B',
         }
     },
+    "MIM": {
+        symbol: "MIM",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0x82f0B8B456c1A451378467398982d4834b6829c1',
+        }
+    },
+    "BOO": {
+        symbol: "BOO",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe',
+        }
+    },
+    "WAKA": {
+        symbol: "WAKA",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0xf61ccde1d4bb76ced1daa9d4c429cca83022b08b',
+        }
+    },
     "Test": {
         symbol: "TLQ",
         decimals: 18,

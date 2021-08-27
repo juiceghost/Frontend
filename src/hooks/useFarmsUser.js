@@ -14,9 +14,7 @@ export const useFarmsUser = (forceUpdate) => {
             try {
                 const data = await fetchFarmUserDataAsync(web3, account, chainId)
                 console.log('data :>> ', data);
-                // console.log(data);
                 setUsers(data)
-                // console.info('getUserData fetched:', data)
             } catch (e) {
                 console.error("getUserData fetched had error", e)
             }

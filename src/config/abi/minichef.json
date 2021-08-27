@@ -2,7 +2,8 @@
   {
     "inputs": [
       { "internalType": "contract IERC20", "name": "_lqdr", "type": "address" },
-      { "internalType": "address", "name": "_feeAddress", "type": "address" }
+      { "internalType": "address", "name": "_feeAddress", "type": "address" },
+      { "internalType": "address", "name": "_treasury", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -36,6 +37,25 @@
       }
     ],
     "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "DepositToLiquidDepositor",
     "type": "event"
   },
   {
@@ -94,19 +114,7 @@
     "name": "Harvest",
     "type": "event"
   },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "lqdrPerSecond",
-        "type": "uint256"
-      }
-    ],
-    "name": "LogLqdrPerSecond",
-    "type": "event"
-  },
+  { "anonymous": false, "inputs": [], "name": "LogInit", "type": "event" },
   {
     "anonymous": false,
     "inputs": [
@@ -181,7 +189,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "lastRewardTime",
+        "name": "lastRewardBlock",
         "type": "uint256"
       },
       {
@@ -251,11 +259,60 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "WithdrawFromLiquidDepositor",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "ACC_LQDR_PRECISION",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "LQDR",
     "outputs": [
       { "internalType": "contract IERC20", "name": "", "type": "address" }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MASTERCHEF_LQDR_PER_BLOCK",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MASTER_CHEF",
+    "outputs": [
+      { "internalType": "contract IMasterChef", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MASTER_PID",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -270,6 +327,11 @@
       {
         "internalType": "contract IRewarder",
         "name": "_rewarder",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IStrategy",
+        "name": "_strategy",
         "type": "address"
       },
       { "internalType": "uint256", "name": "_depositFee", "type": "uint256" }
@@ -328,6 +390,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "feeAddresses",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "pid", "type": "uint256" },
       { "internalType": "address", "name": "to", "type": "address" }
@@ -335,6 +404,33 @@
     "name": "harvest",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "harvestFromMasterChef",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "dummyToken",
+        "type": "address"
+      }
+    ],
+    "name": "init",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "liquidDepositor",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -348,9 +444,18 @@
   },
   {
     "inputs": [],
-    "name": "lqdrPerSecond",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "lqdrPerBlock",
+    "outputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "massHarvestFromStrategies",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -360,28 +465,6 @@
     "name": "massUpdatePools",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "_pid", "type": "uint256" }
-    ],
-    "name": "migrate",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "migrator",
-    "outputs": [
-      {
-        "internalType": "contract IMigratorChef",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -437,7 +520,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "lastRewardTime",
+        "name": "lastRewardBlock",
         "type": "uint256"
       },
       { "internalType": "uint256", "name": "allocPoint", "type": "uint256" },
@@ -473,6 +556,11 @@
         "name": "_rewarder",
         "type": "address"
       },
+      {
+        "internalType": "contract IStrategy",
+        "name": "_strategy",
+        "type": "address"
+      },
       { "internalType": "uint256", "name": "_depositFee", "type": "uint256" },
       { "internalType": "bool", "name": "overwrite", "type": "bool" }
     ],
@@ -492,9 +580,10 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_lqdrPerSecond", "type": "uint256" }
+      { "internalType": "uint256", "name": "pid", "type": "uint256" },
+      { "internalType": "address", "name": "_feeAddress", "type": "address" }
     ],
-    "name": "setLqdrPerSecond",
+    "name": "setFeeAddresses",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -502,14 +591,37 @@
   {
     "inputs": [
       {
-        "internalType": "contract IMigratorChef",
-        "name": "_migrator",
+        "internalType": "contract IMasterChef",
+        "name": "masterChef",
+        "type": "address"
+      },
+      { "internalType": "uint256", "name": "masterPid", "type": "uint256" }
+    ],
+    "name": "setMasterChef",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_treasuryAddress",
         "type": "address"
       }
     ],
-    "name": "setMigrator",
+    "name": "setTreasuryAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "strategies",
+    "outputs": [
+      { "internalType": "contract IStrategy", "name": "", "type": "address" }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -531,6 +643,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "treasury",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
     "name": "updatePool",
     "outputs": [
@@ -543,7 +662,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "lastRewardTime",
+            "name": "lastRewardBlock",
             "type": "uint256"
           },
           {
@@ -553,7 +672,7 @@
           },
           { "internalType": "uint256", "name": "depositFee", "type": "uint256" }
         ],
-        "internalType": "struct MiniChefV2.PoolInfo",
+        "internalType": "struct MasterChefV2.PoolInfo",
         "name": "pool",
         "type": "tuple"
       }

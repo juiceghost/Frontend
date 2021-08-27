@@ -241,7 +241,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           }
         }
 
-        const [info, totalAllocPoint, lqdrPerBlock, rewarderAddress] = await multicall(
+        const [info, totalAllocPoint, lqdrPerBlock] = await multicall(
           web3,
           minichefABI,
           [
@@ -256,28 +256,25 @@ export const fetchFarms = async (web3, chainId = 250) => {
             },
             {
               address: MiniChefAddress,
-              name: "lqdrPerSecond",
-            },
-            {
-              address: MiniChefAddress,
-              name: "rewarder",
-              params: [farmConfig.pid],
+              name: "lqdrPerBlock",
             },
           ],
           chainId
         );
 
-        const [rewardPerSecond] = await multicall(
-          web3,
-          rewarderABI,
-          [
-            {
-              address: rewarderAddress[0],
-              name: "rewardPerSecond",
-            },
-          ],
-          chainId
-        );
+        const rewardPerSecond = 0; 
+
+        // const [rewardPerSecond] = await multicall(
+        //   web3,
+        //   rewarderABI,
+        //   [
+        //     {
+        //       address: rewarderAddress[0],
+        //       name: "rewardPerSecond",
+        //     },
+        //   ],
+        //   chainId
+        // );
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
         const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint));
@@ -290,7 +287,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           lpTotalInQuoteToken: lpTotalInQuoteToken,
           tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
-          multiplierShow: `${allocPoint.toString()}X`,
+          multiplierShow: `${allocPoint.div(100).toString()}X`,
           multiplier: allocPoint.div(100),
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),

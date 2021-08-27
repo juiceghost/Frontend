@@ -173,10 +173,33 @@ const Farms = () => {
             )}
 
             {[0, 3].includes(farmType) && (
-              <div className="div-image waka">
-                <img src={wakaImg} alt="waka logo" />
-                <span>Waka Territory</span>
-              </div>
+              <>
+                <div className="div-image waka">
+                  <img src={wakaImg} alt="waka logo" />
+                  <span>Waka Territory</span>
+                </div>
+                {farms
+                  .filter((farm) => farm.type === 3)
+                  .map((farm, index) => (
+                    <Farm
+                      key={index}
+                      index={index}
+                      active={active}
+                      stakeOnly={stakeOnly}
+                      userInfo={
+                        users
+                          ? users.find(
+                              (user) =>
+                                user.pid === farm.pid && farm.type === user.type
+                            )
+                          : null
+                      }
+                      farm={farm}
+                      forceUpdate={() => forceUpdate()}
+                      prices={prices}
+                    />
+                  ))}
+              </>
             )}
           </>
         ) : (

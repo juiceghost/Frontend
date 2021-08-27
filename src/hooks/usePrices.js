@@ -25,15 +25,15 @@ export const usePrices = (forceUpdate) => {
     }
     let farm;
     farm = farms.find((f) => f.pid === 17 && f.type === 0);
-    const lqdrPrice = farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    const lqdrPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 1 && f.type === 0);
-    const ftmPrice = farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    const ftmPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 5 && f.type === 0);
-    const wbtcPrice = farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    const wbtcPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 16 && f.type === 0);
-    const fraxPrice = farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    const fraxPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 1 && f.type === 1);
-    const spiritPrice = farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    const spiritPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     return {
       LQDR: lqdrPrice,
       FTM: ftmPrice,
