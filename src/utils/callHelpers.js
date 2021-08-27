@@ -46,7 +46,7 @@ export const miniStake = async (miniChefContract, pid, amount, account) => {
 
 export const miniUnstake = async (miniChefContract, pid, amount, account) => {
   return miniChefContract.methods
-    .withdrawAndHarvest(pid, toWei(amount).toFixed(), account)
+    .withdraw(pid, toWei(amount).toFixed(), account)
     .send({ from: account })
     .on("transactionHash", (tx) => {
       return tx.transactionHash;
