@@ -9,12 +9,14 @@
   color: #ffffff;
   font-family: Nunito;
   font-style: normal;
+  background: linear-gradient(180deg, rgba(0,13,54,1) 0%, rgba(0,30,89,1) 100%);
 
   .main-container {
     position: relative;
     background-image: url("assets/imgs/BG.svg");
     background-position: center top;
     background-size: contain;
+    background-repeat: repeat-y; 
     padding: 120px 0;
     text-align: center;
     margin: auto;
