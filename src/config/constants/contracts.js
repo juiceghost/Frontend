@@ -13,7 +13,7 @@ const contracts = {
   },
   minichef: {
     3: '0x42fd1A2dbc2069B6E700ae3774533B87dB4e137B',
-    250: '0x7eD221cC4aB4a2730e3505FE132b202b3B288c73',
+    250: '0x6e2ad6527901c9664f016466b8DA1357a004db0f',
   },
   Sushi: {
     3: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
