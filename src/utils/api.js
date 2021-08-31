@@ -277,7 +277,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
         // );
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
-        const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint));
+        const poolWeight = allocPoint.isZero() ? new BigNumber(farmConfig.alloc).div(108) : allocPoint.div(new BigNumber(totalAllocPoint));
 
         return {
           ...farmConfig,
@@ -287,7 +287,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           lpTotalInQuoteToken: lpTotalInQuoteToken,
           tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
-          multiplierShow: `${allocPoint.div(100).toString()}X`,
+          multiplierShow: `${allocPoint.isZero() ? farmConfig.alloc : allocPoint.div(100).toString()}X`,
           multiplier: allocPoint.div(100),
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),

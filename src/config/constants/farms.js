@@ -277,6 +277,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
+    alloc: 23,
   },
   {
     pid: 1,
@@ -290,6 +291,7 @@ const farms = [
     quoteTokenSymbol: Tokens.LQDR.symbol,
     quoteTokenAdresses: Tokens.LQDR.address,
     type: 1,
+    alloc: 2,
   },
   // {
   //   pid: 2,
@@ -303,6 +305,7 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
+  //   alloc: 4,
   // },
   {
     pid: 3,
@@ -316,6 +319,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FUSDT.symbol,
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 1,
+    alloc: 5,
   },
   // {
   //   pid: 4,
@@ -329,6 +333,7 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
+  //   alloc: 5,
   // },
   {
     pid: 5,
@@ -342,6 +347,7 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 1,
+    alloc: 5,
   },
   // {
   //   pid: 6,
@@ -355,6 +361,7 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
+  //   alloc: 4,
   // },
   {
     pid: 7,
@@ -368,6 +375,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
+    alloc: 4,
   },
   {
     pid: 8,
@@ -381,6 +389,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
+    alloc: 4,
   },
   {
     pid: 9,
@@ -394,6 +403,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
+    alloc: 4,
   },
   {
     pid: 10,
@@ -407,6 +417,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 11,
@@ -420,6 +431,7 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 12,
@@ -433,6 +445,7 @@ const farms = [
     quoteTokenSymbol: Tokens.DAI.symbol,
     quoteTokenAdresses: Tokens.DAI.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 13,
@@ -446,6 +459,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 14,
@@ -459,6 +473,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 15,
@@ -472,6 +487,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 16,
@@ -485,6 +501,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FUSDT.symbol,
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 2,
+    alloc: 5,
   },
   {
     pid: 17,
@@ -498,6 +515,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
+    alloc: 4,
   },
   {
     pid: 18,
@@ -511,6 +529,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
+    alloc: 3,
   },
   {
     pid: 19,
@@ -524,6 +543,7 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
+    alloc: 3,
   },
   {
     pid: 20,
@@ -537,6 +557,7 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 3,
+    alloc: 3,
   },
 ]
 
