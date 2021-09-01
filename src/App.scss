@@ -24,12 +24,16 @@
     width: 100%;
     overflow-y: auto;
     .f-water {
+      display:none;
       position: relative;
       z-index: 1;
       width: 100%;
       object-fit: contain;
       margin: auto;
       object-position: center;
+    }
+    .b-water {
+      display:none;
     }
     .bg-waterfall {
       position: absolute;
@@ -166,9 +170,24 @@ body,
     display: block;
     min-height: 100%;
     height: 100%;
+    background-image:none;
+    background:  rgba(0,30,89,1);
+
     .main-container {
-      min-height: 100%;
-      overflow-y: hidden;
+    background-image: url("assets/imgs/Waterfall-Middle.svg");
+    background-position: center top;
+    background-size: contain;
+    // min-height: 100%;
+    padding:0;
+    position: relative;
+    margin-top: -20px;
+    min-height: 100%;
+    margin-top: 0px;
+    overflow-y: hidden;
+    
+    .f-water,.b-water {
+      display:block;
+    }
     }
   }
 }
