@@ -163,7 +163,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
       .filter((farm) => farm?.lpAddresses[chainId] !== "")
       .map(async (farmConfig) => {
 
-        const [info, totalAllocPoint, lqdrPerBlock, strategy] = await multicall(
+        const [info, totalAllocPoint, /* lqdrPerBlock, */ strategy] = await multicall(
           web3,
           minichefABI,
           [
@@ -176,10 +176,10 @@ export const fetchFarms = async (web3, chainId = 250) => {
               address: MiniChefAddress,
               name: "totalAllocPoint",
             },
-            {
-              address: MiniChefAddress,
-              name: "lqdrPerBlock",
-            },
+            // {
+            //   address: MiniChefAddress,
+            //   name: "lqdrPerBlock",
+            // },
             {
               address: MiniChefAddress,
               name: "strategies",
@@ -188,6 +188,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           ],
           chainId
         );
+        const lqdrPerBlock = 140000000000000000;
         let sBal = 0;
         if (strategy[0] !== "0x0000000000000000000000000000000000000000") {
           const [resBal] = await multicall(

@@ -167,10 +167,14 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
     };
   });
 
-  const rawEarnings = await multicall(web3, masterchefABI, calls, chainId);
-  const parsedEarnings = rawEarnings.map((earnings) => {
-    return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
-  });
+  // const rawEarnings = await multicall(web3, masterchefABI, calls, chainId);
+  // const parsedEarnings = rawEarnings.map((earnings) => {
+  //   return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
+  // });
+
+  const parsedEarnings = masterFarms.map(() => {
+    return new BigNumber(0).toFixed(0, BigNumber.ROUND_DOWN);
+  })
 
   // Minichef
   const minichefAdress = getMiniChefAddress(chainId);
@@ -183,14 +187,17 @@ export const fetchFarmUserEarnings = async (web3, account, chainId) => {
     };
   });
 
-  const minirawEarnings = await multicall(
-    web3,
-    minichefABI,
-    minicalls,
-    chainId
-  );
-  const miniparsedEarnings = minirawEarnings.map((earnings) => {
-    return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
+  // const minirawEarnings = await multicall(
+  //   web3,
+  //   minichefABI,
+  //   minicalls,
+  //   chainId
+  // );
+  // const miniparsedEarnings = minirawEarnings.map((earnings) => {
+  //   return new BigNumber(earnings).toFixed(0, BigNumber.ROUND_DOWN);
+  // });
+  const miniparsedEarnings = miniFarms.map(() => {
+    return new BigNumber(0).toFixed(0, BigNumber.ROUND_DOWN);
   });
   return [...parsedEarnings, ...miniparsedEarnings];
 };
