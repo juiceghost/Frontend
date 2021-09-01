@@ -44,3 +44,15 @@ export const getFTMDistributorAddress = (chainId = 250) => {
 export const getWftmAddress = (chainId = 250) => {
   return Tokens.FTM.address[chainId]
 }
+
+export const getSpiritAddress = (chainId = 250) => {
+  return Tokens.SPIRIT.address[chainId]
+}
+
+export const getBooAddress = (chainId = 250) => {
+  return Tokens.BOO.address[chainId]
+}
+
+export const getWakaAddress = (chainId = 250) => {
+  return Tokens.WAKA.address[chainId]
+}

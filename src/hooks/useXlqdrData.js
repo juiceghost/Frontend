@@ -12,6 +12,9 @@ import {
   getLqdrAddress,
   getXLqdrAddress,
   getWftmAddress,
+  getSpiritAddress,
+  getBooAddress,
+  getWakaAddress,
 } from "../utils/addressHelpers";
 import useWeb3 from "./useWeb3";
 import { ethers } from "ethers";
@@ -99,6 +102,9 @@ export const useRewardInfo = () => {
     ftmReward: new BigNumber(0),
     lqdrPerXlqdr: new BigNumber(0),
     ftmPerXlqdr: new BigNumber(0),
+    spiritPerXlqdr: new BigNumber(0),
+    booPerXlqdr: new BigNumber(0),
+    wakaPerXlqdr: new BigNumber(0),
   });
 
   const web3 = useWeb3();
@@ -109,6 +115,9 @@ export const useRewardInfo = () => {
   const { xlqdrTotalSupply } = useXlqdrInfo();
   const lqdrContract = useERC20(getLqdrAddress(chainId));
   const wftmContract = useERC20(getWftmAddress(chainId));
+  const spiritContract = useERC20(getSpiritAddress(chainId));
+  const booContract = useERC20(getBooAddress(chainId));
+  const wakaContract = useERC20(getWakaAddress(chainId));
 
   useEffect(() => {
     const getUserRewards = async () => {
@@ -133,11 +142,26 @@ export const useRewardInfo = () => {
 
     const getRewardInfo = async () => {
       try {
-        const [lqdrPerWeek, ftmPerWeek] = await Promise.all([
+        const [
+          lqdrPerWeek,
+          ftmPerWeek,
+          spiritPerWeek,
+          booPerWeek,
+          wakaPerWeek,
+        ] = await Promise.all([
           lqdrContract.methods
             .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
             .call(),
           wftmContract.methods
+            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
+            .call(),
+          spiritContract.methods
+            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
+            .call(),
+          booContract.methods
+            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
+            .call(),
+          wakaContract.methods
             .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
             .call(),
         ]);
@@ -149,6 +173,15 @@ export const useRewardInfo = () => {
           ftmPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
             : new BigNumber(ftmPerWeek).div(1e18).div(xlqdrTotalSupply),
+          spiritPerXlqdr: xlqdrTotalSupply.isZero()
+            ? new BigNumber(0)
+            : new BigNumber(spiritPerWeek).div(1e18).div(xlqdrTotalSupply),
+          booPerXlqdr: xlqdrTotalSupply.isZero()
+            ? new BigNumber(0)
+            : new BigNumber(booPerWeek).div(1e18).div(xlqdrTotalSupply),
+          wakaPerXlqdr: xlqdrTotalSupply.isZero()
+            ? new BigNumber(0)
+            : new BigNumber(wakaPerWeek).div(1e18).div(xlqdrTotalSupply),
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
@@ -171,6 +204,9 @@ export const useRewardInfo = () => {
         ftmReward: new BigNumber(0),
         lqdrPerXlqdr: new BigNumber(0),
         ftmPerXlqdr: new BigNumber(0),
+        spiritPerXlqdr: new BigNumber(0),
+        booPerXlqdr: new BigNumber(0),
+        wakaPerXlqdr: new BigNumber(0),
       });
     }
   }, [

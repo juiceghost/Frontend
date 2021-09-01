@@ -27,11 +27,17 @@ const Xlqdr = () => {
   const [lqdrAmount, setLqdrAmount] = useState(new BigNumber(0));
   const [periodLevel, setPeriodLevel] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLQDR, setIsLQDR] = useState(false);
+  const [tokenType, setTokenType] = useState(0);
 
   const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr, lockedLqdr } =
     useXlqdrInfo();
-  const { lqdrPerXlqdr, ftmPerXlqdr } = useRewardInfo();
+  const {
+    lqdrPerXlqdr,
+    ftmPerXlqdr,
+    spiritPerXlqdr,
+    booPerXlqdr,
+    wakaPerXlqdr,
+  } = useRewardInfo();
   const { days, hours, mins } = useEpochInfo();
   const minDate = useMemo(() => {
     if (lockedEnd === 0) {
@@ -73,15 +79,31 @@ const Xlqdr = () => {
     }
   }, [lockedEnd]);
 
-  const ftmApr = useMemo(() => {
-    return !!prices
-      ? ftmPerXlqdr.times(prices["FTM"]).div(prices["LQDR"]).times(5400)
+  const spiritApr = useMemo(() => {
+    return !!prices && prices["LQDR"]
+      ? spiritPerXlqdr.times(prices["SPIRIT"] || 0).div(prices["LQDR"]).times(5400)
       : new BigNumber(0);
-  }, [ftmPerXlqdr, prices]);
+  }, [spiritPerXlqdr, prices]);
+
+  const booApr = useMemo(() => {
+    return !!prices && prices["LQDR"]
+      ? booPerXlqdr.times(prices["BOO"] || 0).div(prices["LQDR"]).times(5400)
+      : new BigNumber(0);
+  }, [booPerXlqdr, prices]);
+
+  const wakaApr = useMemo(() => {
+    return !!prices && prices["LQDR"]
+      ? wakaPerXlqdr.times(prices["WAKA"] || 0).div(prices["LQDR"]).times(5400)
+      : new BigNumber(0);
+  }, [wakaPerXlqdr, prices]);
 
   const lqdrApr = useMemo(() => {
     return lqdrPerXlqdr.times(5400);
   }, [lqdrPerXlqdr]);
+
+  const apr = useMemo(() => {
+    return tokenType === 0 ? lqdrApr : tokenType === 1 ? spiritApr : tokenType === 0 ? booApr : wakaApr;
+  }, [lqdrApr, spiritApr, booApr, wakaApr, tokenType]);
 
   const onExchange = (e) => {
     setLqdrAmount(BigNumber.min(new BigNumber(e.target.value), lqdrBalance));
@@ -127,7 +149,7 @@ const Xlqdr = () => {
         <p className="xlqdr-title">xLQDR</p>
         <div className="balance-section">
           <div className="balance-item">
-            <div className="balance-label">Your LQDR</div>
+            <div className="balance-label">Your locked LQDR</div>
             <div className="balance-value">
               {!account
                 ? "-"
@@ -342,11 +364,11 @@ const Xlqdr = () => {
               />
               <div className="reward-desc">
                 Once you locked your LQDR and received xLQDR, you’ll be eligible
-                to claim rewards from the revenue-sharing vault every week!
+                to claim rewards from the revenue-sharing vault every day!
               </div>
               <div className="reward-desc">
-                80% of the deposit fees will be redistributed to the vault over
-                time.
+                Yields collected from our strategies will be redistributed to
+                the vault over time.
               </div>
               <div className="reward-desc">
                 <div className="reward-desc-title">Current epoch ends in:</div>
@@ -387,10 +409,10 @@ const Xlqdr = () => {
                 <div className="revenue-label">Revenue-sharing vault</div>
               </div>
               <div className="reward-claim">
-                <div className="claim-label">Next receivable earnings :</div>
+                <div className="claim-label">Claimable earnings :</div>
                 <div className="claim-section">
                   <div className="claim-value">
-                    <div className="claim-value-item">
+                    {/* <div className="claim-value-item">
                       wFTM:{" "}
                       {!account
                         ? "-"
@@ -399,7 +421,7 @@ const Xlqdr = () => {
                             .toFormat(
                               ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
                             )}
-                    </div>
+                    </div> */}
                     <div className="claim-value-item">
                       LQDR:{" "}
                       {!account
@@ -408,6 +430,38 @@ const Xlqdr = () => {
                             .times(xlqdrBalance)
                             .toFormat(
                               lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                            )}
+                    </div>
+                    <div className="claim-value-item">
+                      SPIRIT:{" "}
+                      {!account
+                        ? "-"
+                        : spiritPerXlqdr
+                            .times(xlqdrBalance)
+                            .toFormat(
+                              spiritPerXlqdr.times(xlqdrBalance).lt(0.001)
+                                ? 5
+                                : 3
+                            )}
+                    </div>
+                    <div className="claim-value-item">
+                      BOO:{" "}
+                      {!account
+                        ? "-"
+                        : booPerXlqdr
+                            .times(xlqdrBalance)
+                            .toFormat(
+                              booPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
+                            )}
+                    </div>
+                    <div className="claim-value-item">
+                      WAKA:{" "}
+                      {!account
+                        ? "-"
+                        : wakaPerXlqdr
+                            .times(xlqdrBalance)
+                            .toFormat(
+                              wakaPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
                             )}
                     </div>
                   </div>
@@ -436,7 +490,7 @@ const Xlqdr = () => {
                 </div>
               </div>
 
-              <div className="reward-claim">
+              {/* <div className="reward-claim">
                 <div className="claim-label">Next earnings :</div>
                 <div className="claim-section">
                   <div className="claim-value">
@@ -450,31 +504,10 @@ const Xlqdr = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="reward-claim">
                 <div className="claim-section">
                   <div className="claim-value">
-                    <div className="claim-value-item apr">
-                      <span className="apr-title ftm">APR in FTM</span>
-                      <img
-                        className="apr-question"
-                        src="/img/svg/question.svg"
-                        alt="question"
-                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
-                      />
-                      <span className="apr-value ftm">
-                        {`: ${ftmApr.toFormat(2)}%`}
-                      </span>
-                      <img
-                        className="apr-calc"
-                        src="/img/svg/calculator.svg"
-                        alt="calculator"
-                        onClick={() => {
-                          setIsLQDR(false);
-                          setIsOpen(true);
-                        }}
-                      />
-                    </div>
                     <div className="claim-value-item apr">
                       <span className="apr-title">APR in LQDR</span>
                       <img
@@ -491,13 +524,94 @@ const Xlqdr = () => {
                         src="/img/svg/calculator.svg"
                         alt="calculator"
                         onClick={() => {
-                          setIsLQDR(true);
+                          setTokenType(0);
                           setIsOpen(true);
                         }}
                       />
                     </div>
                   </div>
                 </div>
+                <div className="claim-section">
+                  <div className="claim-value">
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in SPIRIT</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${spiritApr.toFormat(2)}%`}
+                      </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setTokenType(1);
+                          setIsOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="claim-section">
+                  <div className="claim-value">
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in BOO</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${booApr.toFormat(2)}%`}
+                      </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setTokenType(2);
+                          setIsOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="claim-section">
+                  <div className="claim-value">
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in WAKA</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${wakaApr.toFormat(2)}%`}
+                      </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setTokenType(3);
+                          setIsOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="reward-claim">
+              </div>
+              <div className="reward-claim">
+              </div>
+              <div className="reward-claim">
               </div>
             </div>
           </div>
@@ -507,9 +621,8 @@ const Xlqdr = () => {
       <CalcModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        lqdrApr={lqdrApr}
-        ftmApr={ftmApr}
-        isLQDR={isLQDR}
+        apr={apr}
+        tokenType={tokenType}
       />
     </>
   );
