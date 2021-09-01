@@ -9,6 +9,7 @@ import {
   getXLQDRContract,
   getFeeDistributorContract,
   getFTMDistributorContract,
+  getMiniChefContract,
 } from "../utils/contractHelpers";
 import useWeb3 from "./useWeb3";
 
@@ -24,6 +25,12 @@ export const useMasterChef = () => {
   const web3 = useWeb3();
   const { chainId } = useWeb3React();
   return useMemo(() => getMasterChefContract(web3, chainId), [web3, chainId]);
+};
+
+export const useMiniChef = () => {
+  const web3 = useWeb3();
+  const { chainId } = useWeb3React();
+  return useMemo(() => getMiniChefContract(web3, chainId), [web3, chainId]);
 };
 
 export const useSusiRouter = () => {
