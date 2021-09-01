@@ -81,19 +81,28 @@ const Xlqdr = () => {
 
   const spiritApr = useMemo(() => {
     return !!prices && prices["LQDR"]
-      ? spiritPerXlqdr.times(prices["SPIRIT"] || 0).div(prices["LQDR"]).times(5400)
+      ? spiritPerXlqdr
+          .times(prices["SPIRIT"] || 0)
+          .div(prices["LQDR"])
+          .times(5400)
       : new BigNumber(0);
   }, [spiritPerXlqdr, prices]);
 
   const booApr = useMemo(() => {
     return !!prices && prices["LQDR"]
-      ? booPerXlqdr.times(prices["BOO"] || 0).div(prices["LQDR"]).times(5400)
+      ? booPerXlqdr
+          .times(prices["BOO"] || 0)
+          .div(prices["LQDR"])
+          .times(5400)
       : new BigNumber(0);
   }, [booPerXlqdr, prices]);
 
   const wakaApr = useMemo(() => {
     return !!prices && prices["LQDR"]
-      ? wakaPerXlqdr.times(prices["WAKA"] || 0).div(prices["LQDR"]).times(5400)
+      ? wakaPerXlqdr
+          .times(prices["WAKA"] || 0)
+          .div(prices["LQDR"])
+          .times(5400)
       : new BigNumber(0);
   }, [wakaPerXlqdr, prices]);
 
@@ -102,7 +111,13 @@ const Xlqdr = () => {
   }, [lqdrPerXlqdr]);
 
   const apr = useMemo(() => {
-    return tokenType === 0 ? lqdrApr : tokenType === 1 ? spiritApr : tokenType === 0 ? booApr : wakaApr;
+    return tokenType === 0
+      ? lqdrApr
+      : tokenType === 1
+      ? spiritApr
+      : tokenType === 0
+      ? booApr
+      : wakaApr;
   }, [lqdrApr, spiritApr, booApr, wakaApr, tokenType]);
 
   const onExchange = (e) => {
@@ -410,7 +425,7 @@ const Xlqdr = () => {
               </div>
               <div className="reward-claim">
                 <div className="claim-label">Claimable earnings :</div>
-                <div className="claim-section">
+                <div className="claim-header-section">
                   <div className="claim-value">
                     {/* <div className="claim-value-item">
                       wFTM:{" "}
@@ -606,12 +621,15 @@ const Xlqdr = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="reward-claim">
-              </div>
-              <div className="reward-claim">
-              </div>
-              <div className="reward-claim">
+                <div className="total-apr">
+                  <span>Total APR&nbsp;:</span>&nbsp;
+                  {lqdrApr
+                    .plus(spiritApr)
+                    .plus(booApr)
+                    .plus(wakaApr)
+                    .toFormat(2)}
+                  %
+                </div>
               </div>
             </div>
           </div>

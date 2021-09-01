@@ -248,6 +248,7 @@
 
         .header-desc {
           display: flex;
+          align-items: center;
           margin-bottom: 30px;
 
           .icons {
@@ -286,7 +287,7 @@
             color: #4dd9f6;
           }
 
-          .claim-section {
+          .claim-header-section {
             display: flex;
             margin-top: 10px;
             justify-content: space-between;
@@ -320,6 +321,51 @@
                 }
               }
             }
+          }
+
+          .claim-section {
+            display: flex;
+            justify-content: space-between;
+
+            .claim-value {
+              text-align: left;
+
+              .claim-value-item {
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+
+                &.apr {
+                  margin: 5px 0;
+                }
+
+                .apr-title {
+                  color: #4dd9f6;
+                }
+
+                .apr-question {
+                  width: 14px;
+                  margin: 0 5px;
+                  cursor: pointer;
+                }
+
+                .apr-calc {
+                  width: 14px;
+                  margin: 0 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+
+        .total-apr {
+          font-size: 24px;
+          display: flex;
+          margin-top: 20px;
+          justify-content: flex-start;
+          span {
+            color: #4dd9f6;
           }
         }
       }
