@@ -3,6 +3,7 @@ import erc20 from "../config/abi/erc20.json";
 import masterchefABI from "../config/abi/masterchef.json";
 import minichefABI from "../config/abi/minichef.json";
 import rewarderABI from "../config/abi/rewarder.json";
+import strategyABI from "../config/abi/strategy.json";
 import SushiAbi from "../config/abi/sushi.json";
 import multicall from "./multicall";
 import {
@@ -104,12 +105,14 @@ export const fetchFarms = async (web3, chainId = 250) => {
             .times(lpTokenRatio);
           const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
             .div(new BigNumber(10).pow(quoteTokenDecimals))
-            .times(lpTokenRatio)
+            .times(lpTokenRatio);
 
           if (!tokenAmount.isZero()) {
             tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
           } else {
-            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
+            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(
+              new BigNumber(tokenBalanceLP)
+            );
           }
         }
 
@@ -159,6 +162,47 @@ export const fetchFarms = async (web3, chainId = 250) => {
     miniFarms
       .filter((farm) => farm?.lpAddresses[chainId] !== "")
       .map(async (farmConfig) => {
+
+        const [info, totalAllocPoint, lqdrPerBlock, strategy] = await multicall(
+          web3,
+          minichefABI,
+          [
+            {
+              address: MiniChefAddress,
+              name: "poolInfo",
+              params: [farmConfig.pid],
+            },
+            {
+              address: MiniChefAddress,
+              name: "totalAllocPoint",
+            },
+            {
+              address: MiniChefAddress,
+              name: "lqdrPerBlock",
+            },
+            {
+              address: MiniChefAddress,
+              name: "strategies",
+              params: [farmConfig.pid],
+            },
+          ],
+          chainId
+        );
+        let sBal = 0;
+        if (strategy[0] !== "0x0000000000000000000000000000000000000000") {
+          const [resBal] = await multicall(
+            web3,
+            strategyABI,
+            [
+              {
+                address: strategy[0],
+                name: "balanceOf",
+              },
+            ],
+            chainId
+          );
+          sBal = resBal;
+        }
         const lpAdress = farmConfig.lpAddresses[chainId];
         const calls = [
           // Balance of Reward token in the LP contract
@@ -216,7 +260,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           lpTotalInQuoteToken = tokenAmount;
         } else {
           // Ratio in % a LP tokens that are in staking, vs the total number in circulation
-          const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(
+          const lpTokenRatio = new BigNumber(lpTokenBalanceMC).plus(sBal).div(
             new BigNumber(lpTotalSupply)
           );
 
@@ -232,37 +276,18 @@ export const fetchFarms = async (web3, chainId = 250) => {
             .times(lpTokenRatio);
           const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
             .div(new BigNumber(10).pow(quoteTokenDecimals))
-            .times(lpTokenRatio)
+            .times(lpTokenRatio);
 
           if (tokenAmount.comparedTo(0) > 0) {
             tokenPriceVsQuote = quoteTokenAmount.div(tokenAmount);
           } else {
-            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(new BigNumber(tokenBalanceLP));
+            tokenPriceVsQuote = new BigNumber(quoteTokenBlanceLP).div(
+              new BigNumber(tokenBalanceLP)
+            );
           }
         }
 
-        const [info, totalAllocPoint, lqdrPerBlock] = await multicall(
-          web3,
-          minichefABI,
-          [
-            {
-              address: MiniChefAddress,
-              name: "poolInfo",
-              params: [farmConfig.pid],
-            },
-            {
-              address: MiniChefAddress,
-              name: "totalAllocPoint",
-            },
-            {
-              address: MiniChefAddress,
-              name: "lqdrPerBlock",
-            },
-          ],
-          chainId
-        );
-
-        const rewardPerSecond = 0; 
+        const rewardPerSecond = 0;
 
         // const [rewardPerSecond] = await multicall(
         //   web3,
@@ -277,17 +302,23 @@ export const fetchFarms = async (web3, chainId = 250) => {
         // );
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
-        const poolWeight = allocPoint.isZero() ? new BigNumber(farmConfig.alloc).div(108) : allocPoint.div(new BigNumber(totalAllocPoint));
+        const poolWeight = allocPoint.isZero()
+          ? new BigNumber(farmConfig.alloc).div(108)
+          : allocPoint.div(new BigNumber(totalAllocPoint));
 
         return {
           ...farmConfig,
-          totalStaked: fromWei(lpTokenBalanceMC),
+          totalStaked: fromWei(new BigNumber(lpTokenBalanceMC).plus(sBal)),
           totalSupply: lpTotalSupply,
           tokenAmount: tokenAmount.toJSON(),
           lpTotalInQuoteToken: lpTotalInQuoteToken,
           tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
-          multiplierShow: `${allocPoint.isZero() ? farmConfig.alloc : allocPoint.div(100).toString()}X`,
+          multiplierShow: `${
+            allocPoint.isZero()
+              ? farmConfig.alloc
+              : allocPoint.div(100).toString()
+          }X`,
           multiplier: allocPoint.div(100),
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),
