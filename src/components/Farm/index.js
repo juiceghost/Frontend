@@ -437,6 +437,19 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             alt="link"
           />
         </a>
+        <a
+          className="provide-liquidity"
+          href={farm.liquidity}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Provide Liquidity
+          <img
+            src="/img/svg/link.svg"
+            style={{ marginLeft: "5px" }}
+            alt="link"
+          />
+        </a>
       </div>
     </>
   );
