@@ -280,7 +280,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
 
         <div className="apr-wrap">
           <p className="apr">
-            <span className="a-title">APR</span>
+            <span className="a-title">APR in LQDR</span>
             <span>
               {" "}
               {prices &&
@@ -299,13 +299,13 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 : "0"}{" "}
               %
             </span>
-          </p>
-          {/* {rewardPerSecond && (
+          </p>          
+          {farm.type === 1 && farm.pid === 0 && (
             <p className="apr">
-              <span className="a-title">APR2</span>
+              <span className="a-title">APR in Spirit</span>
               <span>
-                {" "}
-                {prices &&
+                {" Coming soon"}
+                {/* {prices &&
                 priceQuoteToken !== 0 &&
                 !isZero(lpTotalInQuoteToken) &&
                 rewardPerSecond
@@ -316,10 +316,50 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                       .times(100)
                       .toFormat(0)
                   : "0"}{" "}
-                %
+                % */}
               </span>
             </p>
-          )} */}
+          )}
+          {farm.type === 1 && farm.pid === 1 && (
+            <p className="apr">
+              <span className="a-title">APR in wFTM</span>
+              <span>
+                {" Coming soon"}
+                {/* {prices &&
+                priceQuoteToken !== 0 &&
+                !isZero(lpTotalInQuoteToken) &&
+                rewardPerSecond
+                  ? new BigNumber(
+                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                    )
+                      .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                      .times(100)
+                      .toFormat(0)
+                  : "0"}{" "}
+                % */}
+              </span>
+            </p>
+          )}
+          {farm.type === 2 && farm.pid === 10 && (
+            <p className="apr">
+              <span className="a-title">APR in wFTM</span>
+              <span>
+                {" Coming soon"}
+                {/* {prices &&
+                priceQuoteToken !== 0 &&
+                !isZero(lpTotalInQuoteToken) &&
+                rewardPerSecond
+                  ? new BigNumber(
+                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                    )
+                      .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                      .times(100)
+                      .toFormat(0)
+                  : "0"}{" "}
+                % */}
+              </span>
+            </p>
+          )}
         </div>
         <div
           className="details-btn"
