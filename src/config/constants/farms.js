@@ -278,6 +278,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
     alloc: 23,
+    liquidity: 'https://swap.spiritswap.finance/#/add/FTM/0x10b620b2dbAC4Faa7D7FFD71Da486f5D44cd86f9'
   },
   {
     pid: 1,
@@ -292,6 +293,7 @@ const farms = [
     quoteTokenAdresses: Tokens.LQDR.address,
     type: 1,
     alloc: 2,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0x5Cc61A78F164885776AA610fb0FE1257df78E59B/0x10b620b2dbAC4Faa7D7FFD71Da486f5D44cd86f9'
   },
   // {
   //   pid: 2,
@@ -320,6 +322,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 1,
     alloc: 5,
+    liquidity: 'https://swap.spiritswap.finance/#/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A'
   },
   // {
   //   pid: 4,
@@ -348,6 +351,7 @@ const farms = [
     quoteTokenAdresses: Tokens.USDC.address,
     type: 1,
     alloc: 5,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/FTM'
   },
   // {
   //   pid: 6,
@@ -376,6 +380,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
     alloc: 4,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0x82f0B8B456c1A451378467398982d4834b6829c1/FTM'
   },
   {
     pid: 8,
@@ -390,6 +395,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
     alloc: 4,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC/FTM'
   },
   {
     pid: 9,
@@ -404,6 +410,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
     alloc: 4,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8/FTM'
   },
   {
     pid: 10,
@@ -418,6 +425,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE'
   },
   {
     pid: 11,
@@ -432,6 +440,7 @@ const farms = [
     quoteTokenAdresses: Tokens.USDC.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'
   },
   {
     pid: 12,
@@ -446,6 +455,7 @@ const farms = [
     quoteTokenAdresses: Tokens.DAI.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E'
   },
   {
     pid: 13,
@@ -460,6 +470,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC'
   },
   {
     pid: 14,
@@ -474,6 +485,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8'
   },
   {
     pid: 15,
@@ -488,6 +500,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d'
   },
   {
     pid: 16,
@@ -502,6 +515,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 2,
     alloc: 5,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A'
   },
   {
     pid: 17,
@@ -516,6 +530,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
     alloc: 4,
+    liquidity: 'https://spookyswap.finance/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1'
   },
   {
     pid: 18,
@@ -530,6 +545,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
     alloc: 3,
+    liquidity: 'https://exchange.waka.finance/#/add/FTM/0xf61cCdE1D4bB76CeD1dAa9D4c429cCA83022B08B'
   },
   {
     pid: 19,
@@ -544,6 +560,7 @@ const farms = [
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
     alloc: 3,
+    liquidity: 'https://exchange.waka.finance/#/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11'
   },
   {
     pid: 20,
@@ -558,6 +575,7 @@ const farms = [
     quoteTokenAdresses: Tokens.USDC.address,
     type: 3,
     alloc: 3,
+    liquidity: 'https://exchange.waka.finance/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'
   },
 ]
 
