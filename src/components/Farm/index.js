@@ -73,22 +73,19 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     }
   }, [onStake, forceUpdate]);
 
-  const handleUnStake = useCallback(
-    async () => {
-      try {
-        const tx = await onUnStake();
-        if (tx.status) {
-          forceUpdate();
-        } else {
-          console.log("UnStake Failed");
-        }
-        setUnStakePopup(false);
-      } catch (e) {
-        console.error(e);
+  const handleUnStake = useCallback(async () => {
+    try {
+      const tx = await onUnStake();
+      if (tx.status) {
+        forceUpdate();
+      } else {
+        console.log("UnStake Failed");
       }
-    },
-    [onUnStake, forceUpdate]
-  );
+      setUnStakePopup(false);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [onUnStake, forceUpdate]);
 
   const handleHarvest = useCallback(async () => {
     try {
@@ -299,7 +296,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 : "0"}{" "}
               %
             </span>
-          </p>          
+          </p>
           {farm.type === 1 && farm.pid === 0 && (
             <p className="apr">
               <span className="a-title">APR in Spirit</span>
@@ -437,19 +434,21 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             alt="link"
           />
         </a>
-        <a
-          className="provide-liquidity"
-          href={farm.liquidity}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Provide Liquidity
-          <img
-            src="/img/svg/link.svg"
-            style={{ marginLeft: "5px" }}
-            alt="link"
-          />
-        </a>
+        {farm.liquidity && (
+          <a
+            className="provide-liquidity"
+            href={farm.liquidity}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Provide Liquidity
+            <img
+              src="/img/svg/link.svg"
+              style={{ marginLeft: "5px" }}
+              alt="link"
+            />
+          </a>
+        )}
       </div>
     </>
   );
