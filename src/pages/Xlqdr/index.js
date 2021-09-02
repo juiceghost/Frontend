@@ -221,14 +221,23 @@ const Xlqdr = () => {
             {lockStatus === "increase" &&
               (account ? (
                 <div className="lock-btn">
-                  <div
-                    className={`lq-button ${
-                      isLoading ? "grey-button" : "blue-button"
-                    }`}
-                    onClick={() => onIncreaseAmount()}
-                  >
-                    Increase Amount
-                  </div>
+                  {allowance.gt(0) ? (
+                    <div
+                      className={`lq-button ${
+                        isLoading ? "grey-button" : "blue-button"
+                      }`}
+                      onClick={() => onIncreaseAmount()}
+                    >
+                      Increase Amount
+                    </div>
+                  ) : (
+                    <div
+                      className="lq-button blue-button"
+                      onClick={() => onApprove()}
+                    >
+                      Approve
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="lock-btn">
