@@ -1,12 +1,13 @@
 import web3NoAccount from './web3'
 import ERC20Abi from '../config/abi/erc20.json'
 import MasterChefAbi from '../config/abi/masterchef.json'
+import MiniChefAbi from '../config/abi/minichef.json'
 import SushiAbi from '../config/abi/sushi.json'
 import LotteryAbi from '../config/abi/lottery.json'
 import XLQDRAbi from '../config/abi/xlqdr.json'
 import feeDistributorAbi from '../config/abi/feeDistributor.json'
 import ftmDistributorAbi from '../config/abi/ftmDistributor.json'
-import { getMasterChefAddress, getLotteryAddress, getXLqdrAddress, getFeeDistributorAddress, getFTMDistributorAddress } from './addressHelpers'
+import { getMasterChefAddress, getLotteryAddress, getXLqdrAddress, getFeeDistributorAddress, getFTMDistributorAddress, getMiniChefAddress } from './addressHelpers'
 import { getSushiAddress } from './addressHelpers'
 
 const getContract = (abi, address, web3) => {
@@ -16,6 +17,10 @@ const getContract = (abi, address, web3) => {
 
 export const getMasterChefContract = (web3, chainId) => {
     return getContract(MasterChefAbi, getMasterChefAddress(chainId), web3)
+}
+
+export const getMiniChefContract = (web3, chainId) => {
+    return getContract(MiniChefAbi, getMiniChefAddress(chainId), web3)
 }
 
 export const getSushiRouter = (web3, chainId) => {

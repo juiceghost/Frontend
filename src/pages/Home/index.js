@@ -1,11 +1,11 @@
-import { isZero } from "../config/constants/numbers";
-import { usePrices } from "../hooks/usePrices";
-import { useLqdr } from "../hooks/useLqdr";
-import { useTotalValue } from "../utils/fetchFarmUser";
+import { isZero } from "../../config/constants/numbers";
+import { usePrices } from "../../hooks/usePrices";
+import { useLqdr } from "../../hooks/useLqdr";
+import { useTotalValue } from "../../utils/fetchFarmUser";
 import { Link } from "react-router-dom";
-import { useXlqdrInfo } from "../hooks/useXlqdrData";
+import { useXlqdrInfo } from "../../hooks/useXlqdrData";
 
-import "./Home2.scss";
+import "./Home.scss";
 
 function Home2() {
   const tvl = useTotalValue();
@@ -21,7 +21,7 @@ function Home2() {
           alt="logo"
         />
         <div className="main-title">
-          Incentivizing deep liquidity for SushiSwap on Fantom Opera
+          On-Demand Liquidity as a service on Fantom Opera
         </div>
         <div className="tvl-title">Total Value Locked</div>
         <div className="tvl-amount">
@@ -47,7 +47,7 @@ function Home2() {
             <p className="m-title">LQDR</p>
             <div className="border"></div>
             <p className="amount">
-              {(prices && "$" + prices["LQDR"]) || "N/A"}
+              {(prices && "$" + prices["LQDR"].toFixed(3)) || "N/A"}
             </p>
           </div>
           <div className="market">

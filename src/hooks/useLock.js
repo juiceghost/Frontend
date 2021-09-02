@@ -16,7 +16,7 @@ export const useLock = (amount, unlockTime, lockedEnd) => {
       const tx = await xlqdrContract.methods
         .create_lock(
           new BigNumber(amount).times(1e18).toString(10),
-          Math.floor(new Date().getTime() / 1000) + unlockTime
+          unlockTime
         )
         .send({ from: account });
       setIsLoading(false);
@@ -44,11 +44,10 @@ export const useLock = (amount, unlockTime, lockedEnd) => {
 
   const onIncreaseUnlockTime = useCallback(async () => {
     try {
-      const unlock_time = Math.floor(new Date().getTime() / 1000) + unlockTime;
-      if (lockedEnd > unlock_time) return;
+      if (lockedEnd >= unlockTime) return;
       setIsLoading(true);
       const tx = await xlqdrContract.methods
-        .increase_unlock_time(unlock_time)
+        .increase_unlock_time(unlockTime)
         .send({ from: account });
       setIsLoading(false);
       return tx;

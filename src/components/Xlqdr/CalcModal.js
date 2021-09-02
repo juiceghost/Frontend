@@ -5,7 +5,7 @@ import "./CalcModal.scss";
 
 Modal.setAppElement("#root");
 
-const CalcModal = ({ isOpen, setIsOpen, lqdrApr, ftmApr, isLQDR }) => {
+const CalcModal = ({ isOpen, setIsOpen, apr, tokenType }) => {
   const [amount, setAmount] = useState(0);
   function closeModal() {
     setIsOpen(false);
@@ -46,7 +46,7 @@ const CalcModal = ({ isOpen, setIsOpen, lqdrApr, ftmApr, isLQDR }) => {
     >
       <div className="calc-modal">
         <div className="title-wrap">
-          <p>APR in {isLQDR ? "LQDR" : "FTM"}</p>
+          <p>APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : "WAKA"}</p>
           <svg
             onClick={closeModal}
             width={23}
@@ -87,9 +87,9 @@ const CalcModal = ({ isOpen, setIsOpen, lqdrApr, ftmApr, isLQDR }) => {
         </div>
 
         <div className="spend">
-          APR in {isLQDR ? "LQDR" : "FTM"}:
+          APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : "WAKA"}:
           <span className="lqdr-blue">
-            {(isLQDR ? lqdrApr : ftmApr)
+            {apr
               .times(amount || 0)
               .div(104)
               .toFormat(2)}

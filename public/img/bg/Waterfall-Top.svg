@@ -125,6 +125,8 @@
 <path opacity="0.18" d="M689.824 174.932L686.078 240.417L683.245 174.293L689.824 174.932Z" fill="#00043D"/>
 <path d="M685.712 158.059V249.081L669.906 208.404L685.712 158.059Z" fill="#02B8EB"/>
 <path d="M693.661 177.121L683.976 159.062L677.124 187.336L681.235 189.616L685.986 245.707C685.986 245.707 685.986 186.15 686.169 179.492C689.184 176.938 693.661 177.121 693.661 177.121Z" fill="#72D1F2"/>
+<path d="M0 0H1162V1145H0V0Z" fill="#001F59" fill-opacity="0.5"/>
+
 <defs>
 <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(579.989 106.783) scale(548.631 206.979)">
 <stop stop-color="#32449C"/>

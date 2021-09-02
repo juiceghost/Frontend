@@ -5,9 +5,6 @@
   font-family: Nunito;
   font-style: normal;
   margin: auto;
-  background-image: url("../assets/imgs/Waterfall-Middle.svg");
-  background-position: center top;
-  background-size: contain;
   min-height: 100%;
   padding-bottom: 50px;
   margin-top: -20px;
@@ -165,6 +162,11 @@
       .bottom-btn {
         margin-top: auto;
 
+        .max-period {
+          margin-top: 10px;
+          font-size: 14px;
+        }
+
         .xlqdr-total-info {
           margin-top: 20px;
           font-weight: 600;
@@ -246,9 +248,11 @@
 
         .header-desc {
           display: flex;
+          align-items: center;
           margin-bottom: 30px;
 
           .icons {
+            display: flex;
             .first {
               position: relative;
               display: block;
@@ -256,13 +260,12 @@
               height: 42px;
               border-radius: 50%;
               border: 2px solid #4dd9f6;
-              margin-bottom: -15px;
               z-index: 2;
             }
             .last {
               z-index: 1;
               display: block;
-              margin-left: 20px;
+              margin-left: -10px;
               width: 42px;
               height: 42px;
               border-radius: 50%;
@@ -284,7 +287,7 @@
             color: #4dd9f6;
           }
 
-          .claim-section {
+          .claim-header-section {
             display: flex;
             margin-top: 10px;
             justify-content: space-between;
@@ -318,6 +321,51 @@
                 }
               }
             }
+          }
+
+          .claim-section {
+            display: flex;
+            justify-content: space-between;
+
+            .claim-value {
+              text-align: left;
+
+              .claim-value-item {
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+
+                &.apr {
+                  margin: 5px 0;
+                }
+
+                .apr-title {
+                  color: #4dd9f6;
+                }
+
+                .apr-question {
+                  width: 14px;
+                  margin: 0 5px;
+                  cursor: pointer;
+                }
+
+                .apr-calc {
+                  width: 14px;
+                  margin: 0 5px;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+
+        .total-apr {
+          font-size: 24px;
+          display: flex;
+          margin-top: 20px;
+          justify-content: flex-start;
+          span {
+            color: #4dd9f6;
           }
         }
       }
