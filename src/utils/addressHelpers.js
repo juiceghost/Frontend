@@ -56,3 +56,7 @@ export const getBooAddress = (chainId = 250) => {
 export const getWakaAddress = (chainId = 250) => {
   return Tokens.WAKA.address[chainId]
 }
+
+export const getTreasuryAddress = (chainId = 250) => {
+  return Tokens.Treasury.address[chainId]
+}

@@ -15,6 +15,7 @@ import {
   getSpiritAddress,
   getBooAddress,
   getWakaAddress,
+  getTreasuryAddress,
 } from "../utils/addressHelpers";
 import useWeb3 from "./useWeb3";
 import { ethers } from "ethers";
@@ -118,6 +119,7 @@ export const useRewardInfo = () => {
   const spiritContract = useERC20(getSpiritAddress(chainId));
   const booContract = useERC20(getBooAddress(chainId));
   const wakaContract = useERC20(getWakaAddress(chainId));
+  const treasuryAddress = getTreasuryAddress(chainId);
 
   useEffect(() => {
     const getUserRewards = async () => {
@@ -149,21 +151,11 @@ export const useRewardInfo = () => {
           booPerWeek,
           wakaPerWeek,
         ] = await Promise.all([
-          lqdrContract.methods
-            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
-            .call(),
-          wftmContract.methods
-            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
-            .call(),
-          spiritContract.methods
-            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
-            .call(),
-          booContract.methods
-            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
-            .call(),
-          wakaContract.methods
-            .balanceOf("0x06917EFCE692CAD37A77a50B9BEEF6f4Cdd36422")
-            .call(),
+          lqdrContract.methods.balanceOf(treasuryAddress).call(),
+          wftmContract.methods.balanceOf(treasuryAddress).call(),
+          spiritContract.methods.balanceOf(treasuryAddress).call(),
+          booContract.methods.balanceOf(treasuryAddress).call(),
+          wakaContract.methods.balanceOf(treasuryAddress).call(),
         ]);
         setRewardInfo({
           ...rewardInfo,
