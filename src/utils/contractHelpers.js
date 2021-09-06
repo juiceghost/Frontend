@@ -7,7 +7,8 @@ import LotteryAbi from '../config/abi/lottery.json'
 import XLQDRAbi from '../config/abi/xlqdr.json'
 import feeDistributorAbi from '../config/abi/feeDistributor.json'
 import ftmDistributorAbi from '../config/abi/ftmDistributor.json'
-import { getMasterChefAddress, getLotteryAddress, getXLqdrAddress, getFeeDistributorAddress, getFTMDistributorAddress, getMiniChefAddress } from './addressHelpers'
+import rewarderAbi from '../config/abi/rewarder.json'
+import { getMasterChefAddress, getLotteryAddress, getXLqdrAddress, getFeeDistributorAddress, getFTMDistributorAddress, getMiniChefAddress, getRewarderAddress } from './addressHelpers'
 import { getSushiAddress } from './addressHelpers'
 
 const getContract = (abi, address, web3) => {
@@ -45,4 +46,8 @@ export const getFeeDistributorContract = (web3, chainId) => {
 
 export const getFTMDistributorContract = (web3, chainId) => {
     return getContract(ftmDistributorAbi, getFTMDistributorAddress(chainId), web3)
+}
+
+export const getRewarderContract = (web3, chainId) => {
+    return getContract(rewarderAbi, getRewarderAddress(chainId), web3)
 }

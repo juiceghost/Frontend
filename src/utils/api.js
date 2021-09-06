@@ -9,6 +9,7 @@ import multicall from "./multicall";
 import {
   getMasterChefAddress,
   getMiniChefAddress,
+  getRewarderAddress,
   getSushiAddress,
 } from "./addressHelpers";
 import farmsConfig from "../config/constants/farms";
@@ -288,19 +289,17 @@ export const fetchFarms = async (web3, chainId = 250) => {
           }
         }
 
-        const rewardPerSecond = 0;
-
-        // const [rewardPerSecond] = await multicall(
-        //   web3,
-        //   rewarderABI,
-        //   [
-        //     {
-        //       address: rewarderAddress[0],
-        //       name: "rewardPerSecond",
-        //     },
-        //   ],
-        //   chainId
-        // );
+        const [rewardPerSecond] = await multicall(
+          web3,
+          rewarderABI,
+          [
+            {
+              address: getRewarderAddress(),
+              name: "tokenPerBlock",
+            },
+          ],
+          chainId
+        );
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
         const poolWeight = allocPoint.isZero()

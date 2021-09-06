@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useApprove } from "../../hooks/useApprove";
 import { useStake } from "../../hooks/useStake";
 import { useUnStake } from "../../hooks/useUnStake";
@@ -15,6 +15,8 @@ import { QuoteToken } from "../../config/constants/types";
 import ConnetWallet from "../Common/ConnetWallet";
 import WithdrawModal from "./WidthdrawModal";
 import { useHarvest } from "../../hooks/useHarvest";
+import { getRewarderContract } from "../../utils/contractHelpers";
+import { useRewarder } from "../../hooks/useContract";
 
 const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -25,6 +27,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const [unStakePopup, setUnStakePopup] = useState(false);
   const [stakeInput, setStakeInput] = useState(0);
   const [unStakeInput, setUnStakeInput] = useState(0);
+  const [spiritEarnings, setSpiritEarnings] = useState(new BigNumber(0));
   const [requestedApproval, setRequestedApproval] = useState(true);
   const { onApprove } = useApprove(farm, MasterChefAddress);
   const { onApprove: onMiniApprove } = useApprove(farm, MiniChefAddress);
@@ -39,6 +42,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     : 0;
   const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0;
   const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO;
+  const rewarderContract = useRewarder();
 
   const handleApprove = useCallback(async () => {
     try {
@@ -100,20 +104,32 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     }
   }, [onHarvest, forceUpdate]);
 
+  const getSpiritEarnings = useCallback(async () => {
+    const res = await rewarderContract.methods.pendingToken(0, account).call();
+    setSpiritEarnings(new BigNumber(res).div(1e18));
+  }, [account, chainId, rewarderContract])
+
+  useEffect(() => {
+    if (farm.type === 1 && farm.pid === 0) {
+      getSpiritEarnings();
+    }
+  }, [farm, getSpiritEarnings]);
+
   const priceQuoteToken =
     farm.quoteTokenSymbol === QuoteToken.FUSDT
       ? 1
       : prices[farm.quoteTokenSymbol];
   const {
     lqdrPerBlock,
-    rewardPerSecond,
     lpTotalInQuoteToken,
     totalStaked,
     poolWeight,
     isTokenOnly,
     multiplier,
+    rewardPerSecond,
   } = farm;
   const lqdrPrice = new BigNumber(prices["LQDR"]);
+  const spiritPrice = new BigNumber(prices["SPIRIT"]);
   const tokensName = farm.lpSymbol.split("/");
 
   if (
@@ -192,6 +208,17 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 <p className="h-usd">
                   -{lqdrPrice.times(earnings).toFixed(2)}USD
                 </p>
+                {farm.type === 1 && farm.pid === 0 && (
+                  <>
+                    <p className="h-title">SPIRIT Earned</p>
+                    <p className="h-number">
+                      {isZero(spiritEarnings) ? "0" : Number(spiritEarnings).toFixed(4)}
+                    </p>
+                    <p className="h-usd">
+                      -{spiritPrice.times(spiritEarnings).toFixed(2)}USD
+                    </p>
+                  </>
+                )}
               </div>
               <div className="h-button" onClick={handleHarvest}>
                 Harvest
@@ -301,19 +328,18 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <p className="apr">
               <span className="a-title">APR in Spirit</span>
               <span>
-                {" Coming soon"}
-                {/* {prices &&
+                {prices &&
                 priceQuoteToken !== 0 &&
                 !isZero(lpTotalInQuoteToken) &&
                 rewardPerSecond
                   ? new BigNumber(
-                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                      rewardPerSecond.times(spiritPrice).times(31536000)
                     )
                       .div(lpTotalInQuoteToken.times(priceQuoteToken))
                       .times(100)
                       .toFormat(0)
                   : "0"}{" "}
-                % */}
+                %
               </span>
             </p>
           )}

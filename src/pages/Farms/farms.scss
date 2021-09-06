@@ -388,13 +388,14 @@ input:checked + .slider:before {
                 .harvest {
                     display: flex;
                     justify-content: space-between;
-                    align-items: flex-end;
+                    align-items: center;
                     margin-top: 20px;
                     margin-bottom: 16px;
                     .amount {
                         font-weight: 600;
                         text-align: left;
                         .h-title {
+                            margin-top: 5px;
                             font-size: 14px;
                         }
                         .h-number {
@@ -403,6 +404,7 @@ input:checked + .slider:before {
                         }
                         .h-usd {
                             font-size: 12px;
+                            margin-bottom: 5px;
                         }
                     }
                     .h-button {

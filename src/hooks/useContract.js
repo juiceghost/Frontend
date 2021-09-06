@@ -10,6 +10,7 @@ import {
   getFeeDistributorContract,
   getFTMDistributorContract,
   getMiniChefContract,
+  getRewarderContract,
 } from "../utils/contractHelpers";
 import useWeb3 from "./useWeb3";
 
@@ -61,4 +62,10 @@ export const useFtmDistributor = () => {
   const web3 = useWeb3();
   const { chainId } = useWeb3React();
   return useMemo(() => getFTMDistributorContract(web3, chainId), [web3, chainId]);
+};
+
+export const useRewarder = () => {
+  const web3 = useWeb3();
+  const { chainId } = useWeb3React();
+  return useMemo(() => getRewarderContract(web3, chainId), [web3, chainId]);
 };
