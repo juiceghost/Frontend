@@ -105,9 +105,13 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   }, [onHarvest, forceUpdate]);
 
   const getSpiritEarnings = useCallback(async () => {
-    const res = await rewarderContract.methods.pendingToken(0, account).call();
-    setSpiritEarnings(new BigNumber(res).div(1e18));
-  }, [account, chainId, rewarderContract])
+    if (account) {
+      const res = await rewarderContract.methods.pendingToken(0, account).call();
+      setSpiritEarnings(new BigNumber(res).div(1e18));
+    } else {
+      setSpiritEarnings(new BigNumber(0));
+    }
+  }, [account, chainId, rewarderContract]);
 
   useEffect(() => {
     if (farm.type === 1 && farm.pid === 0) {
@@ -201,27 +205,35 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
           <div className="earn-wrap">
             <div className="harvest">
               <div className="amount">
-                <p className="h-title">LQDR Earned</p>
-                <p className="h-number">
-                  {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
-                </p>
-                <p className="h-usd">
-                  -{lqdrPrice.times(earnings).toFixed(2)}USD
-                </p>
-                {farm.type === 1 && farm.pid === 0 && (
-                  <>
-                    <p className="h-title">SPIRIT Earned</p>
-                    <p className="h-number">
-                      {isZero(spiritEarnings) ? "0" : Number(spiritEarnings).toFixed(4)}
-                    </p>
-                    <p className="h-usd">
-                      -{spiritPrice.times(spiritEarnings).toFixed(2)}USD
-                    </p>
-                  </>
-                )}
+                <div className="earned-section">
+                  <p className="h-title">LQDR Earned</p>
+                  <p className="h-number">
+                    {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
+                  </p>
+                  <p className="h-usd">
+                    -{lqdrPrice.times(earnings).toFixed(2)}USD
+                  </p>
+                </div>
+                <div className="earned-section">
+                  {farm.type === 1 && farm.pid === 0 && (
+                    <>
+                      <p className="h-title">SPIRIT Earned</p>
+                      <p className="h-number">
+                        {isZero(spiritEarnings)
+                          ? "0"
+                          : Number(spiritEarnings).toFixed(4)}
+                      </p>
+                      <p className="h-usd">
+                        -{spiritPrice.times(spiritEarnings).toFixed(2)}USD
+                      </p>
+                    </>
+                  )}
+                </div>
               </div>
-              <div className="h-button" onClick={handleHarvest}>
-                Harvest
+              <div className="h-section">
+                <div className="h-button" onClick={handleHarvest}>
+                  Harvest
+                </div>
               </div>
             </div>
           </div>
