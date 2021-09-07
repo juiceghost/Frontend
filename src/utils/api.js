@@ -7,6 +7,7 @@ import strategyABI from "../config/abi/strategy.json";
 import SushiAbi from "../config/abi/sushi.json";
 import multicall from "./multicall";
 import {
+  getFtmRewarderAddress,
   getMasterChefAddress,
   getMiniChefAddress,
   getRewarderAddress,
@@ -163,32 +164,32 @@ export const fetchFarms = async (web3, chainId = 250) => {
     miniFarms
       .filter((farm) => farm?.lpAddresses[chainId] !== "")
       .map(async (farmConfig) => {
-
-        const [info, totalAllocPoint, /* lqdrPerBlock, */ strategy] = await multicall(
-          web3,
-          minichefABI,
-          [
-            {
-              address: MiniChefAddress,
-              name: "poolInfo",
-              params: [farmConfig.pid],
-            },
-            {
-              address: MiniChefAddress,
-              name: "totalAllocPoint",
-            },
-            // {
-            //   address: MiniChefAddress,
-            //   name: "lqdrPerBlock",
-            // },
-            {
-              address: MiniChefAddress,
-              name: "strategies",
-              params: [farmConfig.pid],
-            },
-          ],
-          chainId
-        );
+        const [info, totalAllocPoint, /* lqdrPerBlock, */ strategy] =
+          await multicall(
+            web3,
+            minichefABI,
+            [
+              {
+                address: MiniChefAddress,
+                name: "poolInfo",
+                params: [farmConfig.pid],
+              },
+              {
+                address: MiniChefAddress,
+                name: "totalAllocPoint",
+              },
+              // {
+              //   address: MiniChefAddress,
+              //   name: "lqdrPerBlock",
+              // },
+              {
+                address: MiniChefAddress,
+                name: "strategies",
+                params: [farmConfig.pid],
+              },
+            ],
+            chainId
+          );
         const lqdrPerBlock = 140000000000000000;
         let sBal = 0;
         if (strategy[0] !== "0x0000000000000000000000000000000000000000") {
@@ -262,9 +263,9 @@ export const fetchFarms = async (web3, chainId = 250) => {
           lpTotalInQuoteToken = tokenAmount;
         } else {
           // Ratio in % a LP tokens that are in staking, vs the total number in circulation
-          const lpTokenRatio = new BigNumber(lpTokenBalanceMC).plus(sBal).div(
-            new BigNumber(lpTotalSupply)
-          );
+          const lpTokenRatio = new BigNumber(lpTokenBalanceMC)
+            .plus(sBal)
+            .div(new BigNumber(lpTotalSupply));
 
           // Total value in staking in quote token value
           lpTotalInQuoteToken = new BigNumber(quoteTokenBlanceLP)
@@ -289,17 +290,38 @@ export const fetchFarms = async (web3, chainId = 250) => {
           }
         }
 
-        const [rewardPerSecond] = await multicall(
-          web3,
-          rewarderABI,
-          [
-            {
-              address: getRewarderAddress(),
-              name: "tokenPerBlock",
-            },
-          ],
-          chainId
-        );
+        let rewardPerSecond = 0;
+
+        if (farmConfig.type === 1 && farmConfig.pid === 0) {
+          const [res] = await multicall(
+            web3,
+            rewarderABI,
+            [
+              {
+                address: getRewarderAddress(),
+                name: "tokenPerBlock",
+              },
+            ],
+            chainId
+          );
+          rewardPerSecond = res;
+        } else if (
+          (farmConfig.type === 1 && farmConfig.pid === 1) ||
+          (farmConfig.type === 2 && farmConfig.pid === 10)
+        ) {
+          const [res] = await multicall(
+            web3,
+            rewarderABI,
+            [
+              {
+                address: getFtmRewarderAddress(),
+                name: "tokenPerBlock",
+              },
+            ],
+            chainId
+          );
+          rewardPerSecond = res;
+        }
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
         const poolWeight = allocPoint.isZero()
