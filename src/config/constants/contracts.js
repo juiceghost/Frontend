@@ -52,5 +52,13 @@ const contracts = {
     250: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
     4002: '',
   },
+  rewarder: {
+    250: '0xC8F0C688568193bf2A40d7831D306c550423450d',
+    4002: '',
+  },
+  ftmRewarder: {
+    250: '0x211413EbD4e439535dF54a63D10bf844a85E981a',
+    4002: '',
+  },
 }
 export default contracts

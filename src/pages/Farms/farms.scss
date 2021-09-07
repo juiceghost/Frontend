@@ -386,15 +386,15 @@ input:checked + .slider:before {
             }
             .earn-wrap {
                 .harvest {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-end;
                     margin-top: 20px;
                     margin-bottom: 16px;
                     .amount {
+                        display: flex;
+                        justify-content: space-between;
                         font-weight: 600;
                         text-align: left;
                         .h-title {
+                            margin-top: 5px;
                             font-size: 14px;
                         }
                         .h-number {
@@ -403,20 +403,26 @@ input:checked + .slider:before {
                         }
                         .h-usd {
                             font-size: 12px;
+                            margin-bottom: 5px;
                         }
                     }
-                    .h-button {
-                        border-radius: 12px;
-                        font-weight: 600;
-                        font-size: 16px;
-                        height: 40px;
-                        width: 120px;
+                    .h-section {
                         display: flex;
                         justify-content: center;
-                        align-items: center;
-                        cursor: pointer;
-                        &:hover {
-                            filter: brightness(1.5);
+
+                        .h-button {
+                            border-radius: 12px;
+                            font-weight: 600;
+                            font-size: 16px;
+                            height: 40px;
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                            &:hover {
+                                filter: brightness(1.5);
+                            }
                         }
                     }
                 }
@@ -424,8 +430,8 @@ input:checked + .slider:before {
             .apr-wrap {
                 margin-top: 26px;
                 padding-bottom: 13px;
-
                 text-align: right;
+                height: 65px;
                 .apr {
                     font-weight: 600;
                     span {

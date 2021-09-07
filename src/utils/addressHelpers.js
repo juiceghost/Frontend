@@ -60,3 +60,11 @@ export const getWakaAddress = (chainId = 250) => {
 export const getTreasuryAddress = (chainId = 250) => {
   return Tokens.Treasury.address[chainId]
 }
+
+export const getRewarderAddress = (chainId = 250) => {
+  return addresses.rewarder[chainId]
+}
+
+export const getFtmRewarderAddress = (chainId = 250) => {
+  return addresses.ftmRewarder[chainId]
+}

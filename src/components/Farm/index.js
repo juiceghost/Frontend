@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useApprove } from "../../hooks/useApprove";
 import { useStake } from "../../hooks/useStake";
 import { useUnStake } from "../../hooks/useUnStake";
@@ -15,6 +15,7 @@ import { QuoteToken } from "../../config/constants/types";
 import ConnetWallet from "../Common/ConnetWallet";
 import WithdrawModal from "./WidthdrawModal";
 import { useHarvest } from "../../hooks/useHarvest";
+import { useFTMRewarder, useRewarder } from "../../hooks/useContract";
 
 const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -25,6 +26,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const [unStakePopup, setUnStakePopup] = useState(false);
   const [stakeInput, setStakeInput] = useState(0);
   const [unStakeInput, setUnStakeInput] = useState(0);
+  const [secondEarnings, setSecondEarnings] = useState(new BigNumber(0));
   const [requestedApproval, setRequestedApproval] = useState(true);
   const { onApprove } = useApprove(farm, MasterChefAddress);
   const { onApprove: onMiniApprove } = useApprove(farm, MiniChefAddress);
@@ -39,6 +41,8 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     : 0;
   const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0;
   const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO;
+  const rewarderContract = useRewarder();
+  const ftmRewarderContract = useFTMRewarder();
 
   const handleApprove = useCallback(async () => {
     try {
@@ -100,20 +104,54 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     }
   }, [onHarvest, forceUpdate]);
 
+  const getSecondEarnings = useCallback(async () => {
+    if (account) {
+      let rewards = 0;
+      if (farm.type === 1 && farm.pid === 0) {
+        rewards = await rewarderContract.methods
+          .pendingToken(0, account)
+          .call();
+      } else if (farm.type === 1 && farm.pid === 1) {
+        rewards = await ftmRewarderContract.methods
+          .pendingToken(1, account)
+          .call();
+      } else if (farm.type === 2 && farm.pid === 10) {
+        rewards = await ftmRewarderContract.methods
+          .pendingToken(10, account)
+          .call();
+      }
+      setSecondEarnings(new BigNumber(rewards).div(1e18));
+    } else {
+      setSecondEarnings(new BigNumber(0));
+    }
+  }, [account, chainId, rewarderContract]);
+
+  useEffect(() => {
+    if (
+      (farm.type === 1 && farm.pid === 0) ||
+      (farm.type === 1 && farm.pid === 1) ||
+      (farm.type === 2 && farm.pid === 10)
+    ) {
+      getSecondEarnings();
+    }
+  }, [farm, getSecondEarnings]);
+
   const priceQuoteToken =
     farm.quoteTokenSymbol === QuoteToken.FUSDT
       ? 1
       : prices[farm.quoteTokenSymbol];
   const {
     lqdrPerBlock,
-    rewardPerSecond,
     lpTotalInQuoteToken,
     totalStaked,
     poolWeight,
     isTokenOnly,
     multiplier,
+    rewardPerSecond,
   } = farm;
   const lqdrPrice = new BigNumber(prices["LQDR"]);
+  const spiritPrice = new BigNumber(prices["SPIRIT"]);
+  const ftmPrice = new BigNumber(prices["FTM"]);
   const tokensName = farm.lpSymbol.split("/");
 
   if (
@@ -185,16 +223,49 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
           <div className="earn-wrap">
             <div className="harvest">
               <div className="amount">
-                <p className="h-title">LQDR Earned</p>
-                <p className="h-number">
-                  {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
-                </p>
-                <p className="h-usd">
-                  -{lqdrPrice.times(earnings).toFixed(2)}USD
-                </p>
+                <div className="earned-section">
+                  <p className="h-title">LQDR Earned</p>
+                  <p className="h-number">
+                    {isZero(earnings) ? "0" : Number(earnings).toFixed(4)}
+                  </p>
+                  <p className="h-usd">
+                    -{lqdrPrice.times(earnings).toFixed(2)}USD
+                  </p>
+                </div>
+                <div className="earned-section">
+                  {farm.type === 1 && farm.pid === 0 && (
+                    <>
+                      <p className="h-title">SPIRIT Earned</p>
+                      <p className="h-number">
+                        {isZero(secondEarnings)
+                          ? "0"
+                          : Number(secondEarnings).toFixed(4)}
+                      </p>
+                      <p className="h-usd">
+                        -{spiritPrice.times(secondEarnings).toFixed(2)}USD
+                      </p>
+                    </>
+                  )}
+                  {((farm.type === 1 && farm.pid === 1) ||
+                    (farm.type === 2 && farm.pid === 10)) && (
+                    <>
+                      <p className="h-title">WFTM Earned</p>
+                      <p className="h-number">
+                        {isZero(secondEarnings)
+                          ? "0"
+                          : Number(secondEarnings).toFixed(4)}
+                      </p>
+                      <p className="h-usd">
+                        -{ftmPrice.times(secondEarnings).toFixed(2)}USD
+                      </p>
+                    </>
+                  )}
+                </div>
               </div>
-              <div className="h-button" onClick={handleHarvest}>
-                Harvest
+              <div className="h-section">
+                <div className="h-button" onClick={handleHarvest}>
+                  Harvest
+                </div>
               </div>
             </div>
           </div>
@@ -301,19 +372,18 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <p className="apr">
               <span className="a-title">APR in Spirit</span>
               <span>
-                {" Coming soon"}
-                {/* {prices &&
+                {prices &&
                 priceQuoteToken !== 0 &&
                 !isZero(lpTotalInQuoteToken) &&
                 rewardPerSecond
                   ? new BigNumber(
-                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                      rewardPerSecond.times(spiritPrice).times(31536000)
                     )
                       .div(lpTotalInQuoteToken.times(priceQuoteToken))
                       .times(100)
                       .toFormat(0)
                   : "0"}{" "}
-                % */}
+                %
               </span>
             </p>
           )}
@@ -321,19 +391,18 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <p className="apr">
               <span className="a-title">APR in wFTM</span>
               <span>
-                {" Coming soon"}
-                {/* {prices &&
+                {prices &&
                 priceQuoteToken !== 0 &&
                 !isZero(lpTotalInQuoteToken) &&
                 rewardPerSecond
                   ? new BigNumber(
-                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                      rewardPerSecond.times(prices["FTM"]).times(31536000)
                     )
                       .div(lpTotalInQuoteToken.times(priceQuoteToken))
                       .times(100)
                       .toFormat(0)
                   : "0"}{" "}
-                % */}
+                %
               </span>
             </p>
           )}
@@ -341,19 +410,18 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <p className="apr">
               <span className="a-title">APR in wFTM</span>
               <span>
-                {" Coming soon"}
-                {/* {prices &&
+                {prices &&
                 priceQuoteToken !== 0 &&
                 !isZero(lpTotalInQuoteToken) &&
                 rewardPerSecond
                   ? new BigNumber(
-                      rewardPerSecond.times(prices["SPIRIT"]).times(31536000)
+                      rewardPerSecond.times(prices["FTM"]).times(31536000)
                     )
                       .div(lpTotalInQuoteToken.times(priceQuoteToken))
                       .times(100)
                       .toFormat(0)
                   : "0"}{" "}
-                % */}
+                %
               </span>
             </p>
           )}
