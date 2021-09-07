@@ -323,6 +323,18 @@ export const fetchFarms = async (web3, chainId = 250) => {
           rewardPerSecond = res;
         }
 
+        let feeApr = 0;
+        if (farmConfig.type === 1) {
+          const res = await fetch(`https://api.covalenthq.com/v1/250/xy=k/spiritswap/pools/address/${lpAdress}/?key=ckey_f65f7ad58ef343ca8fdb96dfc22`);
+          const json = await res.json();
+          const response = json.data.items;
+          if (response.length > 0) {
+            const fee = response[0]["fee_24h_quote"];
+            const totalLiquidity = response[0]["total_liquidity_quote"];
+            feeApr = totalLiquidity === 0 ? 0 : fee / totalLiquidity * 365 * 100 * 5 / 6;
+          }
+        }
+
         const allocPoint = new BigNumber(info.allocPoint._hex);
         const poolWeight = allocPoint.isZero()
           ? new BigNumber(farmConfig.alloc).div(108)
@@ -345,6 +357,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),
           rewardPerSecond: fromWei(rewardPerSecond),
+          feeApr: feeApr.toFixed(2),
         };
       })
   );

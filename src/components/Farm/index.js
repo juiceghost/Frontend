@@ -148,6 +148,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     isTokenOnly,
     multiplier,
     rewardPerSecond,
+    feeApr,
   } = farm;
   const lqdrPrice = new BigNumber(prices["LQDR"]);
   const spiritPrice = new BigNumber(prices["SPIRIT"]);
@@ -425,6 +426,10 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               </span>
             </p>
           )}
+          <p className="apr">
+            <span className="a-title">Trading Fee APR</span>
+            <span>{feeApr}{" "}%</span>
+          </p>
         </div>
         <div
           className="details-btn"

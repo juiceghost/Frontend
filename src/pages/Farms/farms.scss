@@ -428,11 +428,16 @@ input:checked + .slider:before {
                 }
             }
             .apr-wrap {
-                margin-top: 26px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-top: 15px;
                 padding-bottom: 13px;
-                text-align: right;
-                height: 65px;
+                text-align: left;
+                height: 90px;
                 .apr {
+                    display: flex;
+                    justify-content: space-between;
                     font-weight: 600;
                     span {
                         font-size: 21px;
