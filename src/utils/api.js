@@ -331,7 +331,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           if (response.length > 0) {
             const fee = response[0]["fee_24h_quote"];
             const totalLiquidity = response[0]["total_liquidity_quote"];
-            feeApr = totalLiquidity === 0 ? 0 : fee / totalLiquidity * 365 * 100 * 5 / 6;
+            feeApr = !totalLiquidity || totalLiquidity === 0 ? 0 : fee / totalLiquidity * 365 * 100 * 5 / 6;
           }
         }
 
