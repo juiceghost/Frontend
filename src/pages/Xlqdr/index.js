@@ -79,36 +79,41 @@ const Xlqdr = () => {
     }
   }, [lockedEnd]);
 
-  const spiritApr = useMemo(() => {
-    return !!prices && prices["LQDR"]
-      ? spiritPerXlqdr
-          .times(prices["SPIRIT"] || 0)
-          .div(prices["LQDR"])
-          .times(5400)
-      : new BigNumber(0);
-  }, [spiritPerXlqdr, prices]);
+  // const spiritApr = useMemo(() => {
+  //   return !!prices && prices["LQDR"]
+  //     ? spiritPerXlqdr
+  //         .times(prices["SPIRIT"] || 0)
+  //         .div(prices["LQDR"])
+  //         .times(5400)
+  //     : new BigNumber(0);
+  // }, [spiritPerXlqdr, prices]);
 
-  const booApr = useMemo(() => {
-    return !!prices && prices["LQDR"]
-      ? booPerXlqdr
-          .times(prices["BOO"] || 0)
-          .div(prices["LQDR"])
-          .times(5400)
-      : new BigNumber(0);
-  }, [booPerXlqdr, prices]);
+  // const booApr = useMemo(() => {
+  //   return !!prices && prices["LQDR"]
+  //     ? booPerXlqdr
+  //         .times(prices["BOO"] || 0)
+  //         .div(prices["LQDR"])
+  //         .times(5400)
+  //     : new BigNumber(0);
+  // }, [booPerXlqdr, prices]);
 
-  const wakaApr = useMemo(() => {
-    return !!prices && prices["LQDR"]
-      ? wakaPerXlqdr
-          .times(prices["WAKA"] || 0)
-          .div(prices["LQDR"])
-          .times(5400)
-      : new BigNumber(0);
-  }, [wakaPerXlqdr, prices]);
+  // const wakaApr = useMemo(() => {
+  //   return !!prices && prices["LQDR"]
+  //     ? wakaPerXlqdr
+  //         .times(prices["WAKA"] || 0)
+  //         .div(prices["LQDR"])
+  //         .times(5400)
+  //     : new BigNumber(0);
+  // }, [wakaPerXlqdr, prices]);
 
-  const lqdrApr = useMemo(() => {
-    return lqdrPerXlqdr.times(5400);
-  }, [lqdrPerXlqdr]);
+  // const lqdrApr = useMemo(() => {
+  //   return lqdrPerXlqdr.times(5400);
+  // }, [lqdrPerXlqdr]);
+
+  const lqdrApr = new BigNumber(50.3);
+  const spiritApr = new BigNumber(53.97);
+  const booApr = new BigNumber(104.35);
+  const wakaApr = new BigNumber(12.13);
 
   const apr = useMemo(() => {
     return tokenType === 0
