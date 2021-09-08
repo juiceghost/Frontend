@@ -21,6 +21,8 @@ import {
   getLastRouteName,
 } from "../config/constants/tokens";
 import contracts from "../config/constants/contracts";
+import { PAIR_DAY_DATA_BULK } from "../apollo/queries";
+import { client } from "../apollo/client";
 
 const miniFarms = farmsConfig.filter((farm) => farm.type > 0);
 const nonMiniFarms = farmsConfig.filter((farm) => farm.type === 0);
@@ -159,6 +161,18 @@ export const fetchFarms = async (web3, chainId = 250) => {
   );
 
   const MiniChefAddress = getMiniChefAddress(chainId);
+
+  const spookyLpAddresses = miniFarms
+    .filter((farm) => farm.type === 2)
+    .map((farm) => {
+      return farm.lpAddresses[chainId];
+    });
+  const { data: results } = await client.query({
+    query: PAIR_DAY_DATA_BULK(spookyLpAddresses),
+    fetchPolicy: "cache-first",
+  });
+
+  const pairDayDatas = results.pairDayDatas;
 
   const miniData = await Promise.all(
     miniFarms
@@ -323,6 +337,34 @@ export const fetchFarms = async (web3, chainId = 250) => {
           rewardPerSecond = res;
         }
 
+        let feeApr = 0;
+        if (farmConfig.type === 1) {
+          const res = await fetch(
+            `https://api.covalenthq.com/v1/250/xy=k/spiritswap/pools/address/${lpAdress}/?key=ckey_f65f7ad58ef343ca8fdb96dfc22`
+          );
+          const json = await res.json();
+          const response = json.data.items;
+          if (response.length > 0) {
+            const fee = response[0]["fee_24h_quote"];
+            const totalLiquidity = response[0]["total_liquidity_quote"];
+            feeApr =
+              !totalLiquidity || totalLiquidity === 0
+                ? 0
+                : ((fee / totalLiquidity) * 365 * 100 * 5) / 6;
+          }
+        }
+        const pairData = pairDayDatas.find(pair => pair.pairAddress.toLowerCase() === lpAdress.toLowerCase());
+        if (pairData) {
+            const { dailyVolumeUSD, reserveUSD } = pairData;
+            feeApr =
+              !reserveUSD || Number(reserveUSD) === 0
+                ? 0
+                : (Number(dailyVolumeUSD) / Number(reserveUSD)) *
+                  365 *
+                  100 *
+                  0.002;
+        }
+
         const allocPoint = new BigNumber(info.allocPoint._hex);
         const poolWeight = allocPoint.isZero()
           ? new BigNumber(farmConfig.alloc).div(108)
@@ -345,6 +387,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),
           rewardPerSecond: fromWei(rewardPerSecond),
+          feeApr: feeApr.toFixed(2),
         };
       })
   );

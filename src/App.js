@@ -15,6 +15,8 @@ import { useWeb3React } from "@web3-react/core";
 import { addRPC } from "./utils/addRPC";
 import "react-notifications/lib/notifications.css";
 import "./App.scss";
+import { ApolloProvider } from "react-apollo";
+import { client } from "./apollo/client";
 
 function App() {
   const { account, error } = useWeb3React();
@@ -46,37 +48,48 @@ function App() {
 
   return (
     <div className="main">
-      <RefreshContextProvider>
-        <BrowserRouter>
-          <Navbar />
-          <WithdrawModal />
+      <ApolloProvider client={client}>
+        <RefreshContextProvider>
+          <BrowserRouter>
+            <Navbar />
+            <WithdrawModal />
 
-          <div className="main-container">
+            <div className="main-container">
+              <img
+                style={{ width: "100%" }}
+                className="f-water"
+                src="/img/bg/Waterfall-Top.svg"
+                alt="top"
+              />
 
-           <img  style={{ width: "100%" }}  className="f-water" src="/img/bg/Waterfall-Top.svg" alt="top" />
-          
-            <Switch>
-              <Route path="/deposit">
-                <Farms />
-              </Route>
-              <Route path="/farms">
-                <Farms />
-              </Route>
-              <Route path="/lottery">
-                <Lottery />
-              </Route>
-              <Route path="/xlqdr">
-                <Xlqdr />
-              </Route>
+              <Switch>
+                <Route path="/deposit">
+                  <Farms />
+                </Route>
+                <Route path="/farms">
+                  <Farms />
+                </Route>
+                <Route path="/lottery">
+                  <Lottery />
+                </Route>
+                <Route path="/xlqdr">
+                  <Xlqdr />
+                </Route>
 
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-             <img style={{ width: "100%",marginBottom:"-2px" }} className="b-water"  src="/img/bg/Waterfall-Bottom.svg" alt="top" />
-          </div>
-        </BrowserRouter>
-      </RefreshContextProvider>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
+              <img
+                style={{ width: "100%", marginBottom: "-2px" }}
+                className="b-water"
+                src="/img/bg/Waterfall-Bottom.svg"
+                alt="top"
+              />
+            </div>
+          </BrowserRouter>
+        </RefreshContextProvider>
+      </ApolloProvider>
       <NotificationContainer />
     </div>
   );
