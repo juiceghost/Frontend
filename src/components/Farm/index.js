@@ -426,10 +426,12 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               </span>
             </p>
           )}
-          <p className="apr">
-            <span className="a-title">Trading Fee APR</span>
-            <span>{feeApr}{" "}%</span>
-          </p>
+          {![0, 3].includes(farm.type) && (
+            <p className="apr">
+              <span className="a-title">Trading Fee APR</span>
+              <span>{feeApr} %</span>
+            </p>
+          )}
         </div>
         <div
           className="details-btn"
