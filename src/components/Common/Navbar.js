@@ -141,6 +141,39 @@ const Navbar = () => {
             }}
           >
             <ConnectWallet />
+            <ul
+              className="social-media-wrap"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "nowrap",
+              }}
+            >
+              <li>
+                <a href="https://t.me/LiquidDriver"
+                  target="_blank"
+                  rel="noreferrer">
+                  <img src="/img/telegram.svg" alt="tlg" />
+                </a>
+              </li>
+
+              <li>
+                <a href="https://twitter.com/LiquidDriver"
+                  target="_blank"
+                  rel="noreferrer">
+                  <img src="/img/twitter.svg" alt="tlg" />
+                </a>
+              </li>
+
+              <li>
+                <a href="https://discord.gg/liquiddriver"
+                  target="_blank"
+                  rel="noreferrer">
+                  <img src="/img/discord.png" alt="tlg" />
+                </a>
+              </li>
+
+            </ul>
           </div>
         </div>
       </div>

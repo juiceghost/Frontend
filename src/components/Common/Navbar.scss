@@ -5,7 +5,7 @@
   overflow-y: auto;
   min-height: 100%;
   color: #e5e5e5;
-  border: 1px solid #0B5079;
+  border: 1px solid #0b5079;
   .close {
     display: none;
   }
@@ -96,6 +96,19 @@
     }
     &:hover {
       filter: brightness(1.1);
+    }
+  }
+  .social-media-wrap {
+    padding-top: 20px;
+    li {
+      border-radius: 50%;
+      margin: 0 5px;
+      a {
+        padding: 8px;
+        img {
+          width: 30px;
+        }
+      }
     }
   }
 }
