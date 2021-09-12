@@ -158,22 +158,32 @@ const Navbar = () => {
               </li>
 
               <li>
-                <a href="https://twitter.com/LiquidDriver"
-                  target="_blank"
-                  rel="noreferrer">
-                  <img src="/img/twitter.svg" alt="tlg" />
-                </a>
-              </li>
-
-              <li>
                 <a href="https://discord.gg/liquiddriver"
                   target="_blank"
                   rel="noreferrer">
                   <img src="/img/discord.png" alt="tlg" />
                 </a>
               </li>
+              <li>
+                <a href="https://www.coingecko.com/en/coins/liquiddriver"
+                  target="_blank"
+                  rel="noreferrer">
+                  <img src="/img/coingecko.svg" alt="tlg" />
+                </a>
+              </li>
 
+              <li>
+                <a href="https://twitter.com/LiquidDriver"
+                  target="_blank"
+                  rel="noreferrer">
+                  <img src="/img/twitter.svg" alt="tlg" />
+                </a>
+              </li>
             </ul>
+            {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <img src="/img/solidity.finance.jpg" style={{ width: "30px", borderRadius: "50%" }} alt="tlg" />
+              <p>Audited by <a href="https://solidity.finance" target="_blank" rel="noreferrer" style={{ cursor: "pointer", color: "#ff00ff" }}>solidity.finance</a> </p>
+            </div> */}
           </div>
         </div>
       </div>
