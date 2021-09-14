@@ -173,38 +173,43 @@ export const fetchFarms = async (web3, chainId = 250) => {
   });
 
   const pairDayDatas = results.pairDayDatas;
+  const [totalAllocPoint, lqdrPerBlock] = await multicall(
+    web3,
+    minichefABI,
+    [
+      {
+        address: MiniChefAddress,
+        name: "totalAllocPoint",
+      },
+      {
+        address: MiniChefAddress,
+        name: "lqdrPerBlock",
+      },
+    ],
+    chainId
+  );
 
   const miniData = await Promise.all(
     miniFarms
       .filter((farm) => farm?.lpAddresses[chainId] !== "")
       .map(async (farmConfig) => {
-        const [info, totalAllocPoint, /* lqdrPerBlock, */ strategy] =
-          await multicall(
-            web3,
-            minichefABI,
-            [
-              {
-                address: MiniChefAddress,
-                name: "poolInfo",
-                params: [farmConfig.pid],
-              },
-              {
-                address: MiniChefAddress,
-                name: "totalAllocPoint",
-              },
-              // {
-              //   address: MiniChefAddress,
-              //   name: "lqdrPerBlock",
-              // },
-              {
-                address: MiniChefAddress,
-                name: "strategies",
-                params: [farmConfig.pid],
-              },
-            ],
-            chainId
-          );
-        const lqdrPerBlock = 140000000000000000;
+        const [info, strategy] = await multicall(
+          web3,
+          minichefABI,
+          [
+            {
+              address: MiniChefAddress,
+              name: "poolInfo",
+              params: [farmConfig.pid],
+            },
+            {
+              address: MiniChefAddress,
+              name: "strategies",
+              params: [farmConfig.pid],
+            },
+          ],
+          chainId
+        );
         let sBal = 0;
         if (strategy[0] !== "0x0000000000000000000000000000000000000000") {
           const [resBal] = await multicall(
@@ -353,16 +358,18 @@ export const fetchFarms = async (web3, chainId = 250) => {
                 : ((fee / totalLiquidity) * 365 * 100 * 5) / 6;
           }
         }
-        const pairData = pairDayDatas.find(pair => pair.pairAddress.toLowerCase() === lpAdress.toLowerCase());
+        const pairData = pairDayDatas.find(
+          (pair) => pair.pairAddress.toLowerCase() === lpAdress.toLowerCase()
+        );
         if (pairData) {
-            const { dailyVolumeUSD, reserveUSD } = pairData;
-            feeApr =
-              !reserveUSD || Number(reserveUSD) === 0
-                ? 0
-                : (Number(dailyVolumeUSD) / Number(reserveUSD)) *
-                  365 *
-                  100 *
-                  0.002;
+          const { dailyVolumeUSD, reserveUSD } = pairData;
+          feeApr =
+            !reserveUSD || Number(reserveUSD) === 0
+              ? 0
+              : (Number(dailyVolumeUSD) / Number(reserveUSD)) *
+                365 *
+                100 *
+                0.002;
         }
 
         const allocPoint = new BigNumber(info.allocPoint._hex);

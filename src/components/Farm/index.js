@@ -360,7 +360,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                     lqdrPerBlock
                       .times(poolWeight)
                       .times(prices["LQDR"])
-                      .times(31536000)
+                      .times(31536000 * 0.74)
                   )
                     .div(lpTotalInQuoteToken.times(priceQuoteToken))
                     .times(100)
