@@ -180,10 +180,13 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
-            {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <img src="/img/solidity.finance.jpg" style={{ width: "30px", borderRadius: "50%" }} alt="tlg" />
-              <p>Audited by <a href="https://solidity.finance" target="_blank" rel="noreferrer" style={{ cursor: "pointer", color: "#ff00ff" }}>solidity.finance</a> </p>
-            </div> */}
+          </div>
+          <div style={{ textAlign: "center", marginTop: "30px" }}>
+            <a href="https://solidity.finance/"
+              target="_blank"
+              rel="noreferrer">
+              <img src="/img/solidity.png" style={{ width: "70%", maxWidth: "180px" }} alt="solidity.finance" />
+            </a>
           </div>
         </div>
       </div>
