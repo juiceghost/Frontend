@@ -182,7 +182,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div style={{ textAlign: "center", marginTop: "30px" }}>
-            <a href="https://solidity.finance/"
+            <a href="https://solidity.finance/audits/LiquidDriver"
               target="_blank"
               rel="noreferrer">
               <img src="/img/solidity.png" style={{ width: "70%", maxWidth: "180px" }} alt="solidity.finance" />
