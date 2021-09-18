@@ -30,6 +30,11 @@ export const formatAmount = (amount = null, fixed = 5) => {
     if (isZero(amount) || isGt(0.00001, amount)) return 0
 
     const bigAmount = new BigNumber(amount)
+
+    if (bigAmount.lt(1)) {
+        return bigAmount.toFixed(4)
+    }
+
     if (new BigNumber(10).pow(fixed - 1).lte(bigAmount)) {
         return bigAmount.toFixed(0, BigNumber.ROUND_DOWN)
     }
