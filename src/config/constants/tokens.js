@@ -199,14 +199,6 @@ export const Tokens = {
             250: '0xD8C61EDe8CD9EE7B93855c3f110191e95eDF2979',
         }
     },
-    "Treasury": {
-        symbol: "TRS",
-        decimals: 18,
-        address: {
-            3: '',
-            250: '0x298d4313Aea04d0B82B52A3EC5090f4A8C3718B5',
-        }
-    },
 }
 
 const SushiRouteName = {

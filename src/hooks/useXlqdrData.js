@@ -4,23 +4,17 @@ import BigNumber from "bignumber.js";
 import useRefresh from "./useRefresh";
 import {
   useERC20,
-  // // useFeeDistributor,
-  // useFtmDistributor,
   useXLQDR,
 } from "./useContract";
 import {
   getLqdrAddress,
   getXLqdrAddress,
-  getWftmAddress,
-  getSpiritAddress,
-  getBooAddress,
-  getWakaAddress,
-  getTreasuryAddress,
 } from "../utils/addressHelpers";
 import useWeb3 from "./useWeb3";
 import { ethers } from "ethers";
 import feeABI from "../config/abi/feeDistributor.json";
 import { getFeeDistributorAddress } from "../utils/addressHelpers";
+import { getDailyRewardAmount } from "../utils/api";
 
 export const useAllowance = () => {
   const [allowance, setAllowance] = useState(new BigNumber(0));
@@ -101,6 +95,9 @@ export const useRewardInfo = () => {
   const [rewardInfo, setRewardInfo] = useState({
     lqdrReward: new BigNumber(0),
     ftmReward: new BigNumber(0),
+    booReward: new BigNumber(0),
+    spiritReward: new BigNumber(0),
+    wakaReward: new BigNumber(0),
     lqdrPerXlqdr: new BigNumber(0),
     ftmPerXlqdr: new BigNumber(0),
     spiritPerXlqdr: new BigNumber(0),
@@ -111,15 +108,7 @@ export const useRewardInfo = () => {
   const web3 = useWeb3();
   const { account, chainId } = useWeb3React();
   const { fastRefresh } = useRefresh();
-  // const feeContract = useFeeDistributor();
-  // const ftmContract = useFtmDistributor();
   const { xlqdrTotalSupply } = useXlqdrInfo();
-  const lqdrContract = useERC20(getLqdrAddress(chainId));
-  const wftmContract = useERC20(getWftmAddress(chainId));
-  const spiritContract = useERC20(getSpiritAddress(chainId));
-  const booContract = useERC20(getBooAddress(chainId));
-  const wakaContract = useERC20(getWakaAddress(chainId));
-  const treasuryAddress = getTreasuryAddress(chainId);
 
   useEffect(() => {
     const getUserRewards = async () => {
@@ -136,6 +125,9 @@ export const useRewardInfo = () => {
           ...rewardInfo,
           lqdrReward: new BigNumber(Number(rewards[0])).div(1e18),
           ftmReward: new BigNumber(Number(rewards[1])).div(1e18),
+          booReward: new BigNumber(Number(rewards[2])).div(1e18),
+          spiritReward: new BigNumber(Number(rewards[3])).div(1e18),
+          wakaReward: new BigNumber(Number(rewards[4])).div(1e18),
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
@@ -144,42 +136,39 @@ export const useRewardInfo = () => {
 
     const getRewardInfo = async () => {
       try {
-        const [
-          lqdrPerWeek,
-          ftmPerWeek,
-          spiritPerWeek,
-          booPerWeek,
-          wakaPerWeek,
-        ] = await Promise.all([
-          lqdrContract.methods.balanceOf(treasuryAddress).call(),
-          wftmContract.methods.balanceOf(treasuryAddress).call(),
-          spiritContract.methods.balanceOf(treasuryAddress).call(),
-          booContract.methods.balanceOf(treasuryAddress).call(),
-          wakaContract.methods.balanceOf(treasuryAddress).call(),
-        ]);
+        const dailyReward = await getDailyRewardAmount();
+        const lqdr = 6500;
+        let boo = 0;
+        let spirit = 0;
+        let waka = 0;
+        if (dailyReward && dailyReward.success) {
+          boo = dailyReward.data.boo;
+          spirit = dailyReward.data.spirit;
+          waka = dailyReward.data.waka;
+        }
         setRewardInfo({
           ...rewardInfo,
           lqdrPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(lqdrPerWeek).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(lqdr).div(7).div(xlqdrTotalSupply),
           ftmPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(ftmPerWeek).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(0).div(1e18).div(xlqdrTotalSupply),
           spiritPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(spiritPerWeek).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(spirit).div(1e18).div(xlqdrTotalSupply),
           booPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(booPerWeek).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(boo).div(1e18).div(xlqdrTotalSupply),
           wakaPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(wakaPerWeek).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(waka).div(1e18).div(xlqdrTotalSupply),
         });
       } catch (e) {
         console.error("fetch xlqdr data had error", e);
       }
     };
-    if (web3 && lqdrContract && wftmContract) {
+    if (web3) {
       getRewardInfo();
       if (account) {
         getUserRewards();
@@ -188,12 +177,18 @@ export const useRewardInfo = () => {
           ...rewardInfo,
           lqdrReward: new BigNumber(0),
           ftmReward: new BigNumber(0),
+          booReward: new BigNumber(0),
+          spiritReward: new BigNumber(0),
+          wakaReward: new BigNumber(0),
         });
       }
     } else {
       setRewardInfo({
         lqdrReward: new BigNumber(0),
         ftmReward: new BigNumber(0),
+        booReward: new BigNumber(0),
+        spiritReward: new BigNumber(0),
+        wakaReward: new BigNumber(0),
         lqdrPerXlqdr: new BigNumber(0),
         ftmPerXlqdr: new BigNumber(0),
         spiritPerXlqdr: new BigNumber(0),
@@ -206,8 +201,6 @@ export const useRewardInfo = () => {
     chainId,
     fastRefresh,
     account,
-    lqdrContract,
-    wftmContract,
     xlqdrTotalSupply,
   ]);
 

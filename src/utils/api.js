@@ -472,3 +472,15 @@ export const fechLqdr = async (web3, chainId = 250) => {
     circulating: fromWei(totalSupply, 18).minus(fromWei(burnerAmounts, 18)),
   };
 };
+
+export const getDailyRewardAmount = async () => {
+  let data;
+  try {
+    const url = `https://api.liquiddriver.finance/api/getBalances`;
+    const response = await fetch(url);
+    data = await response.json();
+  } catch (e) {
+    return null;
+  }
+  return data;
+};
