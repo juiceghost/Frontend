@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import { TEN } from "../config/constants/numbers";
+import { TEN, isZero, isGt } from "../config/constants/numbers";
 
 // BigNumber.DEBUG = true
 
@@ -22,4 +22,21 @@ export const getBalanceNumber = (balance, decimals = 18) => {
 
 export const getFullDisplayBalance = (balance, decimals = 18) => {
     return fromWei(balance, decimals).toFixed()
+}
+
+export const formatAmount = (amount = null, fixed = 5) => {
+
+    if (!amount) return '0'
+    if (isZero(amount) || isGt(0.00001, amount)) return 0
+
+    const bigAmount = new BigNumber(amount)
+
+    if (bigAmount.lt(1)) {
+        return bigAmount.toFixed(4)
+    }
+
+    if (new BigNumber(10).pow(fixed - 1).lte(bigAmount)) {
+        return bigAmount.toFixed(0, BigNumber.ROUND_DOWN)
+    }
+    return bigAmount.toPrecision(fixed, BigNumber.ROUND_DOWN)
 }
