@@ -41,7 +41,7 @@ const contracts = {
     4002: '',
   },
   feeDistributor: {
-    250: '0xa0f2b1Ea6257767BBc6A3a7dD36A95c6DDfeB558',
+    250: '0x3d29859b742427065b459dd1c6e7e29b0343425a',
     4002: '',
   },
   ftmDistributor: {

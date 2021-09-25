@@ -91,7 +91,7 @@
         "name": "_start_time"
       },
       {
-        "type": "address",
+        "type": "address[5]",
         "name": "_token"
       },
       {
@@ -101,10 +101,6 @@
       {
         "type": "address",
         "name": "_emergency_return"
-      },
-      {
-        "type": "address",
-        "name": "_fantom_distributor"
       }
     ],
     "stateMutability": "nonpayable",
@@ -116,7 +112,7 @@
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 823964
+    "gas": 26434008
   },
   {
     "name": "ve_for_at",
@@ -146,17 +142,13 @@
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 10592405
+    "gas": 73909685
   },
   {
     "name": "claim",
     "outputs": [
       {
-        "type": "uint256",
-        "name": ""
-      },
-      {
-        "type": "uint256",
+        "type": "uint256[5]",
         "name": ""
       }
     ],
@@ -168,11 +160,7 @@
     "name": "claim",
     "outputs": [
       {
-        "type": "uint256",
-        "name": ""
-      },
-      {
-        "type": "uint256",
+        "type": "uint256[5]",
         "name": ""
       }
     ],
@@ -201,7 +189,7 @@
     ],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 26284097
+    "gas": 157830459
   },
   {
     "name": "burn",
@@ -219,7 +207,7 @@
     ],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 823450
+    "gas": 26435874
   },
   {
     "name": "commit_admin",
@@ -248,7 +236,7 @@
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 41911
+    "gas": 38673
   },
   {
     "name": "kill_me",
@@ -256,7 +244,7 @@
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 39587
+    "gas": 52630
   },
   {
     "name": "recover_balance",
@@ -274,7 +262,25 @@
     ],
     "stateMutability": "nonpayable",
     "type": "function",
-    "gas": 7778
+    "gas": 6881
+  },
+  {
+    "name": "set_emergency_return",
+    "outputs": [
+      {
+        "type": "bool",
+        "name": ""
+      }
+    ],
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "gas": 36743
   },
   {
     "name": "get_timestamp",
@@ -287,7 +293,7 @@
     "inputs": [],
     "stateMutability": "view",
     "type": "function",
-    "gas": 740
+    "gas": 770
   },
   {
     "name": "start_time",
@@ -300,7 +306,7 @@
     "inputs": [],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1571
+    "gas": 1601
   },
   {
     "name": "time_cursor",
@@ -313,7 +319,7 @@
     "inputs": [],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1601
+    "gas": 1631
   },
   {
     "name": "time_cursor_of",
@@ -331,7 +337,7 @@
     ],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1846
+    "gas": 1876
   },
   {
     "name": "user_epoch_of",
@@ -349,23 +355,10 @@
     ],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1876
+    "gas": 1906
   },
   {
-    "name": "last_token_time",
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": ""
-      }
-    ],
-    "inputs": [],
-    "stateMutability": "view",
-    "type": "function",
-    "gas": 1691
-  },
-  {
-    "name": "tokens_per_week",
+    "name": "last_token_times",
     "outputs": [
       {
         "type": "uint256",
@@ -383,20 +376,29 @@
     "gas": 1830
   },
   {
-    "name": "voting_escrow",
+    "name": "tokens_per_day",
     "outputs": [
       {
-        "type": "address",
+        "type": "uint256",
         "name": ""
       }
     ],
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "arg0"
+      },
+      {
+        "type": "uint256",
+        "name": "arg1"
+      }
+    ],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1751
+    "gas": 1975
   },
   {
-    "name": "token",
+    "name": "voting_escrow",
     "outputs": [
       {
         "type": "address",
@@ -409,20 +411,25 @@
     "gas": 1781
   },
   {
-    "name": "total_received",
+    "name": "tokens",
     "outputs": [
       {
-        "type": "uint256",
+        "type": "address",
         "name": ""
       }
     ],
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "arg0"
+      }
+    ],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1811
+    "gas": 1920
   },
   {
-    "name": "token_last_balance",
+    "name": "total_received",
     "outputs": [
       {
         "type": "uint256",
@@ -435,17 +442,22 @@
     "gas": 1841
   },
   {
-    "name": "fantom_distributor",
+    "name": "token_last_balances",
     "outputs": [
       {
-        "type": "address",
+        "type": "uint256",
         "name": ""
       }
     ],
-    "inputs": [],
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "arg0"
+      }
+    ],
     "stateMutability": "view",
     "type": "function",
-    "gas": 1871
+    "gas": 1980
   },
   {
     "name": "ve_supply",

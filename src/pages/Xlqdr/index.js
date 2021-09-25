@@ -32,6 +32,11 @@ const Xlqdr = () => {
   const { xlqdrBalance, lockedEnd, xlqdrTotalSupply, totalLqdr, lockedLqdr } =
     useXlqdrInfo();
   const {
+    lqdrReward,
+    ftmReward,
+    booReward,
+    spiritReward,
+    wakaReward,
     lqdrPerXlqdr,
     ftmPerXlqdr,
     spiritPerXlqdr,
@@ -48,7 +53,7 @@ const Xlqdr = () => {
   }, [lockedEnd]);
   const maxDate = new Date(
     Math.floor(new Date().getTime() / 86400 / 1000) * 86400 * 1000 +
-      3600 * 24 * (365 * 2) * 1000
+    3600 * 24 * (365 * 2) * 1000
   );
   const [selectedDate, setSelectedDate] = useState(minDate);
   const unlockTime = useMemo(() => {
@@ -67,7 +72,7 @@ const Xlqdr = () => {
     onWithdraw,
     isLoading,
   } = useLock(lqdrAmount, unlockTime, lockedEnd);
-  // const { pendingClaim, onClaim } = useClaim();
+  const { pendingClaim, onClaim } = useClaim();
 
   const lockStatus = useMemo(() => {
     if (lockedEnd === 0) {
@@ -84,7 +89,7 @@ const Xlqdr = () => {
   //     ? spiritPerXlqdr
   //         .times(prices["SPIRIT"] || 0)
   //         .div(prices["LQDR"])
-  //         .times(5400)
+  //         .times(36500)
   //     : new BigNumber(0);
   // }, [spiritPerXlqdr, prices]);
 
@@ -93,7 +98,7 @@ const Xlqdr = () => {
   //     ? booPerXlqdr
   //         .times(prices["BOO"] || 0)
   //         .div(prices["LQDR"])
-  //         .times(5400)
+  //         .times(36500)
   //     : new BigNumber(0);
   // }, [booPerXlqdr, prices]);
 
@@ -102,15 +107,14 @@ const Xlqdr = () => {
   //     ? wakaPerXlqdr
   //         .times(prices["WAKA"] || 0)
   //         .div(prices["LQDR"])
-  //         .times(5400)
+  //         .times(36500)
   //     : new BigNumber(0);
   // }, [wakaPerXlqdr, prices]);
 
-  // const lqdrApr = useMemo(() => {
-  //   return lqdrPerXlqdr.times(5400);
-  // }, [lqdrPerXlqdr]);
+  const lqdrApr = useMemo(() => {
+    return lqdrPerXlqdr.times(36500);
+  }, [lqdrPerXlqdr]);
 
-  const lqdrApr = new BigNumber(50.3);
   const spiritApr = new BigNumber(53.97);
   const booApr = new BigNumber(104.35);
   const wakaApr = new BigNumber(12.13);
@@ -119,10 +123,10 @@ const Xlqdr = () => {
     return tokenType === 0
       ? lqdrApr
       : tokenType === 1
-      ? spiritApr
-      : tokenType === 0
-      ? booApr
-      : wakaApr;
+        ? spiritApr
+        : tokenType === 0
+          ? booApr
+          : wakaApr;
   }, [lqdrApr, spiritApr, booApr, wakaApr, tokenType]);
 
   const onExchange = (e) => {
@@ -228,9 +232,8 @@ const Xlqdr = () => {
                 <div className="lock-btn">
                   {allowance.gt(0) ? (
                     <div
-                      className={`lq-button ${
-                        isLoading ? "grey-button" : "blue-button"
-                      }`}
+                      className={`lq-button ${isLoading ? "grey-button" : "blue-button"
+                        }`}
                       onClick={() => onIncreaseAmount()}
                     >
                       Increase Amount
@@ -266,9 +269,9 @@ const Xlqdr = () => {
                   setSelectedDate(
                     new Date(
                       Math.floor(date.getTime() / 1000 / 7 / 86400) *
-                        7 *
-                        86400 *
-                        1000
+                      7 *
+                      86400 *
+                      1000
                     )
                   );
                 }}
@@ -285,7 +288,7 @@ const Xlqdr = () => {
               className="period-section"
               name="fruit"
               selectedValue={periodLevel}
-              onChange={() => {}}
+              onChange={() => { }}
             >
               <div className="radio-item" onClick={() => setPeriodLevel(0)}>
                 <Radio value={0} />
@@ -309,11 +312,10 @@ const Xlqdr = () => {
                 (account ? (
                   <>
                     <div
-                      className={`lq-button ${
-                        isLoading || lockedEnd >= unlockTime
-                          ? "grey-button"
-                          : "blue-button"
-                      }`}
+                      className={`lq-button ${isLoading || lockedEnd >= unlockTime
+                        ? "grey-button"
+                        : "blue-button"
+                        }`}
                       onClick={() => onIncreaseUnlockTime()}
                     >
                       Extend Period
@@ -329,9 +331,8 @@ const Xlqdr = () => {
                 (account ? (
                   allowance.gt(0) ? (
                     <div
-                      className={`lq-button ${
-                        isLoading ? "grey-button" : "blue-button"
-                      }`}
+                      className={`lq-button ${isLoading ? "grey-button" : "blue-button"
+                        }`}
                       onClick={() => onCreateLock()}
                     >
                       Lock LQDR
@@ -350,9 +351,8 @@ const Xlqdr = () => {
               {lockStatus === "withdraw" &&
                 (account ? (
                   <div
-                    className={`lq-button ${
-                      isLoading ? "grey-button" : "blue-button"
-                    }`}
+                    className={`lq-button ${isLoading ? "grey-button" : "blue-button"
+                      }`}
                     onClick={() => onWithdraw()}
                   >
                     Withdraw
@@ -376,9 +376,9 @@ const Xlqdr = () => {
                     {totalLqdr.isZero()
                       ? "0.00"
                       : new BigNumber(730)
-                          .div(totalLqdr)
-                          .times(xlqdrTotalSupply)
-                          .toFormat(2)}
+                        .div(totalLqdr)
+                        .times(xlqdrTotalSupply)
+                        .toFormat(2)}
                   </span>
                 </div>
               </div>
@@ -421,12 +421,12 @@ const Xlqdr = () => {
                   />
                   <img
                     className="last"
-                    src={`/img/svg/token2/SPIRIT.svg`}
+                    src={`/img/svg/token2/BOO.svg`}
                     alt="token"
                   />
                   <img
                     className="last"
-                    src={`/img/svg/token2/BOO.svg`}
+                    src={`/img/svg/token2/SPIRIT.svg`}
                     alt="token"
                   />
                   <img
@@ -455,85 +455,58 @@ const Xlqdr = () => {
                       LQDR:{" "}
                       {!account
                         ? "-"
-                        : lqdrPerXlqdr
-                            .times(xlqdrBalance)
-                            .toFormat(
-                              lqdrPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                            )}
-                    </div>
-                    <div className="claim-value-item">
-                      SPIRIT:{" "}
-                      {!account
-                        ? "-"
-                        : spiritPerXlqdr
-                            .times(xlqdrBalance)
-                            .toFormat(
-                              spiritPerXlqdr.times(xlqdrBalance).lt(0.001)
-                                ? 5
-                                : 3
-                            )}
+                        : lqdrReward
+                          .toFormat(
+                            !lqdrReward.isZero() && lqdrReward.lt(0.001) ? 5 : 3
+                          )}
                     </div>
                     <div className="claim-value-item">
                       BOO:{" "}
                       {!account
                         ? "-"
-                        : booPerXlqdr
-                            .times(xlqdrBalance)
-                            .toFormat(
-                              booPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                            )}
+                        : booReward
+                          .toFormat(
+                            !booReward.isZero() && booReward.lt(0.001) ? 5 : 3
+                          )}
+                    </div>
+                    <div className="claim-value-item">
+                      SPIRIT:{" "}
+                      {!account
+                        ? "-"
+                        : spiritReward
+                          .toFormat(
+                            !spiritReward.isZero() && spiritReward.lt(0.001) ? 5 : 3
+                          )}
                     </div>
                     <div className="claim-value-item">
                       WAKA:{" "}
                       {!account
                         ? "-"
-                        : wakaPerXlqdr
-                            .times(xlqdrBalance)
-                            .toFormat(
-                              wakaPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                            )}
+                        : wakaReward
+                          .toFormat(
+                            !wakaReward.isZero() && wakaReward.lt(0.001) ? 5 : 3
+                          )}
                     </div>
                   </div>
                   <div className="claim-btn">
-                    {/* {account && (
+                    {account && (
                       <div
-                        className={`lq-button ${
-                          pendingClaim ||
-                          lqdrReward.isZero() ||
-                          ftmReward.isZero()
-                            ? "grey-button"
-                            : "blue-button"
-                        }`}
+                        className={`lq-button ${pendingClaim ||
+                          (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero())
+                          ? "grey-button"
+                          : "blue-button"
+                          }`}
                         onClick={() => {
-                          if (lqdrReward.isZero() || ftmReward.isZero()) return;
+                          if (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero()) return;
                           onClaim();
                         }}
                       >
-                        {(lqdrReward.isZero() || ftmReward.isZero()) &&
-                        !xlqdrBalance.isZero()
-                          ? "Claimed"
-                          : "Claim"}
+                        Claim
                       </div>
-                    )} */}
+                    )}
                   </div>
                 </div>
               </div>
-
-              {/* <div className="reward-claim">
-                <div className="claim-label">Next earnings :</div>
-                <div className="claim-section">
-                  <div className="claim-value">
-                    <div className="claim-value-item">
-                      FTM / xLQDR :{" "}
-                      {ftmPerXlqdr.toFormat(ftmPerXlqdr.lt(0.001) ? 5 : 3)}
-                    </div>
-                    <div className="claim-value-item">
-                      LQDR / xLQDR :{" "}
-                      {lqdrPerXlqdr.toFormat(lqdrPerXlqdr.lt(0.001) ? 5 : 3)}
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div className="reward-claim">
                 <div className="claim-section">
                   <div className="claim-value">
@@ -563,31 +536,6 @@ const Xlqdr = () => {
                 <div className="claim-section">
                   <div className="claim-value">
                     <div className="claim-value-item apr">
-                      <span className="apr-title">APR in SPIRIT</span>
-                      <img
-                        className="apr-question"
-                        src="/img/svg/question.svg"
-                        alt="question"
-                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
-                      />
-                      <span className="apr-value">
-                        {`: ${spiritApr.toFormat(2)}%`}
-                      </span>
-                      <img
-                        className="apr-calc"
-                        src="/img/svg/calculator.svg"
-                        alt="calculator"
-                        onClick={() => {
-                          setTokenType(1);
-                          setIsOpen(true);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="claim-section">
-                  <div className="claim-value">
-                    <div className="claim-value-item apr">
                       <span className="apr-title">APR in BOO</span>
                       <img
                         className="apr-question"
@@ -604,6 +552,31 @@ const Xlqdr = () => {
                         alt="calculator"
                         onClick={() => {
                           setTokenType(2);
+                          setIsOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="claim-section">
+                  <div className="claim-value">
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in SPIRIT</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${spiritApr.toFormat(2)}%`}
+                      </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setTokenType(1);
                           setIsOpen(true);
                         }}
                       />
