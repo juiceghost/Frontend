@@ -217,7 +217,7 @@ export const useEpochInfo = () => {
 
   useEffect(() => {
     const curTime = new Date().getTime() / 1000;
-    const nextEpoch = Math.ceil(curTime / 7 / 86400) * 7 * 86400;
+    const nextEpoch = Math.ceil(curTime / 86400) * 86400;
     const days = Math.floor((nextEpoch - curTime) / 86400);
     const hours = Math.floor((nextEpoch - curTime - days * 86400) / 3600);
     const mins = Math.floor(

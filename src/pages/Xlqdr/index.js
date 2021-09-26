@@ -402,7 +402,7 @@ const Xlqdr = () => {
               <div className="reward-desc">
                 <div className="reward-desc-title">Current epoch ends in:</div>
                 <div className="reward-desc-value">
-                  {`${days} days, ${hours} hours, ${mins} minutes`}
+                  {`${hours} hours, ${mins} minutes`}
                 </div>
               </div>
             </div>
@@ -488,23 +488,23 @@ const Xlqdr = () => {
                           )}
                     </div>
                   </div>
-                  <div className="claim-btn">
-                    {account && (
-                      <div
-                        className={`lq-button ${pendingClaim ||
-                          (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero())
-                          ? "grey-button"
-                          : "blue-button"
-                          }`}
-                        onClick={() => {
-                          if (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero()) return;
-                          onClaim();
-                        }}
-                      >
-                        Claim
-                      </div>
-                    )}
-                  </div>
+                </div>
+                <div className="claim-btn">
+                  {account && (
+                    <div
+                      className={`lq-button ${pendingClaim ||
+                        (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero())
+                        ? "grey-button"
+                        : "blue-button"
+                        }`}
+                      onClick={() => {
+                        if (lqdrReward.isZero() && ftmReward.isZero() && booReward.isZero() && spiritReward.isZero() && wakaReward.isZero()) return;
+                        onClaim();
+                      }}
+                    >
+                      Claim
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="reward-claim">
@@ -609,13 +609,15 @@ const Xlqdr = () => {
                   </div>
                 </div>
                 <div className="total-apr">
-                  <span>Total APR&nbsp;:</span>&nbsp;
-                  {lqdrApr
-                    .plus(spiritApr)
-                    .plus(booApr)
-                    .plus(wakaApr)
-                    .toFormat(2)}
-                  %
+                  <span className="total-apr-header">Total APR</span>
+                  <span className="total-apr-body">
+                    {lqdrApr
+                      .plus(spiritApr)
+                      .plus(booApr)
+                      .plus(wakaApr)
+                      .toFormat(2)}
+                    %
+                  </span>
                 </div>
               </div>
             </div>

@@ -248,8 +248,9 @@
 
         .header-desc {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          margin-bottom: 30px;
+          margin: 20px 0 30px;
 
           .icons {
             display: flex;
@@ -276,7 +277,7 @@
           .revenue-label {
             font-weight: bold;
             font-size: 20px;
-            margin-left: 20px;
+            margin-top: 10px;
           }
         }
 
@@ -289,7 +290,7 @@
 
           .claim-header-section {
             display: flex;
-            margin-top: 10px;
+            margin: 10px 0;
             justify-content: space-between;
 
             .claim-value {
@@ -362,10 +363,18 @@
         .total-apr {
           font-size: 24px;
           display: flex;
+          flex-direction: column;
           margin-top: 20px;
           justify-content: flex-start;
-          span {
+
+          .total-apr-header {
             color: #4dd9f6;
+            font-size: 20px;
+          }
+
+          .total-apr-body {
+            font-size: 28px;
+            margin-top: 10px;
           }
         }
       }
