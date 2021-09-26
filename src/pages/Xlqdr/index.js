@@ -120,7 +120,7 @@ const Xlqdr = () => {
       ? lqdrApr
       : tokenType === 1
         ? spiritApr
-        : tokenType === 0
+        : tokenType === 2
           ? booApr
           : wakaApr;
   }, [lqdrApr, spiritApr, booApr, wakaApr, tokenType]);
