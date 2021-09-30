@@ -326,6 +326,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
           rewardPerSecond = res;
         } else if (
           (farmConfig.type === 1 && farmConfig.pid === 1) ||
+          (farmConfig.type === 1 && farmConfig.pid === 22) ||
           (farmConfig.type === 2 && farmConfig.pid === 10)
         ) {
           const [res] = await multicall(

@@ -21,6 +21,7 @@ export const usePrices = (forceUpdate) => {
         DAI: 1,
         FUSDT: 1,
         SPIRIT: 0,
+        SPELL: 0,
       };
     }
     let farm;
@@ -38,6 +39,8 @@ export const usePrices = (forceUpdate) => {
     const booPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 18 && f.type === 3);
     const wakaPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
+    farm = farms.find((f) => f.pid === 22 && f.type === 1);
+    const spellPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     return {
       LQDR: lqdrPrice,
       FTM: ftmPrice,
@@ -49,6 +52,7 @@ export const usePrices = (forceUpdate) => {
       SPIRIT: spiritPrice * lqdrPrice,
       BOO: booPrice * ftmPrice,
       WAKA: wakaPrice * ftmPrice,
+      SPELL: spellPrice,
     }
   }, [farms])
 };

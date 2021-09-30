@@ -153,6 +153,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const lqdrPrice = new BigNumber(prices["LQDR"]);
   const spiritPrice = new BigNumber(prices["SPIRIT"]);
   const ftmPrice = new BigNumber(prices["FTM"]);
+  const spellPrice = new BigNumber(prices["SPELL"]);
   const tokensName = farm.lpSymbol.split("/");
 
   if (
@@ -258,6 +259,19 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                         </p>
                         <p className="h-usd">
                           -{ftmPrice.times(secondEarnings).toFixed(2)}USD
+                        </p>
+                      </>
+                    )}
+                    {farm.type === 1 && farm.pid === 22 && (
+                      <>
+                        <p className="h-title">SPELL Earned</p>
+                        <p className="h-number">
+                          {isZero(secondEarnings)
+                            ? "0"
+                            : formatAmount(secondEarnings, 5)}
+                        </p>
+                        <p className="h-usd">
+                          -{spellPrice.times(secondEarnings).toFixed(2)}USD
                         </p>
                       </>
                     )}
@@ -394,6 +408,25 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   rewardPerSecond
                   ? new BigNumber(
                     rewardPerSecond.times(prices["FTM"]).times(31536000)
+                  )
+                    .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                    .times(100)
+                    .toFormat(0)
+                  : "0"}{" "}
+                %
+              </span>
+            </p>
+          )}
+          {farm.type === 1 && farm.pid === 22 && (
+            <p className="apr">
+              <span className="a-title">APR in SPELL</span>
+              <span>
+                {prices &&
+                  priceQuoteToken !== 0 &&
+                  !isZero(lpTotalInQuoteToken) &&
+                  rewardPerSecond
+                  ? new BigNumber(
+                    rewardPerSecond.times(prices["SPELL"]).times(31536000)
                   )
                     .div(lpTotalInQuoteToken.times(priceQuoteToken))
                     .times(100)
