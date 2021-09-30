@@ -204,7 +204,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
           <div className="icons">
             <img
               className="first"
-              src={`/img/svg/token2/${tokensName[0]}.svg`}
+              src={`/img/svg/token2/${tokensName[0] === "SPELL" ? "SPELL.png" : tokensName[0] + '.svg'}`}
               alt="token"
             />
             {tokensName.length > 1 && (

@@ -199,6 +199,14 @@ export const Tokens = {
             250: '0xD8C61EDe8CD9EE7B93855c3f110191e95eDF2979',
         }
     },
+    "SPELL": {
+        symbol: "SPELL",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0x468003B688943977e6130F4F68F23aad939a1040',
+        }
+    },
 }
 
 const SushiRouteName = {

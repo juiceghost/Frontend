@@ -413,6 +413,21 @@ const farms = [
     liquidity: 'https://swap.spiritswap.finance/#/add/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8/FTM'
   },
   {
+    pid: 22,
+    lpSymbol: 'SPELL/fUSDT',
+    lpAddresses: {
+      250: "0x31c0385DDE956f95D43Dac80Bd74FEE149961f4c",
+      3: '',
+    },
+    tokenSymbol: Tokens.SPELL.symbol,
+    tokenAddresses: Tokens.SPELL.address,
+    quoteTokenSymbol: Tokens.FUSDT.symbol,
+    quoteTokenAdresses: Tokens.FUSDT.address,
+    type: 1,
+    alloc: 1,
+    liquidity: 'https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eabf473097a2fc38ef61633a3c7a'
+  },
+  {
     pid: 10,
     lpSymbol: 'BOO/FTM',
     lpAddresses: {
