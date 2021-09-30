@@ -60,5 +60,9 @@ const contracts = {
     250: '0x211413EbD4e439535dF54a63D10bf844a85E981a',
     4002: '',
   },
+  spellRewarder: {
+    250: '0x0ff12bc64252943805F340955939EE78eF3Da968',
+    4002: '',
+  },
 }
 export default contracts
