@@ -64,3 +64,7 @@ export const getRewarderAddress = (chainId = 250) => {
 export const getFtmRewarderAddress = (chainId = 250) => {
   return addresses.ftmRewarder[chainId]
 }
+
+export const getSpellRewarderAddress = (chainId = 250) => {
+  return addresses.spellRewarder[chainId]
+}

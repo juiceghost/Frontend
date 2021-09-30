@@ -11,6 +11,7 @@ import {
   getMasterChefAddress,
   getMiniChefAddress,
   getRewarderAddress,
+  getSpellRewarderAddress,
   getSushiAddress,
 } from "./addressHelpers";
 import farmsConfig from "../config/constants/farms";
@@ -326,7 +327,6 @@ export const fetchFarms = async (web3, chainId = 250) => {
           rewardPerSecond = res;
         } else if (
           (farmConfig.type === 1 && farmConfig.pid === 1) ||
-          (farmConfig.type === 1 && farmConfig.pid === 22) ||
           (farmConfig.type === 2 && farmConfig.pid === 10)
         ) {
           const [res] = await multicall(
@@ -335,6 +335,20 @@ export const fetchFarms = async (web3, chainId = 250) => {
             [
               {
                 address: getFtmRewarderAddress(),
+                name: "tokenPerBlock",
+              },
+            ],
+            chainId
+          );
+          rewardPerSecond = res;
+        } else if (farmConfig.type === 1 && farmConfig.pid === 22)
+        {
+          const [res] = await multicall(
+            web3,
+            rewarderABI,
+            [
+              {
+                address: getSpellRewarderAddress(),
                 name: "tokenPerBlock",
               },
             ],
