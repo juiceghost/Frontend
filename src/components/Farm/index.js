@@ -138,6 +138,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     if (
       (farm.type === 1 && farm.pid === 0) ||
       (farm.type === 1 && farm.pid === 1) ||
+      (farm.type === 1 && farm.pid === 22) ||
       (farm.type === 2 && farm.pid === 10)
     ) {
       getSecondEarnings();
