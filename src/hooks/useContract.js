@@ -65,14 +65,7 @@ export const useFtmDistributor = () => {
   return useMemo(() => getFTMDistributorContract(web3, chainId), [web3, chainId]);
 };
 
-export const useRewarder = () => {
+export const useRewarder = (address) => {
   const web3 = useWeb3();
-  const { chainId } = useWeb3React();
-  return useMemo(() => getRewarderContract(web3, chainId), [web3, chainId]);
-};
-
-export const useFTMRewarder = () => {
-  const web3 = useWeb3();
-  const { chainId } = useWeb3React();
-  return useMemo(() => getFtmRewarderContract(web3, chainId), [web3, chainId]);
+  return useMemo(() => getRewarderContract(web3, address), [web3, address]);
 };

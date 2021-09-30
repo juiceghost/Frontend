@@ -5,8 +5,11 @@ import { useStake } from "../../hooks/useStake";
 import { useUnStake } from "../../hooks/useUnStake";
 import { getExplorerAddress } from "../../utils";
 import {
+  getFtmRewarderAddress,
   getMasterChefAddress,
   getMiniChefAddress,
+  getRewarderAddress,
+  getSpellRewarderAddress,
 } from "../../utils/addressHelpers";
 import BigNumber from "bignumber.js";
 import { isZero, ZERO } from "../../config/constants/numbers";
@@ -15,7 +18,7 @@ import { QuoteToken } from "../../config/constants/types";
 import ConnetWallet from "../Common/ConnetWallet";
 import WithdrawModal from "./WidthdrawModal";
 import { useHarvest } from "../../hooks/useHarvest";
-import { useFTMRewarder, useRewarder } from "../../hooks/useContract";
+import { useRewarder } from "../../hooks/useContract";
 
 const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -41,8 +44,9 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     : 0;
   const earnings = userInfo ? getFullDisplayBalance(userInfo.earnings) : 0;
   const allowance = userInfo ? new BigNumber(userInfo.allowance) : ZERO;
-  const rewarderContract = useRewarder();
-  const ftmRewarderContract = useFTMRewarder();
+  const rewarderContract = useRewarder(getRewarderAddress());
+  const ftmRewarderContract = useRewarder(getFtmRewarderAddress());
+  const spellRewarderContract = useRewarder(getSpellRewarderAddress());
 
   const handleApprove = useCallback(async () => {
     try {
@@ -114,6 +118,10 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
       } else if (farm.type === 1 && farm.pid === 1) {
         rewards = await ftmRewarderContract.methods
           .pendingToken(1, account)
+          .call();
+      } else if (farm.type === 1 && farm.pid === 22) {
+        rewards = await spellRewarderContract.methods
+          .pendingToken(22, account)
           .call();
       } else if (farm.type === 2 && farm.pid === 10) {
         rewards = await ftmRewarderContract.methods
@@ -262,19 +270,19 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                         </p>
                       </>
                     )}
-                    {farm.type === 1 && farm.pid === 22 && (
-                      <>
-                        <p className="h-title">SPELL Earned</p>
-                        <p className="h-number">
-                          {isZero(secondEarnings)
-                            ? "0"
-                            : formatAmount(secondEarnings, 5)}
-                        </p>
-                        <p className="h-usd">
-                          -{spellPrice.times(secondEarnings).toFixed(2)}USD
-                        </p>
-                      </>
-                    )}
+                  {farm.type === 1 && farm.pid === 22 && (
+                    <>
+                      <p className="h-title">SPELL Earned</p>
+                      <p className="h-number">
+                        {isZero(secondEarnings)
+                          ? "0"
+                          : formatAmount(secondEarnings, 5)}
+                      </p>
+                      <p className="h-usd">
+                        -{spellPrice.times(secondEarnings).toFixed(2)}USD
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="h-section">
