@@ -146,9 +146,6 @@ export const useRewardInfo = () => {
           spirit = dailyReward.data.spirit;
           waka = dailyReward.data.waka;
         }
-        boo = new BigNumber(389.5).times(1e18);
-        spirit = new BigNumber(42983).times(1e18);
-        waka = new BigNumber(4886.8).times(1e18);
         setRewardInfo({
           ...rewardInfo,
           lqdrPerXlqdr: xlqdrTotalSupply.isZero()
