@@ -207,6 +207,14 @@ export const Tokens = {
             250: '0x468003B688943977e6130F4F68F23aad939a1040',
         }
     },
+    "SCREAM": {
+        symbol: "SCREAM",
+        decimals: 18,
+        address: {
+            3: '',
+            250: '0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+        }
+    },
 }
 
 const SushiRouteName = {

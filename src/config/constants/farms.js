@@ -96,7 +96,7 @@ const farms = [
   {
     pid: 4,
     lpSymbol: 'fUSDT/FTM',
-    
+
     lpAddresses: {
       250: '0xd019dd7c760c6431797d6ed170bffb8faee11f99',
       3: '',
@@ -123,7 +123,7 @@ const farms = [
   {
     pid: 6,
     lpSymbol: 'SUSHI/FTM',
-    
+
     lpAddresses: {
       250: '0x49d2e0dc99c7358d7a9a8633bf6df111d0ee7f65',
       3: '',
@@ -546,6 +546,21 @@ const farms = [
     type: 2,
     alloc: 4,
     liquidity: 'https://spookyswap.finance/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1'
+  },
+  {
+    pid: 23,
+    lpSymbol: 'SCREAM/FTM',
+    lpAddresses: {
+      250: "0x30872e4fc4edbFD7a352bFC2463eb4fAe9C09086",
+      3: '',
+    },
+    tokenSymbol: Tokens.SCREAM.symbol,
+    tokenAddresses: Tokens.SCREAM.address,
+    quoteTokenSymbol: Tokens.FTM.symbol,
+    quoteTokenAdresses: Tokens.FTM.address,
+    type: 2,
+    alloc: 2,
+    liquidity: 'https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475'
   },
   {
     pid: 18,
