@@ -46,7 +46,7 @@ const CalcModal = ({ isOpen, setIsOpen, apr, tokenType }) => {
     >
       <div className="calc-modal">
         <div className="title-wrap">
-          <p>APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : "WAKA"}</p>
+          <p>APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : tokenType === 3 ? "WAKA" : "WFTM"}</p>
           <svg
             onClick={closeModal}
             width={23}
@@ -87,7 +87,7 @@ const CalcModal = ({ isOpen, setIsOpen, apr, tokenType }) => {
         </div>
 
         <div className="spend">
-          APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : "WAKA"}:
+          APR in {tokenType === 0 ? "LQDR" : tokenType === 1 ? "SPIRIT" : tokenType === 2 ? "BOO" : tokenType === 3 ? "WAKA" : "WFTM"}:
           <span className="lqdr-blue">
             {apr
               .times(amount || 0)
