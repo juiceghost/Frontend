@@ -115,6 +115,15 @@ const Xlqdr = () => {
     return lqdrPerXlqdr.times(36500);
   }, [lqdrPerXlqdr]);
 
+  const wftmApr = useMemo(() => {
+    return !!prices && prices["LQDR"]
+      ? ftmPerXlqdr
+          .times(prices["FTM"] || 0)
+          .div(prices["LQDR"])
+          .times(36500)
+      : new BigNumber(0);
+  }, [ftmPerXlqdr, prices]);
+
   const apr = useMemo(() => {
     return tokenType === 0
       ? lqdrApr
@@ -122,8 +131,10 @@ const Xlqdr = () => {
         ? spiritApr
         : tokenType === 2
           ? booApr
-          : wakaApr;
-  }, [lqdrApr, spiritApr, booApr, wakaApr, tokenType]);
+          : tokenType === 3
+            ? wakaApr
+            : wftmApr;
+  }, [lqdrApr, spiritApr, booApr, wakaApr, wftmApr, tokenType]);
 
   const onExchange = (e) => {
     setLqdrAmount(BigNumber.min(new BigNumber(e.target.value), lqdrBalance));
@@ -437,16 +448,6 @@ const Xlqdr = () => {
                 <div className="claim-label">Claimable earnings :</div>
                 <div className="claim-header-section">
                   <div className="claim-value">
-                    {/* <div className="claim-value-item">
-                      wFTM:{" "}
-                      {!account
-                        ? "-"
-                        : ftmPerXlqdr
-                            .times(xlqdrBalance)
-                            .toFormat(
-                              ftmPerXlqdr.times(xlqdrBalance).lt(0.001) ? 5 : 3
-                            )}
-                    </div> */}
                     <div className="claim-value-item">
                       LQDR:{" "}
                       {!account
@@ -454,6 +455,15 @@ const Xlqdr = () => {
                         : lqdrReward
                           .toFormat(
                             !lqdrReward.isZero() && lqdrReward.lt(0.001) ? 5 : 3
+                          )}
+                    </div>
+                    <div className="claim-value-item">
+                      WFTM:{" "}
+                      {!account
+                        ? "-"
+                        : ftmReward
+                          .toFormat(
+                            !ftmReward.isZero() && ftmReward.lt(0.001) ? 5 : 3
                           )}
                     </div>
                     <div className="claim-value-item">
@@ -523,6 +533,31 @@ const Xlqdr = () => {
                         alt="calculator"
                         onClick={() => {
                           setTokenType(0);
+                          setIsOpen(true);
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="claim-section">
+                  <div className="claim-value">
+                    <div className="claim-value-item apr">
+                      <span className="apr-title">APR in WFTM</span>
+                      <img
+                        className="apr-question"
+                        src="/img/svg/question.svg"
+                        alt="question"
+                        data-tip="Assumes 1 xLQDR = 1 LQDR ( i.e 1 LQDR locked for 2 years )"
+                      />
+                      <span className="apr-value">
+                        {`: ${wftmApr.toFormat(2)}%`}
+                      </span>
+                      <img
+                        className="apr-calc"
+                        src="/img/svg/calculator.svg"
+                        alt="calculator"
+                        onClick={() => {
+                          setTokenType(4);
                           setIsOpen(true);
                         }}
                       />
@@ -611,6 +646,7 @@ const Xlqdr = () => {
                       .plus(spiritApr)
                       .plus(booApr)
                       .plus(wakaApr)
+                      .plus(wftmApr)
                       .toFormat(2)}
                     %
                   </span>

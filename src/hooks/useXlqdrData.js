@@ -137,23 +137,26 @@ export const useRewardInfo = () => {
     const getRewardInfo = async () => {
       try {
         const dailyReward = await getDailyRewardAmount();
-        const lqdr = 6500;
+        let lqdr = 0;
         let boo = 0;
         let spirit = 0;
         let waka = 0;
+        let ftm = 0;
         if (dailyReward && dailyReward.success) {
+          lqdr = dailyReward.data.lqdr;
           boo = dailyReward.data.boo;
           spirit = dailyReward.data.spirit;
           waka = dailyReward.data.waka;
+          ftm = dailyReward.data.wftm;
         }
         setRewardInfo({
           ...rewardInfo,
           lqdrPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(lqdr).div(7).div(xlqdrTotalSupply),
+            : new BigNumber(lqdr).div(1e18).div(xlqdrTotalSupply),
           ftmPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
-            : new BigNumber(0).div(1e18).div(xlqdrTotalSupply),
+            : new BigNumber(ftm).div(1e18).div(xlqdrTotalSupply),
           spiritPerXlqdr: xlqdrTotalSupply.isZero()
             ? new BigNumber(0)
             : new BigNumber(spirit).div(1e18).div(xlqdrTotalSupply),
