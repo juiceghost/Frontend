@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { useApprove } from "../../hooks/useApprove";
 import { useStake } from "../../hooks/useStake";
 import { useUnStake } from "../../hooks/useUnStake";
@@ -145,10 +145,6 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     }
   }, [farm, getSecondEarnings]);
 
-  const priceQuoteToken =
-    farm.quoteTokenSymbol === QuoteToken.FUSDT
-      ? 1
-      : prices[farm.quoteTokenSymbol];
   const {
     lqdrPerBlock,
     lpTotalInQuoteToken,
@@ -158,7 +154,28 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
     multiplier,
     rewardPerSecond,
     feeApr,
+    tokenPriceVsQuote,
   } = farm;
+
+  const priceQuoteToken = useMemo(() => {
+    return farm.type === 4 ? tokenPriceVsQuote.toNumber() : prices[farm.quoteTokenSymbol];
+  }, [farm.type, tokenPriceVsQuote, prices]);
+
+  const totalLiquidityInUsd = useMemo(() => {
+    return (farm.type === 4 ? totalStaked : lpTotalInQuoteToken).times(priceQuoteToken);
+  }, [lpTotalInQuoteToken, priceQuoteToken, totalStaked, farm.type]);
+
+  const buttonStyle = useMemo(() => {
+    return farm.type === 1
+      ? "spirit-button"
+      : farm.type === 2
+        ? "spooky-button"
+        : farm.type === 3
+          ? "waka-button"
+          : farm.type === 4
+            ? "magic-button"
+            : "blue-button"
+  }, [farm])
   const lqdrPrice = new BigNumber(prices["LQDR"]);
   const spiritPrice = new BigNumber(prices["SPIRIT"]);
   const ftmPrice = new BigNumber(prices["FTM"]);
@@ -207,27 +224,49 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               ? "spooky"
               : farm.type === 3
                 ? "waka"
-                : "lqdr"
+                : farm.type === 4
+                  ? "magic"
+                  : "lqdr"
           }`}
       >
         <div className="top">
-          <div className="icons">
-            <img
-              className="first"
-              src={`/img/svg/token2/${tokensName[0] === "SPELL" ? "SPELL.png" : tokensName[0] + '.svg'}`}
-              alt="token"
-            />
-            {tokensName.length > 1 && (
+          {farm.type === 4 ? (
+            <div className="icons">
               <img
-                className="last"
-                src={`/img/svg/token2/${tokensName[1]}.svg`}
+                className="first"
+                src={`/img/svg/token2/MIM.svg`}
                 alt="token"
               />
-            )}
-          </div>
+              <img
+                className="last"
+                src={`/img/svg/token2/fUSDT.svg`}
+                alt="token"
+              />
+              <img
+                className="end"
+                src={`/img/svg/token2/USDC.svg`}
+                alt="token"
+              />
+            </div>
+          ) : (
+            <div className="icons">
+              <img
+                className="first"
+                src={`/img/svg/token2/${tokensName[0] === "SPELL" ? "SPELL.png" : tokensName[0] + '.svg'}`}
+                alt="token"
+              />
+              {tokensName.length > 1 && (
+                <img
+                  className="last"
+                  src={`/img/svg/token2/${tokensName[1]}.svg`}
+                  alt="token"
+                />
+              )}
+            </div>
+          )}
           <div className="info">
             <p className="name">{farm.lpSymbol}</p>
-            <p className="multiplier">{farm?.multiplierShow.toLowerCase()}</p>
+            <p className="multiplier">{multiplier.toString()}x</p>
           </div>
         </div>
         {account && (
@@ -301,28 +340,14 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {farm.isDisable ? (
                   <div
-                    className={`lq-button ${farm.type === 1
-                      ? "spirit-button"
-                      : farm.type === 2
-                        ? "spooky-button"
-                        : farm.type === 3
-                          ? "waka-button"
-                          : "blue-button"
-                      }`}
+                    className={`lq-button ${buttonStyle}`}
                     style={{ width: "45%" }}
                   >
                     Stake
                   </div>
                 ) : (
                   <div
-                    className={`lq-button ${farm.type === 1
-                      ? "spirit-button"
-                      : farm.type === 2
-                        ? "spooky-button"
-                        : farm.type === 3
-                          ? "waka-button"
-                          : "blue-button"
-                      }`}
+                    className={`lq-button ${buttonStyle}`}
                     style={{ width: "45%" }}
                     onClick={() => {
                       setStakePopup(true);
@@ -332,14 +357,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   </div>
                 )}
                 <div
-                  className={`lq-button ${farm.type === 1
-                    ? "spirit-button"
-                    : farm.type === 2
-                      ? "spooky-button"
-                      : farm.type === 3
-                        ? "waka-button"
-                        : "blue-button"
-                    }`}
+                  className={`lq-button ${buttonStyle}`}
                   style={{ width: "45%" }}
                   onClick={() => {
                     setUnStakePopup(true);
@@ -350,14 +368,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               </div>
             ) : (
               <div
-                className={`lq-button ${farm.type === 1
-                  ? "spirit-button"
-                  : farm.type === 2
-                    ? "spooky-button"
-                    : farm.type === 3
-                      ? "waka-button"
-                      : "blue-button"
-                  }`}
+                className={`lq-button ${buttonStyle}`}
                 onClick={handleApprove}
               >
                 Approve Pool
@@ -372,8 +383,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
             <span>
               {" "}
               {prices &&
-                priceQuoteToken !== 0 &&
-                !isZero(lpTotalInQuoteToken) &&
+                !isZero(totalLiquidityInUsd) &&
                 !isNaN(poolWeight)
                 ? new BigNumber(
                   lqdrPerBlock
@@ -382,7 +392,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                     .times(31536000)
                     .div(1.18)
                 )
-                  .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                  .div(totalLiquidityInUsd)
                   .times(100)
                   .toFormat(0)
                 : "0"}{" "}
@@ -400,7 +410,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   ? new BigNumber(
                     rewardPerSecond.times(spiritPrice).times(31536000)
                   )
-                    .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                    .div(totalLiquidityInUsd)
                     .times(100)
                     .toFormat(0)
                   : "0"}{" "}
@@ -419,7 +429,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   ? new BigNumber(
                     rewardPerSecond.times(prices["FTM"]).times(31536000)
                   )
-                    .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                    .div(totalLiquidityInUsd)
                     .times(100)
                     .toFormat(0)
                   : "0"}{" "}
@@ -438,7 +448,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   ? new BigNumber(
                     rewardPerSecond.times(prices["SPELL"]).times(31536000)
                   )
-                    .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                    .div(totalLiquidityInUsd)
                     .times(100)
                     .toFormat(0)
                   : "0"}{" "}
@@ -457,7 +467,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                   ? new BigNumber(
                     rewardPerSecond.times(prices["FTM"]).times(31536000)
                   )
-                    .div(lpTotalInQuoteToken.times(priceQuoteToken))
+                    .div(totalLiquidityInUsd)
                     .times(100)
                     .toFormat(0)
                   : "0"}{" "}
@@ -465,7 +475,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               </span>
             </p>
           )}
-          {![0, 3].includes(farm.type) && (
+          {![0, 3, 4].includes(farm.type) && (
             <p className="apr">
               <span className="a-title">Trading Fee APR</span>
               <span>{feeApr} %</span>
@@ -495,8 +505,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 <p>
                   $
                   {priceQuoteToken && !isZero(totalStaked) && !isZero(stakedBalance)
-                    ? lpTotalInQuoteToken
-                      .times(priceQuoteToken)
+                    ? totalLiquidityInUsd
                       .div(totalStaked)
                       .times(stakedBalance)
                       .toFormat(1)
@@ -517,18 +526,13 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
               <p>{new BigNumber(totalStaked).toFormat(4)}</p>
             </div>
             <div className="item">
-              <p>Deposit fee</p>
-              <p>{farm?.depositFeeBP / 100}%</p>
-            </div>
-            <div className="item">
               <p>{isTokenOnly ? "LQDR" : "LP"} Price</p>
               <p>
                 $
-                {priceQuoteToken && !isZero(totalStaked)
-                  ? lpTotalInQuoteToken
-                    .times(priceQuoteToken)
+                {!isZero(totalStaked)
+                  ? totalLiquidityInUsd
                     .div(totalStaked)
-                    .toFormat(1)
+                    .toFormat(2)
                   : 0}{" "}
               </p>
             </div>
@@ -538,7 +542,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 $
                 {!priceQuoteToken
                   ? 0
-                  : lpTotalInQuoteToken.times(priceQuoteToken).toFormat(0)}{" "}
+                  : totalLiquidityInUsd.toFormat(0)}{" "}
               </p>
             </div>
           </div>
