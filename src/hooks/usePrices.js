@@ -25,9 +25,9 @@ export const usePrices = (forceUpdate) => {
       };
     }
     let farm;
-    farm = farms.find((f) => f.pid === 17 && f.type === 0);
+    farm = farms.find((f) => f.pid === 0 && f.type === 1);
     const lqdrPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
-    farm = farms.find((f) => f.pid === 1 && f.type === 0);
+    farm = farms.find((f) => f.pid === 3 && f.type === 1);
     const ftmPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     farm = farms.find((f) => f.pid === 5 && f.type === 0);
     const wbtcPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
@@ -42,7 +42,7 @@ export const usePrices = (forceUpdate) => {
     farm = farms.find((f) => f.pid === 22 && f.type === 1);
     const spellPrice = farm && farm.tokenPriceVsQuote ? farm.tokenPriceVsQuote.toNumber() : 0;
     return {
-      LQDR: lqdrPrice,
+      LQDR: lqdrPrice * ftmPrice,
       FTM: ftmPrice,
       WBTC: wbtcPrice * ftmPrice,
       FRAX: fraxPrice,

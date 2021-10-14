@@ -158,7 +158,7 @@ const Navbar = () => {
               </li>
 
               <li>
-                <a href="https://discord.gg/liquiddriver"
+                <a href="https://discord.gg/6BvXc9Bbfu"
                   target="_blank"
                   rel="noreferrer">
                   <img src="/img/discord.png" alt="tlg" />
