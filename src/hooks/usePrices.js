@@ -1,9 +1,5 @@
-import { BigNumber } from "ethers";
-import { useEffect, useMemo, useState } from "react";
-import { fetchQuoteTokenPrices } from "../utils/api";
+import { useMemo } from "react";
 import { useFarms } from "./useFarms";
-import useRefresh from "./useRefresh";
-import useWeb3 from "./useWeb3";
 
 // Prices
 
@@ -49,7 +45,7 @@ export const usePrices = (forceUpdate) => {
       USDC: 1,
       DAI: 1,
       FUSDT: 1,
-      SPIRIT: spiritPrice * lqdrPrice,
+      SPIRIT: spiritPrice * lqdrPrice * ftmPrice,
       BOO: booPrice * ftmPrice,
       WAKA: wakaPrice * ftmPrice,
       SPELL: spellPrice,
