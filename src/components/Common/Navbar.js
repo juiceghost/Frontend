@@ -69,6 +69,19 @@ const Navbar = () => {
             </li>
             <li onClick={() => setOpenMenu(false)}>
               <a
+                href="https://vote.liquiddriver.finance"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="icon-wrap">
+                  {" "}
+                  <img alt={"icon"} src="/img/svg/vote.png" />
+                </div>
+                <p>Vote</p>
+              </a>
+            </li>
+            <li onClick={() => setOpenMenu(false)}>
+              <a
                 href="https://github.com/LiquidDriver-finance"
                 target="_blank"
                 rel="noreferrer"
