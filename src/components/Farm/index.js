@@ -376,7 +376,7 @@ const Farm = ({ farm, prices, userInfo, forceUpdate, active, stakeOnly }) => {
                 !isZero(lpTotalInQuoteToken) &&
                 !isNaN(poolWeight)
                 ? new BigNumber(
-                  lqdrPerBlock
+                  new BigNumber(0.1441)
                     .times(poolWeight)
                     .times(prices["LQDR"])
                     .times(31536000)
