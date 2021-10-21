@@ -214,7 +214,7 @@ const Xlqdr = () => {
               </div>
             </div>
             <div className="balance-item">
-              <div className="balance-label">Your Locked End</div>
+              <div className="balance-label">Locked until :</div>
               <div className="balance-value">
                 {lockStatus === "increase"
                   ? new Date(lockedEnd * 1000).toISOString().split("T")[0]
