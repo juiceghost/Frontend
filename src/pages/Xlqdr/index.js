@@ -87,27 +87,27 @@ const Xlqdr = () => {
   const spiritApr = useMemo(() => {
     return !!prices && prices["LQDR"]
       ? spiritPerXlqdr
-          .times(prices["SPIRIT"] || 0)
-          .div(prices["LQDR"])
-          .times(36500)
+        .times(prices["SPIRIT"] || 0)
+        .div(prices["LQDR"])
+        .times(36500)
       : new BigNumber(0);
   }, [spiritPerXlqdr, prices]);
 
   const booApr = useMemo(() => {
     return !!prices && prices["LQDR"]
       ? booPerXlqdr
-          .times(prices["BOO"] || 0)
-          .div(prices["LQDR"])
-          .times(36500)
+        .times(prices["BOO"] || 0)
+        .div(prices["LQDR"])
+        .times(36500)
       : new BigNumber(0);
   }, [booPerXlqdr, prices]);
 
   const wakaApr = useMemo(() => {
     return !!prices && prices["LQDR"]
       ? wakaPerXlqdr
-          .times(prices["WAKA"] || 0)
-          .div(prices["LQDR"])
-          .times(36500)
+        .times(prices["WAKA"] || 0)
+        .div(prices["LQDR"])
+        .times(36500)
       : new BigNumber(0);
   }, [wakaPerXlqdr, prices]);
 
@@ -118,9 +118,9 @@ const Xlqdr = () => {
   const wftmApr = useMemo(() => {
     return !!prices && prices["LQDR"]
       ? ftmPerXlqdr
-          .times(prices["FTM"] || 0)
-          .div(prices["LQDR"])
-          .times(36500)
+        .times(prices["FTM"] || 0)
+        .div(prices["LQDR"])
+        .times(36500)
       : new BigNumber(0);
   }, [ftmPerXlqdr, prices]);
 
@@ -179,26 +179,55 @@ const Xlqdr = () => {
       <div className="xlqdr-wrap">
         <p className="xlqdr-title">xLQDR</p>
         <div className="balance-section">
-          <div className="balance-item">
-            <div className="balance-label">Your locked LQDR</div>
-            <div className="balance-value">
-              {!account
-                ? "-"
-                : lockedLqdr.toFormat(lockedLqdr.lt(0.001) ? 5 : 3)}
+          <div className="balance-row">
+            <div className="balance-item">
+              <div className="balance-label">Total Locked LQDR</div>
+              <div className="balance-value">
+                {totalLqdr.toFormat(2)}
+              </div>
+            </div>
+            <div className="balance-item">
+              <div className="balance-label">Avg. Lock Time (days)</div>
+              <div className="balance-value">
+                {totalLqdr.isZero()
+                  ? "0.00"
+                  : new BigNumber(730)
+                    .div(totalLqdr)
+                    .times(xlqdrTotalSupply)
+                    .toFormat(2)}
+              </div>
+            </div>
+            <div className="balance-item">
+              <div className="balance-label">Total xLQDR</div>
+              <div className="balance-value">
+                {xlqdrTotalSupply.toFormat(xlqdrTotalSupply.lt(0.001) ? 5 : 3)}
+              </div>
             </div>
           </div>
-          <div className="balance-item">
-            <div className="balance-label">Your xLQDR</div>
-            <div className="balance-value">
-              {!account
-                ? "-"
-                : xlqdrBalance.toFormat(xlqdrBalance.lt(0.001) ? 5 : 3)}
+          <div className="balance-row">
+            <div className="balance-item">
+              <div className="balance-label">Your Locked LQDR</div>
+              <div className="balance-value">
+                {!account
+                  ? "-"
+                  : lockedLqdr.toFormat(lockedLqdr.lt(0.001) ? 5 : 3)}
+              </div>
             </div>
-          </div>
-          <div className="balance-item">
-            <div className="balance-label">Total xLQDR</div>
-            <div className="balance-value">
-              {xlqdrTotalSupply.toFormat(xlqdrTotalSupply.lt(0.001) ? 5 : 3)}
+            <div className="balance-item">
+              <div className="balance-label">Locked until :</div>
+              <div className="balance-value">
+                {lockStatus === "increase"
+                  ? new Date(lockedEnd * 1000).toISOString().split("T")[0]
+                  : "-"}
+              </div>
+            </div>
+            <div className="balance-item">
+              <div className="balance-label">Your xLQDR</div>
+              <div className="balance-value">
+                {!account
+                  ? "-"
+                  : xlqdrBalance.toFormat(xlqdrBalance.lt(0.001) ? 5 : 3)}
+              </div>
             </div>
           </div>
         </div>
@@ -212,9 +241,8 @@ const Xlqdr = () => {
               </div>
             )}
             <div className="input-label">
-              <div className="input-label-left">Your Balance</div>
+              <div className="input-label-left">Your LQDR</div>
               <div className="input-label-right">
-                Balance:{" "}
                 {!account
                   ? "-"
                   : lqdrBalance.toFormat(lqdrBalance.lt(0.001) ? 5 : 3)}
@@ -367,28 +395,6 @@ const Xlqdr = () => {
                 ) : (
                   <ConnectWallet />
                 ))}
-
-              <div className="xlqdr-total-info">
-                <div className="xlqdr-info-item">
-                  <span className="xlqdr-item-title">Total Locked LQDR</span>
-                  <span className="xlqdr-item-value">
-                    {totalLqdr.toFormat(2)}
-                  </span>
-                </div>
-                <div className="xlqdr-info-item">
-                  <span className="xlqdr-item-title">
-                    Avg. Lock Time (days)
-                  </span>
-                  <span className="xlqdr-item-value">
-                    {totalLqdr.isZero()
-                      ? "0.00"
-                      : new BigNumber(730)
-                        .div(totalLqdr)
-                        .times(xlqdrTotalSupply)
-                        .toFormat(2)}
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
           <div className="reward-section">

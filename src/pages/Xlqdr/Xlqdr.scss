@@ -31,43 +31,51 @@
 
   .balance-section {
     margin: 50px 40px 0;
-    padding: 30px 53px 24px 53px;
     background: rgba(3, 6, 41, 0.72);
     box-shadow: 0px 0px 20px rgba(8, 11, 44, 0.2);
     border-radius: 24px;
-    display: flex;
-
-    @media screen and (max-width: 1280px) {
-      flex-direction: column;
-    }
-
-    .balance-item {
-      flex: 1;
-      border-right: 1px solid #0b5079;
-      border-bottom: 0;
-
-      @media screen and (max-width: 1280px) {
-        padding: 20px 0;
-        border-right: 0;
-        border-bottom: 1px solid #0b5079;
-      }
-
+    .balance-row {
+      padding: 30px 53px 24px 53px;
+      display: flex;
+      border-bottom: 1px solid #0b5079;
+  
       &:last-child {
         border: 0;
       }
-
-      .balance-label {
-        font-weight: 600;
-        font-size: 21px;
-        margin-bottom: 7px;
-        color: #4dd9f6;
+  
+      @media screen and (max-width: 1280px) {
+        flex-direction: column;
+      }
+  
+      .balance-item {
+        flex: 1;
+        border-right: 1px solid #0b5079;
+        border-bottom: 0;
+  
+        @media screen and (max-width: 1280px) {
+          padding: 20px 0;
+          border-right: 0;
+          border-bottom: 1px solid #0b5079;
+        }
+  
+        &:last-child {
+          border: 0;
+        }
+  
+        .balance-label {
+          font-weight: 600;
+          font-size: 21px;
+          margin-bottom: 7px;
+          color: #4dd9f6;
+        }
+  
+        .balance-value {
+          font-weight: bold;
+          font-size: 38px;
+          color: #ffffff;
+        }
       }
 
-      .balance-value {
-        font-weight: bold;
-        font-size: 38px;
-        color: #ffffff;
-      }
     }
   }
 
@@ -106,6 +114,11 @@
         display: flex;
         justify-content: space-between;
         margin: 30px 0 5px;
+        font-size: 14px;
+
+        .input-label-left {
+          color: #4dd9f6;
+        }
       }
 
       .input-wrap {
@@ -156,7 +169,7 @@
       }
 
       .lock-btn {
-        margin-top: 20px;
+        margin: 20px 0 30px;
       }
 
       .bottom-btn {
