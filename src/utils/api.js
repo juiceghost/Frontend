@@ -5,6 +5,7 @@ import minichefABI from "../config/abi/minichef.json";
 import rewarderABI from "../config/abi/rewarder.json";
 import strategyABI from "../config/abi/strategy.json";
 import SushiAbi from "../config/abi/sushi.json";
+import PoolV2Abi from "../config/abi/3poolv2.json";
 import multicall from "./multicall";
 import {
   getFtmRewarderAddress,
@@ -84,14 +85,12 @@ export const fetchFarms = async (web3, chainId = 250) => {
           quoteTokenDecimals,
         ] = await multicall(web3, erc20, calls, chainId);
 
-        let tokenAmount;
         let lpTotalInQuoteToken;
         let tokenPriceVsQuote = new BigNumber(1);
 
-        if (farmConfig.isTokenOnly) {
+        if (farmConfig.isTokenOnly || farmConfig.type === 4) {
           //TODO Decimals
-          tokenAmount = fromWei(lpTokenBalanceMC, tokenDecimals);
-          lpTotalInQuoteToken = tokenAmount;
+          lpTotalInQuoteToken = fromWei(lpTokenBalanceMC, tokenDecimals);
         } else {
           // Ratio in % a LP tokens that are in staking, vs the total number in circulation
           const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(
@@ -105,7 +104,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
             .times(lpTokenRatio);
 
           // Amount of token in the LP that are considered staking (i.e amount of token * lp ratio)
-          tokenAmount = new BigNumber(tokenBalanceLP)
+          const tokenAmount = new BigNumber(tokenBalanceLP)
             .div(new BigNumber(10).pow(tokenDecimals))
             .times(lpTokenRatio);
           const quoteTokenAmount = new BigNumber(quoteTokenBlanceLP)
@@ -149,13 +148,10 @@ export const fetchFarms = async (web3, chainId = 250) => {
           ...farmConfig,
           totalStaked: fromWei(lpTokenBalanceMC),
           totalSupply: lpTotalSupply,
-          tokenAmount: tokenAmount.toJSON(),
           lpTotalInQuoteToken: lpTotalInQuoteToken,
           tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
-          multiplierShow: `${allocPoint.toString()}X`,
           multiplier: allocPoint.div(100),
-          depositFeeBP: info.depositFeeBP,
           lqdrPerBlock: fromWei(lqdrPerBlock),
         };
       })
@@ -281,6 +277,21 @@ export const fetchFarms = async (web3, chainId = 250) => {
           //TODO Decimals
           tokenAmount = fromWei(lpTokenBalanceMC, tokenDecimals);
           lpTotalInQuoteToken = tokenAmount;
+        } else if (farmConfig.type === 4) {
+          tokenAmount = fromWei(lpTokenBalanceMC, tokenDecimals);
+          lpTotalInQuoteToken = tokenAmount;
+          const [res] = await multicall(
+            web3,
+            PoolV2Abi,
+            [
+              {
+                address: farmConfig.lpAddresses[chainId],
+                name: "get_virtual_price",
+              },
+            ],
+            chainId
+          );
+          tokenPriceVsQuote = fromWei(res);
         } else {
           // Ratio in % a LP tokens that are in staking, vs the total number in circulation
           const lpTokenRatio = new BigNumber(lpTokenBalanceMC)
@@ -388,25 +399,16 @@ export const fetchFarms = async (web3, chainId = 250) => {
         }
 
         const allocPoint = new BigNumber(info.allocPoint._hex);
-        const poolWeight = allocPoint.isZero()
-          ? new BigNumber(farmConfig.alloc).div(108)
-          : allocPoint.div(new BigNumber(totalAllocPoint));
+        const poolWeight = allocPoint.div(new BigNumber(totalAllocPoint));
 
         return {
           ...farmConfig,
           totalStaked: fromWei(new BigNumber(lpTokenBalanceMC).plus(sBal)),
           totalSupply: lpTotalSupply,
-          tokenAmount: tokenAmount.toJSON(),
-          lpTotalInQuoteToken: lpTotalInQuoteToken,
+          lpTotalInQuoteToken,
           tokenPriceVsQuote,
           poolWeight: poolWeight.toNumber(),
-          multiplierShow: `${
-            allocPoint.isZero()
-              ? farmConfig.alloc
-              : allocPoint.div(100).toString()
-          }X`,
           multiplier: allocPoint.div(100),
-          depositFeeBP: info.depositFee,
           lqdrPerBlock: fromWei(lqdrPerBlock),
           rewardPerSecond: fromWei(rewardPerSecond),
           feeApr: feeApr.toFixed(2),

@@ -277,7 +277,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
-    alloc: 23,
     liquidity: 'https://swap.spiritswap.finance/#/add/FTM/0x10b620b2dbAC4Faa7D7FFD71Da486f5D44cd86f9'
   },
   {
@@ -292,7 +291,6 @@ const farms = [
     quoteTokenSymbol: Tokens.LQDR.symbol,
     quoteTokenAdresses: Tokens.LQDR.address,
     type: 1,
-    alloc: 2,
     liquidity: 'https://swap.spiritswap.finance/#/add/0x5Cc61A78F164885776AA610fb0FE1257df78E59B/0x10b620b2dbAC4Faa7D7FFD71Da486f5D44cd86f9'
   },
   // {
@@ -307,7 +305,6 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
-  //   alloc: 4,
   // },
   {
     pid: 3,
@@ -321,7 +318,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FUSDT.symbol,
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 1,
-    alloc: 5,
     liquidity: 'https://swap.spiritswap.finance/#/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A'
   },
   // {
@@ -336,7 +332,6 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
-  //   alloc: 5,
   // },
   {
     pid: 5,
@@ -350,7 +345,6 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 1,
-    alloc: 5,
     liquidity: 'https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/FTM'
   },
   // {
@@ -365,7 +359,6 @@ const farms = [
   //   quoteTokenSymbol: Tokens.FTM.symbol,
   //   quoteTokenAdresses: Tokens.FTM.address,
   //   type: 1,
-  //   alloc: 4,
   // },
   {
     pid: 7,
@@ -379,7 +372,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
-    alloc: 4,
     liquidity: 'https://swap.spiritswap.finance/#/add/0x82f0B8B456c1A451378467398982d4834b6829c1/FTM'
   },
   {
@@ -394,7 +386,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
-    alloc: 4,
     liquidity: 'https://swap.spiritswap.finance/#/add/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC/FTM'
   },
   {
@@ -409,7 +400,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 1,
-    alloc: 4,
     liquidity: 'https://swap.spiritswap.finance/#/add/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8/FTM'
   },
   {
@@ -424,7 +414,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FUSDT.symbol,
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 1,
-    alloc: 1,
     liquidity: 'https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eabf473097a2fc38ef61633a3c7a'
   },
   {
@@ -439,7 +428,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE'
   },
   {
@@ -454,7 +442,6 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'
   },
   {
@@ -469,7 +456,6 @@ const farms = [
     quoteTokenSymbol: Tokens.DAI.symbol,
     quoteTokenAdresses: Tokens.DAI.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E'
   },
   {
@@ -484,7 +470,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC'
   },
   {
@@ -499,7 +484,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8'
   },
   {
@@ -514,7 +498,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d'
   },
   {
@@ -529,7 +512,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FUSDT.symbol,
     quoteTokenAdresses: Tokens.FUSDT.address,
     type: 2,
-    alloc: 5,
     liquidity: 'https://spookyswap.finance/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A'
   },
   {
@@ -544,7 +526,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 4,
     liquidity: 'https://spookyswap.finance/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1'
   },
   {
@@ -559,7 +540,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 2,
-    alloc: 2,
     liquidity: 'https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475'
   },
   {
@@ -574,7 +554,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
-    alloc: 3,
     liquidity: 'https://exchange.waka.finance/#/add/FTM/0xf61cCdE1D4bB76CeD1dAa9D4c429cCA83022B08B'
   },
   {
@@ -589,7 +568,6 @@ const farms = [
     quoteTokenSymbol: Tokens.FTM.symbol,
     quoteTokenAdresses: Tokens.FTM.address,
     type: 3,
-    alloc: 3,
     liquidity: 'https://exchange.waka.finance/#/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11'
   },
   {
@@ -604,8 +582,21 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 3,
-    alloc: 3,
     liquidity: 'https://exchange.waka.finance/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'
+  },
+  {
+    pid: 25,
+    lpSymbol: '3poolv2',
+    lpAddresses: {
+      250: "0x2dd7C9371965472E5A5fD28fbE165007c61439E1",
+      3: '',
+    },
+    tokenSymbol: Tokens.MIM.symbol,
+    tokenAddresses: Tokens.MIM.address,
+    quoteTokenSymbol: Tokens.USDC.symbol,
+    quoteTokenAdresses: Tokens.USDC.address,
+    type: 4,
+    liquidity: 'https://ftm.curve.fi/factory/1/deposit'
   },
 ]
 

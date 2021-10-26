@@ -10,15 +10,16 @@ const ConnectWallet = ({ style, rest, type = 0 }) => {
       <WalletModal open={open} setOpen={setOpen} />
       {account ? (
         <div
-          className={`lq-button ${
-            type === 0
-              ? "blue-button"
-              : type === 1
+          className={`lq-button ${type === 0
+            ? "blue-button"
+            : type === 1
               ? "spirit-button"
               : type === 2
-              ? "spooky-button"
-              : "waka-button"
-          } `}
+                ? "spooky-button"
+                : type === 3 ?
+                  "waka-button"
+                  : "magic-button"
+            } `}
           style={style}
           {...rest}
         >
@@ -28,15 +29,16 @@ const ConnectWallet = ({ style, rest, type = 0 }) => {
         </div>
       ) : (
         <div
-          className={`lq-button ${
-            type === 0
-              ? "blue-button"
-              : type === 1
+          className={`lq-button ${type === 0
+            ? "blue-button"
+            : type === 1
               ? "spirit-button"
               : type === 2
-              ? "spooky-button"
-              : "waka-button"
-          } flex-sb`}
+                ? "spooky-button"
+                : type === 3 ?
+                  "waka-button"
+                  : "magic-button"
+            } flex-sb`}
           onClick={() => {
             console.log("clicked");
             setOpen(true);

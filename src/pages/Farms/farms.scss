@@ -175,6 +175,11 @@ input:checked + .slider:before {
                 border: 1px solid #E8D435;
             }
 
+            &.magic {
+                background: rgba(57, 56, 139, 0.68);
+                border: 1px solid #7b79f7;
+            }
+
             img {
                 max-height: 100%;
             }
@@ -340,11 +345,48 @@ input:checked + .slider:before {
                 }
             }
 
+            &.magic {
+                background: rgba(57, 56, 139, 0.68);
+                border: 1px solid #7b79f7;
+
+                .multiplier {
+                    border: 1px solid #7b79f7;
+                }
+                .apr-wrap {
+                    border-bottom: 1px solid #7b79f7;
+                    .a-title {
+                        color: #7b79f7;
+                    }
+                }
+
+                .details-btn {
+                    border: 1px solid #7b79f7;
+                    .d-title {
+                        color: #7b79f7;
+                    }
+                }
+                .harvest {
+                    .amount {
+                        .h-title {
+                            color: #7b79f7;
+                        }
+                        .h-usd {
+                            color: #7b79f7;
+                        }
+                    }
+                    .h-button {
+                        border: 1px solid #7b79f7;
+                        color: #7b79f7;
+                    }
+                }
+            }
+
             .top {
                 display: flex;
                 justify-content: space-between;
 
                 .icons {
+                    display: flex;
                     .first {
                         position: relative;
                         display: block;
@@ -352,20 +394,31 @@ input:checked + .slider:before {
                         height: 42px;
                         border-radius: 50%;
                         border: 2px solid #0B5079;
-                        margin-bottom: -15px;
                         z-index: 2;
                         background: #080B3A;
                     }
                     .last {
                         z-index: 1;
                         display: block;
-                        margin-left: 20px;
+                        margin-left: -22px;
+                        margin-top: 22px;
                         width: 42px;
                         height: 42px;
                         border-radius: 50%;
                         border: 2px solid #0B5079;
                         background: #080B3A;
                     }
+                    .end {
+                        z-index: 0;
+                        display: block;
+                        margin-left: -22px;
+                        width: 42px;
+                        height: 42px;
+                        border-radius: 50%;
+                        border: 2px solid #0B5079;
+                        background: #080B3A;
+                    }
+                    
                 }
                 .info {
                     display: flex;
@@ -556,9 +609,13 @@ input:checked + .slider:before {
                             width: 35px;
                             height: 35px;
                             border: 1px solid #4dd9f6;
-                            margin-bottom: -15px;
                         }
                         .last {
+                            width: 35px;
+                            height: 35px;
+                            border: 1px solid #4dd9f6;
+                        }
+                        .end {
                             width: 35px;
                             height: 35px;
                             border: 1px solid #4dd9f6;

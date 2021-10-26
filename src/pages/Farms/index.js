@@ -7,6 +7,7 @@ import { useFarmsUser } from "../../hooks/useFarmsUser";
 import spiritImg from "../../assets/imgs/svg/spirit.svg";
 import spookyImg from "../../assets/imgs/svg/spooky.svg";
 import wakaImg from "../../assets/imgs/svg/waka.svg";
+import magicImg from "../../assets/imgs/svg/magic.png";
 import "./farms.scss";
 
 export const options = [
@@ -25,6 +26,10 @@ export const options = [
   {
     value: 3,
     label: "Waka",
+  },
+  {
+    value: 4,
+    label: "Magic",
   },
 ];
 
@@ -59,7 +64,6 @@ const Farms = () => {
           <Select
             values={[options.find((opt) => opt.label === "All")]}
             onChange={(values) => {
-              console.log("values :>> ", values);
               setFarmType(values[0].value);
             }}
             options={options}
@@ -180,6 +184,36 @@ const Farms = () => {
                 </div>
                 {farms
                   .filter((farm) => farm.type === 3)
+                  .map((farm, index) => (
+                    <Farm
+                      key={index}
+                      index={index}
+                      active={active}
+                      stakeOnly={stakeOnly}
+                      userInfo={
+                        users
+                          ? users.find(
+                              (user) =>
+                                user.pid === farm.pid && farm.type === user.type
+                            )
+                          : null
+                      }
+                      farm={farm}
+                      forceUpdate={() => forceUpdate()}
+                      prices={prices}
+                    />
+                  ))}
+              </>
+            )}
+
+            {[0, 4].includes(farmType) && (
+              <>
+                <div className="div-image magic">
+                  <img src={magicImg} alt="magic logo" />
+                  <span>Magic Land</span>
+                </div>
+                {farms
+                  .filter((farm) => farm.type === 4)
                   .map((farm, index) => (
                     <Farm
                       key={index}
