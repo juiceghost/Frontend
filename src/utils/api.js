@@ -365,7 +365,7 @@ export const fetchFarms = async (web3, chainId = 250) => {
             ],
             chainId
           );
-          rewardPerSecond = res;
+          rewardPerSecond = new BigNumber(res).times(0.4);
         }
 
         let feeApr = 0;
