@@ -596,7 +596,7 @@ const farms = [
     quoteTokenSymbol: Tokens.USDC.symbol,
     quoteTokenAdresses: Tokens.USDC.address,
     type: 4,
-    // liquidity: 'https://exchange.waka.finance/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75'
+    liquidity: 'https://ftm.curve.fi/factory/1/deposit'
   },
 ]
 
