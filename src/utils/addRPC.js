@@ -17,6 +17,16 @@ export const addRPC = (account, chainId = 250) => {
 }
 
 const NetworksData = {
+    1666600000: {
+        chainId: "1666600000",
+        chainName: "Harmony Mainnet",
+        nativeCurrency: {
+            name: "Harmony",
+            symbol: "ONE",
+            decimals: 18,
+        },
+        rpcUrls: ["https://api.harmony.one/"],
+    },
     250: {
         chainId: "0xFA",
         chainName: "Fantom Opera",

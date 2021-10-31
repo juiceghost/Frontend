@@ -599,5 +599,5 @@ const farms = [
     liquidity: 'https://ftm.curve.fi/factory/1/deposit'
   },
 ]
-
-export default farms
+const farms2 = []
+export default farms2

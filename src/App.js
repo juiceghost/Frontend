@@ -25,7 +25,7 @@ function App() {
     if (error instanceof UnsupportedChainIdError) {
       NotificationManager.error(
         <>
-          <p>Please make sure to set the right network (Fantom Network) </p>
+          <p>Please make sure to set the right network (Harmony Network) </p>
           <div
             style={{
               background: "blue",
@@ -36,9 +36,9 @@ function App() {
               margin: "auto",
               marginTop: "20px",
             }}
-            onClick={() => addRPC(account, 250)}
+            onClick={() => addRPC(account, 1666600000)}
           >
-            Switch to Fantom
+            Switch to Harmony
           </div>
         </>,
         "Error"

@@ -5,7 +5,7 @@ export const nodes = ["https://rpc.ftm.tools/"]
 
 const getRpcUrl = () => {
   const randomIndex = random(0, nodes.length - 1)
-  return nodes[randomIndex]
+  return "https://api.harmony.one/"
 }
 
 export default getRpcUrl
